@@ -10,6 +10,12 @@ class CheckTest
 {
 
   @Test
+  void defaultConstructor()
+  {
+    Check c = new Check();
+  }
+  
+  @Test
   void forContainsTest()
   {
     String[] haystack = {"Horse","Cow","Dog","Cat"};
