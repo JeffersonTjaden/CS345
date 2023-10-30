@@ -109,7 +109,7 @@ public class Fraction
    */
   public void expandingFraction()
   {
-    if (wholeNumber <= 0)
+    if (wholeNumber >= 0)
     {
       numerator = numerator + wholeNumber * denominator;
       wholeNumber = 0;
