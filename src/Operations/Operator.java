@@ -1,3 +1,4 @@
+package Operations;
 /**
  * A immutable Operator Object
  */
@@ -18,7 +19,7 @@ public class Operator
    */
   public Operator(Fraction F1, Fraction F2, String operation) throws IllegalArgumentException
   {
-    if (F1.equals(null) || F2.equals(null))
+    if (F1 == null || F2 == null)
     {
       throw new IllegalArgumentException();
     }
