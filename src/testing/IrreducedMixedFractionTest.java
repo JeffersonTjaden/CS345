@@ -100,6 +100,39 @@ class IrreducedMixedFractionTest
     int whole = 0;
     IrreducedMixedFraction fraction = new IrreducedMixedFraction(whole, numerator, denominator);
     fraction.reduce();
-    assertEquals(2, whole);
+    assertEquals(2, fraction.getWhole());
+    assertEquals(0, fraction.getNumerator());
+    assertEquals(2, fraction.getDenominator());
+  }
+  @Test
+  void unreduce()
+  {
+    int numerator = 0;
+    int denominator = 2;
+    int whole = 2;
+    IrreducedMixedFraction fraction = new IrreducedMixedFraction(whole, numerator, denominator);
+    fraction.unreduce();
+    assertEquals(0, fraction.getWhole());
+    assertEquals(4, fraction.getNumerator());
+    assertEquals(2, fraction.getDenominator());
+  }
+  
+  @Test
+  void gcd()
+  {
+    int w1 = 2;
+    int n1 = 1;
+    int d1 = 2;
+    int w2 = 1;
+    int n2 = 3;
+    int d2 = 4;
+    IrreducedMixedFraction f1 = new IrreducedMixedFraction(w1, n1, d1);
+    IrreducedMixedFraction f2 = new IrreducedMixedFraction(w2, n2, d2);
+    IrreducedMixedFraction.gcd(f1, f2);
+    int w3 = 5;
+    int n3 = 10;
+    int d3 = 2;
+    IrreducedMixedFraction f3 = new IrreducedMixedFraction(w3, n3, d3);
+    IrreducedMixedFraction.gcd(f3, f1);
   }
 }

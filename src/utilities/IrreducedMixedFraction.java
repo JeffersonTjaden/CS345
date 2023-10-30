@@ -67,7 +67,7 @@ public class IrreducedMixedFraction
     
   public void reduce()
   {
-    while (numerator > denominator)
+    while (numerator >= denominator)
     {
       numerator -= denominator;
       whole++;
