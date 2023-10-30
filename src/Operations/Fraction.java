@@ -135,7 +135,11 @@ public class Fraction
    */
   public String toString()
   {
-    return String.format("%s/%s", numerator, denominator);
+    if(wholeNumber > 0) {
+      return String.format("%s %s/%s", wholeNumber, numerator, denominator);
+    }
+    else {
+      return String.format("%s/%s", numerator, denominator);
+    }
   }
 }
-
