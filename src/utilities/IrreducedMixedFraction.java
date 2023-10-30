@@ -1,4 +1,4 @@
-
+package utilities;
 public class IrreducedMixedFraction
 {
 
@@ -18,6 +18,10 @@ public class IrreducedMixedFraction
   }
   
   public IrreducedMixedFraction(int whole, int numerator, int denominator) {
+    if (denominator == 0)
+    {
+      throw new IllegalArgumentException();
+    }
     this.whole = whole;
     this.numerator = numerator;
     this.denominator = denominator;
@@ -51,9 +55,16 @@ public class IrreducedMixedFraction
 
   public void setDenominator(int denominator)
   {
-    this.denominator = denominator;
+    if (denominator == 0)
+    {
+      throw new IllegalArgumentException();
+    }
+    else
+    {
+      this.denominator = denominator;  
+    }
   }
-
+    
   public void reduce()
   {
     while (numerator > denominator)

@@ -1,9 +1,19 @@
+package testing;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
+import utilities.IrreducedMixedFraction;
+import utilities.Operations;
+
 public class OperationsTest
 {
+  
+  @Test
+  public void defaultConstructor()
+  {
+    Operations o = new Operations();
+  }
   
   @Test
   public void testAdd() {
