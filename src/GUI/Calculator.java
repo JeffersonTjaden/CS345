@@ -44,7 +44,10 @@ public class Calculator extends JFrame
     // Create Help menu with About and Help items
     JMenu helpMenu = new JMenu("Help");
     JMenuItem aboutItem = new JMenuItem("About");
-    // TODO: add an action listener to aboutItem if needed
+    aboutItem.addActionListener(e -> {
+      About aboutDialog = new About(Calculator.this);
+      aboutDialog.setVisible(true);
+  });
     JMenuItem helpItem = new JMenuItem("Help");
     // TODO: add an action listener to helpItem if needed
     helpMenu.add(aboutItem);
