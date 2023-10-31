@@ -1,3 +1,7 @@
+/**
+ * @author Jefferson Tjaden.
+ * @version October 30, 2023
+ */
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;

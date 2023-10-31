@@ -1,3 +1,7 @@
+/**
+ * @author Jefferson Tjaden.
+ * @version October 30, 2023
+ */
 package testing;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -13,6 +17,8 @@ class OperatorTest
   String s = "subtraction";
   String m = "multiplication";
   String d = "division";
+  Fraction frac1 = new Fraction(1, 4);
+  Fraction frac2 = new Fraction(2, 4);
   
   @Test
   void constructorGood()
@@ -53,18 +59,43 @@ class OperatorTest
   }
   
   @Test
-  void calculate()
+  void calculateAddition()
   {
-    Fraction f1 = new Fraction(1, 4);
-    Fraction f2 = new Fraction(2, 4);
-    Operator op = new Operator(f1, f2, a);
-    op.calculate();
-    Operator op2 = new Operator(f2, f1, s);
-    op2.calculate();
-    Operator op3 = new Operator(f1, f2, m);
-    op3.calculate();
-    Operator op4 = new Operator(f1, f2, d);
-    op4.calculate();
+    Operator op = new Operator(frac1, frac2, a);
+    Fraction res1 = op.calculate();
+    assertEquals(12,res1.getNumerator());
+    assertEquals(16,res1.getDenominator());
+    assertEquals(0, res1.getWholeNumber());
+  }
+  
+  @Test
+  void calculateSubtaction()
+  {
+    Operator op2 = new Operator(frac2, frac1, s);
+    Fraction res2 = op2.calculate();
+    assertEquals(4,res2.getNumerator());
+    assertEquals(16,res2.getDenominator());
+    assertEquals(0, res2.getWholeNumber());
+  }
+  
+  @Test
+  void calculateMultiplication()
+  {
+    Operator op3 = new Operator(frac1, frac2, m);
+    Fraction res3 = op3.calculate();
+    assertEquals(2,res3.getNumerator());
+    assertEquals(16,res3.getDenominator());
+    assertEquals(0, res3.getWholeNumber());
+  }
+  
+  @Test
+  void calculateDivision()
+  {
+    Operator op4 = new Operator(frac1, frac2, d);
+    Fraction res4 = op4.calculate();
+    assertEquals(4,res4.getNumerator());
+    assertEquals(8,res4.getDenominator());
+    assertEquals(0, res4.getWholeNumber());
   }
   
   @Test
