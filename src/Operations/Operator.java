@@ -32,7 +32,7 @@ public class Operator
   /**
    * Calls all the different calculations methods
    */
-  public void calculate()
+  public Fraction calculate()
   {
     switch (operator)
     {
@@ -64,6 +64,7 @@ public class Operator
         // Error unknown operator
         break;
     }
+    return ComputedFraction;
   }
 
   /**
