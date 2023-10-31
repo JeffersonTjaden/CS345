@@ -31,6 +31,8 @@ public class Operator
 
   /**
    * Calls all the different calculations methods
+   *
+   *@return the ComputedFraction
    */
   public Fraction calculate()
   {
