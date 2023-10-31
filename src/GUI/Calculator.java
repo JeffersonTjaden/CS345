@@ -12,6 +12,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 public class Calculator extends JFrame
@@ -20,9 +23,45 @@ public class Calculator extends JFrame
   {
     setupLayout();
   }
+  
+  private void setupMenu()
+  {
+    // Create a menu bar
+    JMenuBar menuBar = new JMenuBar();
+
+    // Create File menu with Exit item
+    JMenu fileMenu = new JMenu("File");
+    JMenuItem exitItem = new JMenuItem("Exit");
+    exitItem.addActionListener(e -> System.exit(0)); // Close the application on selecting Exit
+    fileMenu.add(exitItem);
+
+    // Create View menu with Pie Chart item
+    JMenu viewMenu = new JMenu("View");
+    JMenuItem pieChartItem = new JMenuItem("Pie Chart");
+    // TODO: add an action listener to pieChartItem if needed
+    viewMenu.add(pieChartItem);
+
+    // Create Help menu with About and Help items
+    JMenu helpMenu = new JMenu("Help");
+    JMenuItem aboutItem = new JMenuItem("About");
+    // TODO: add an action listener to aboutItem if needed
+    JMenuItem helpItem = new JMenuItem("Help");
+    // TODO: add an action listener to helpItem if needed
+    helpMenu.add(aboutItem);
+    helpMenu.add(helpItem);
+
+    // Add menus to menu bar
+    menuBar.add(fileMenu);
+    menuBar.add(viewMenu);
+    menuBar.add(helpMenu);
+
+    // Set the menu bar to the frame
+    setJMenuBar(menuBar);
+  }
 
   private void setupLayout()
   {
+    setupMenu();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     setTitle("Calculator by ferguszo");
