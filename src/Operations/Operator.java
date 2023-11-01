@@ -1,12 +1,11 @@
-package Operations;
 /**
  * A immutable Operator Object
  */
 public class Operator
 {
-  private Fraction F1;
-  private Fraction F2;
-  private Fraction ComputedFraction;
+  private Fraction f1;
+  private Fraction f2;
+  private Fraction result;
   private String operator;
 
   /**
@@ -23,8 +22,8 @@ public class Operator
     {
       throw new IllegalArgumentException();
     }
-    this.F1 = F1;
-    this.F2 = F2;
+    this.f1 = F1;
+    this.f2 = F2;
 
     this.operator = operation.toLowerCase();
   }
@@ -39,134 +38,153 @@ public class Operator
     switch (operator)
     {
       case "addition":
-        Addition(F1, F2);
+        Addition(f1, f2);
         break;
       case "subtraction":
-        Subtraction(F1, F2);
+        Subtraction(f1, f2);
         break;
       case "multiplication":
-        Multiplication(F1, F2);
+        Multiplication(f1, f2);
         break;
       case "division":
-        Division(F1, F2);
+        Division(f1, f2);
         break;
       default:
         // Error unknown operator
         break;
     }
-    return ComputedFraction;
+    return result;
   }
 
   /**
    * Addition Operator
    */
-  private void Addition(Fraction F1, Fraction F2)
+  private void Addition(final Fraction f1, final Fraction f2)
   {
     int numerator, denominator;
-    F1.expandingFraction();
-    F2.expandingFraction();
+    f1.expandingFraction();
+    f2.expandingFraction();
 
-    // Handles if sign of F1 is negative
-    if (F1.getSign() == true && F2.getSign() == false)
+    // Handles negative numbers and performs computation
+    if (f1.getSign() && !f2.getSign())
     {
-      Subtraction(F2, F1);
+      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
+          + (f2.getNumerator() * f1.getDenominator());
+      denominator = (f1.getDenominator() * f2.getDenominator());
     }
-    // Handles if sign of F2 is negative
-    else if (F1.getSign() == false && F2.getSign() == true)
+    else if (!f1.getSign() && f2.getSign())
     {
-      F2.setSign(false);
-      Subtraction(F1, F2);
+      numerator = (f1.getNumerator() * f2.getDenominator())
+          + ((-1) * f2.getNumerator() * f1.getDenominator());
+      denominator = (f1.getDenominator() * f2.getDenominator());
     }
-    // Handles if sign of F1 and F2 are negative
-    else if (F1.getSign() == true && F2.getSign() == true)
+    else if (f1.getSign() && f2.getSign())
     {
-      numerator = (F1.getNumerator() * F2.getDenominator())
-          + (F2.getNumerator() * F1.getDenominator());
-
-      denominator = (F1.getDenominator() * F2.getDenominator());
-
-      ComputedFraction = new Fraction(numerator, denominator);
-      ComputedFraction.setSign(true);
+      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
+          + ((-1) * f2.getNumerator() * f1.getDenominator());
+      denominator = (f1.getDenominator() * f2.getDenominator());
     }
-    // Handles if both sign's are positive
     else
     {
-      numerator = (F1.getNumerator() * F2.getDenominator())
-          + (F2.getNumerator() * F1.getDenominator());
+      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
+          + (f2.getNumerator() * f1.getDenominator());
 
-      denominator = (F1.getDenominator() * F2.getDenominator());
-
-      ComputedFraction = new Fraction(numerator, denominator);
-      ComputedFraction.setSign(false);
+      denominator = (f1.getDenominator() * f2.getDenominator());
     }
-    ComputedFraction.mixedNumbers();
-    //ComputedFraction.simplifyingFraction();
+
+    // Handles if a negative numerator
+    if (numerator < 0)
+    {
+      numerator = Math.abs(numerator);
+      result = new Fraction(numerator, denominator, true);
+      result.mixedNumbers();
+      result.simplifyingFraction();
+    }
+    else
+    {
+      result = new Fraction(numerator, denominator, false);
+      result.mixedNumbers();
+      result.simplifyingFraction();
+    }
   }
 
   /**
    * Subtraction Operator
    */
-  private void Subtraction(Fraction F1, Fraction F2)
+  private void Subtraction(final Fraction f1, final Fraction f2)
   {
     int numerator, denominator;
-    F1.expandingFraction();
-    F2.expandingFraction();
-    // Handles if sign of F1 is negative
-    if (F1.getSign() == true && F2.getSign() == false)
+    f1.expandingFraction();
+    f2.expandingFraction();
+
+    // Handles negative numbers and performs computation
+    if (f1.getSign() && !f2.getSign())
     {
-      F1.setSign(false);
-      Addition(F1, F2);
-      ComputedFraction.setSign(true);
+      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
+          - (f2.getNumerator() * f1.getDenominator());
+
+      denominator = (f1.getDenominator() * f2.getDenominator());
     }
-    // Handles if sign of F2 is negative
-    else if (F1.getSign() == false && F2.getSign() == true)
+    else if (!f1.getSign() && f2.getSign())
     {
-      F2.setSign(false);
-      Addition(F1, F2);
+      numerator = (f1.getNumerator() * f2.getDenominator())
+          - ((-1) * f2.getNumerator() * f1.getDenominator());
+
+      denominator = (f1.getDenominator() * f2.getDenominator());
     }
-    // Handles if sign of F1 and F2 are negative
-    else if (F1.getSign() == true && F2.getSign() == true)
+    else if (f1.getSign() && f2.getSign())
     {
-      F1.setSign(false);
-      F2.setSign(false);
-      Subtraction(F2, F1);
+      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
+          - ((-1) * f2.getNumerator() * f1.getDenominator());
+
+      denominator = (f1.getDenominator() * f2.getDenominator());
+      System.out.println("Numerator:" + numerator + " Denominator:" + denominator);
     }
-    // Handles if both sign's are positive
     else
     {
-      System.out.println("You are here");
-      numerator = (F1.getNumerator() * F2.getDenominator())
-          - (F2.getNumerator() * F1.getDenominator());
+      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
+          - (f2.getNumerator() * f1.getDenominator());
 
-      denominator = (F1.getDenominator() * F2.getDenominator());
-
-      ComputedFraction = new Fraction(numerator, denominator);
+      denominator = (f1.getDenominator() * f2.getDenominator());
     }
-    ComputedFraction.mixedNumbers();
-  //ComputedFraction.simplifyingFraction();
+
+    // Handles if a negative numerator
+    if (numerator < 0)
+    {
+      numerator = Math.abs(numerator);
+      result = new Fraction(numerator, denominator, true);
+      result.mixedNumbers();
+      result.simplifyingFraction();
+    }
+    else
+    {
+      result = new Fraction(numerator, denominator, false);
+      result.mixedNumbers();
+      result.simplifyingFraction();
+    }
   }
 
   /**
    * Multiplication Operator
    */
-  private void Multiplication(Fraction F1, Fraction F2)
+  private void Multiplication(Fraction f1, Fraction f2)
   {
     int numerator, denominator;
 
-    F1.expandingFraction();
-    F2.expandingFraction();
+    f1.expandingFraction();
+    f2.expandingFraction();
 
-    numerator = (F1.getNumerator() * F2.getNumerator());
-    denominator = (F1.getDenominator() * F2.getDenominator());
-    ComputedFraction = new Fraction(numerator, denominator);
+    numerator = (f1.getNumerator() * f2.getNumerator());
+    denominator = (f1.getDenominator() * f2.getDenominator());
+    result = new Fraction(numerator, denominator);
 
-    if (F1.getSign() == true ^ F2.getSign())
+    if (f1.getSign() ^ f2.getSign())
     {
-      ComputedFraction.setSign(true);
+      result.setSign(true);
     }
 
-    ComputedFraction.mixedNumbers();
-  //ComputedFraction.simplifyingFraction();
+    result.mixedNumbers();
+    result.simplifyingFraction();
   }
 
   /**
@@ -181,15 +199,15 @@ public class Operator
 
     numerator = (F1.getNumerator() * F2.getDenominator());
     denominator = (F1.getDenominator() * F2.getNumerator());
-    ComputedFraction = new Fraction(numerator, denominator);
-    
-    if (F1.getSign() == true ^ F2.getSign())
+    result = new Fraction(numerator, denominator);
+
+    if (F1.getSign() ^ F2.getSign())
     {
-      ComputedFraction.setSign(true);
+      result.setSign(true);
     }
-    
-    ComputedFraction.mixedNumbers();
-  //ComputedFraction.simplifyingFraction();
+
+    result.mixedNumbers();
+    result.simplifyingFraction();
   }
 
   /**
@@ -199,6 +217,6 @@ public class Operator
    */
   public String toString()
   {
-    return ComputedFraction.toString();
+    return result.toString();
   }
 }
