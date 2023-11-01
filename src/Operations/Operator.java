@@ -190,7 +190,6 @@ public class Operator
   /**
    * Create a String representation of this Operator
    * 
-   * 
    * @return The String representation of the Computed Fraction
    */
   public String toString()
