@@ -95,4 +95,11 @@ public class IrreducedMixedFraction
       right.setDenominator(right.getDenominator() * leftConstant);
     }
   }
+  public void changeSign() {
+    if (whole != 0) {
+        whole = -whole;
+    } else {
+        numerator = -numerator;
+    }
+  }
 }

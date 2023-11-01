@@ -60,4 +60,9 @@ public class Operations
     result = new IrreducedMixedFraction(numerator, denominator);
     return result;
   }
+  
+  public static void changeSign(IrreducedMixedFraction fraction) {
+    fraction.changeSign();
+  }
+  
 }
