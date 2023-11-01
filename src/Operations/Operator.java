@@ -87,7 +87,7 @@ public class Operator
       ComputedFraction = new Fraction(numerator, denominator);
       ComputedFraction.setSign(true);
     }
-    // Handles if sign of F1 is negative
+    // Handles if both sign's are positive
     else
     {
       numerator = (F1.getNumerator() * F2.getDenominator())
@@ -129,7 +129,7 @@ public class Operator
       F2.setSign(false);
       Subtraction(F2, F1);
     }
-    // Handles if sign of F1 is negative
+    // Handles if both sign's are positive
     else
     {
       System.out.println("You are here");
