@@ -1,4 +1,3 @@
-package Operations;
 /**
  * A immutable Operator Object
  */
@@ -83,32 +82,9 @@ public class Operator
     f1.expandingFraction();
     f2.expandingFraction();
 
-    // Handles negative numbers and performs computation
-    if (f1.getSign() && !f2.getSign())
-    {
-      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
-          + (f2.getNumerator() * f1.getDenominator());
-      denominator = (f1.getDenominator() * f2.getDenominator());
-    }
-    else if (!f1.getSign() && f2.getSign())
-    {
-      numerator = (f1.getNumerator() * f2.getDenominator())
-          + ((-1) * f2.getNumerator() * f1.getDenominator());
-      denominator = (f1.getDenominator() * f2.getDenominator());
-    }
-    else if (f1.getSign() && f2.getSign())
-    {
-      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
-          + ((-1) * f2.getNumerator() * f1.getDenominator());
-      denominator = (f1.getDenominator() * f2.getDenominator());
-    }
-    else
-    {
-      numerator = (f1.getNumerator() * f2.getDenominator())
-          + (f2.getNumerator() * f1.getDenominator());
-
-      denominator = (f1.getDenominator() * f2.getDenominator());
-    }
+    numerator = ((f1.getSign()) * f1.getNumerator() * f2.getDenominator())
+        + ((f2.getSign()) * f2.getNumerator() * f1.getDenominator());
+    denominator = (f1.getDenominator() * f2.getDenominator());
 
     // Handles if a negative numerator
     if (numerator < 0)
@@ -131,36 +107,10 @@ public class Operator
     f1.expandingFraction();
     f2.expandingFraction();
 
-    // Handles negative numbers and performs computation
-    if (f1.getSign() && !f2.getSign())
-    {
-      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
-          - (f2.getNumerator() * f1.getDenominator());
+    numerator = ((f1.getSign()) * f1.getNumerator() * f2.getDenominator())
+        - ((f2.getSign()) * f2.getNumerator() * f1.getDenominator());
 
-      denominator = (f1.getDenominator() * f2.getDenominator());
-    }
-    else if (!f1.getSign() && f2.getSign())
-    {
-      numerator = (f1.getNumerator() * f2.getDenominator())
-          - ((-1) * f2.getNumerator() * f1.getDenominator());
-
-      denominator = (f1.getDenominator() * f2.getDenominator());
-    }
-    else if (f1.getSign() && f2.getSign())
-    {
-      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
-          - ((-1) * f2.getNumerator() * f1.getDenominator());
-
-      denominator = (f1.getDenominator() * f2.getDenominator());
-      System.out.println("Numerator:" + numerator + " Denominator:" + denominator);
-    }
-    else
-    {
-      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
-          - (f2.getNumerator() * f1.getDenominator());
-
-      denominator = (f1.getDenominator() * f2.getDenominator());
-    }
+    denominator = (f1.getDenominator() * f2.getDenominator());
 
     // Handles if a negative numerator
     if (numerator < 0)
@@ -184,11 +134,13 @@ public class Operator
     f1.expandingFraction();
     f2.expandingFraction();
 
-    numerator = (f1.getNumerator() * f2.getNumerator());
+    numerator = ((f1.getSign() * f1.getNumerator()) * (f2.getSign() * f2.getNumerator()));
     denominator = (f1.getDenominator() * f2.getDenominator());
 
-    if (f1.getSign() ^ f2.getSign())
+    // Handles if a negative numerator
+    if (numerator < 0)
     {
+      numerator = Math.abs(numerator);
       result = new Fraction(numerator, denominator, true);
     }
     else
@@ -207,11 +159,13 @@ public class Operator
     f1.expandingFraction();
     f2.expandingFraction();
 
-    numerator = (f1.getNumerator() * f2.getDenominator());
+    numerator = ((f1.getSign() * f1.getNumerator()) * (f2.getSign() * f2.getDenominator()));
     denominator = (f1.getDenominator() * f2.getNumerator());
 
-    if (f1.getSign() ^ f2.getSign())
+    // Handles if a negative numerator
+    if (numerator < 0)
     {
+      numerator = Math.abs(numerator);
       result = new Fraction(numerator, denominator, true);
     }
     else
