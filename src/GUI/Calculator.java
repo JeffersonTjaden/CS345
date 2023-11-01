@@ -1,14 +1,11 @@
 package GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.TextArea;
-import java.awt.TextComponent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
 public class Calculator extends JFrame
 {
