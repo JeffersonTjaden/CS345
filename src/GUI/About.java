@@ -21,7 +21,7 @@ public class About extends JDialog {
         JLabel labelTitle = new JLabel("Fragile v1.0");
         JLabel labelDescription = new JLabel("Fragile is a modern, easy-to-use mixed-fraction calculator.");
         JLabel labelCompany = new JLabel("It is a product of Sagacious Media that was developed by:");
-        JLabel labelDevelopers = new JLabel("Zachary Buchan, Dade Buschy, Ben Curtis, Sean Halloran, Christopher Hoon and Jefferson Tjaden");
+        JLabel labelDevelopers = new JLabel("Zachary Ferguson, Dade Buschy, Ben Curtis, Sean Halloran, Christopher Hoon and Jefferson Tjaden");
         
         // Center-align the text in the labels
         labelTitle.setHorizontalAlignment(JLabel.CENTER);
