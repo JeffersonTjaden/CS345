@@ -1,4 +1,3 @@
-package Operations;
 /**
  * A mutable Fraction Object
  */
@@ -7,6 +6,7 @@ public class Fraction
   private int numerator;
   private int denominator;
   private int wholeNumber;
+  private boolean sign;
 
   /**
    * Constructs a Fraction with passed parameters and a wholeNumber 0
@@ -25,10 +25,32 @@ public class Fraction
     this.numerator = numerator;
     this.denominator = denominator;
     this.wholeNumber = 0;
+    this.sign = false;
   }
-  
+
+  /**
+   * 
+   * @param numerator
+   * @param denominator
+   * @param sign
+   * @throws IllegalArgumentException
+   */
+  public Fraction(int numerator, int denominator, boolean sign) throws IllegalArgumentException
+  {
+    if (denominator == 0)
+    {
+      throw new IllegalArgumentException("Divide by 0");
+    }
+
+    this.numerator = numerator;
+    this.denominator = denominator;
+    this.wholeNumber = 0;
+    this.sign = sign;
+  }
+
   /**
    * Constructs a Fraction with passed parameters
+   * 
    * @param numerator
    * @param denominator
    * @param wholeNumber
@@ -44,6 +66,21 @@ public class Fraction
     this.numerator = numerator;
     this.denominator = denominator;
     this.wholeNumber = wholeNumber;
+    this.sign = false;
+  }
+
+  public Fraction(int numerator, int denominator, int wholeNumber, boolean sign)
+      throws IllegalArgumentException
+  {
+    if (denominator == 0)
+    {
+      throw new IllegalArgumentException("Divide by 0");
+    }
+
+    this.numerator = numerator;
+    this.denominator = denominator;
+    this.wholeNumber = wholeNumber;
+    this.sign = sign;
   }
 
   /**
@@ -58,6 +95,7 @@ public class Fraction
 
   /**
    * Sets the denominator with this Fraction object.
+   * 
    * @param denominator
    */
   public void setDenominator(int denominator)
@@ -73,6 +111,16 @@ public class Fraction
   public void setWholeNumber(int wholeNumber)
   {
     this.wholeNumber = wholeNumber;
+  }
+
+  /**
+   * Sets the sign with this Fraction object.
+   * 
+   * @param sign
+   */
+  public void setSign(boolean sign)
+  {
+    this.sign = sign;
   }
 
   /**
@@ -106,6 +154,16 @@ public class Fraction
   }
 
   /**
+   * Get the sign with this Fraction object.
+   * 
+   * @return the sign
+   */
+  public boolean getSign()
+  {
+    return sign;
+  }
+
+  /**
    * Expands the fraction from a mixed number to a improper fraction
    */
   public void expandingFraction()
@@ -115,6 +173,17 @@ public class Fraction
       numerator = numerator + wholeNumber * denominator;
       wholeNumber = 0;
     }
+  }
+
+  /**
+   * Simplifies fraction down to smallest possible
+   */
+  public void simplifyingFraction()
+  {
+    int greatestCommonDivisor = gcd(this.numerator, this.denominator);
+
+    numerator = numerator / greatestCommonDivisor;
+    denominator = denominator / greatestCommonDivisor;
   }
 
   /**
@@ -130,17 +199,72 @@ public class Fraction
   }
 
   /**
+   * Computes the greatest common divisor without recursion
+   * 
+   * @param inE
+   * @param inZ
+   * @return
+   */
+  public int gcd(int inE, int inZ)
+  {
+    int num0 = 0, num1 = 0;
+    int arr[] = new int[2];
+    int q = 0;
+
+    // Handles input so num0 is always the greater number
+    if (inE < inZ)
+    {
+      num0 = inE;
+      num1 = inZ;
+    }
+    else
+    {
+      num0 = inZ;
+      num1 = inE;
+    }
+
+    // gcd computation
+    arr[0] = num0;
+    arr[1] = num1;
+    while (arr[1] != 0)
+    {
+      q = arr[0] % arr[1];
+      arr[0] = arr[1];
+      arr[1] = q;
+    }
+
+    return arr[0];
+  }
+
+  /**
    * Create a String representation of this Fraction
    * 
    * @return The String representation
    */
   public String toString()
   {
-    if(wholeNumber > 0) {
-      return String.format("%s %s/%s", wholeNumber, numerator, denominator);
+    if (wholeNumber > 0)
+    {
+      if (sign == true)
+      {
+        return String.format("-%s %s/%s", wholeNumber, numerator, denominator);
+      }
+      else
+      {
+        return String.format("%s %s/%s", wholeNumber, numerator, denominator);
+      }
     }
-    else {
-      return String.format("%s/%s", numerator, denominator);
+    else
+    {
+      if (sign == true)
+      {
+        return String.format("-%s/%s", numerator, denominator);
+      }
+      else
+      {
+        return String.format("%s/%s", numerator, denominator);
+      }
+
     }
   }
 }
