@@ -251,27 +251,27 @@ public class Calculator extends JFrame implements ActionListener
   {
     // TODO Auto-generated method stub
     String command = e.getActionCommand();
-    if (add.getActionCommand() == command)
+    if (add.getActionCommand().equals(command))
     {
       currentOperation = "+";
       partialCurrentExpression = left.toString() + currentOperation;
     }
-    else if (minus.getActionCommand() == command)
+    else if (minus.getActionCommand().equals(command))
     {
       currentOperation = "-";
       partialCurrentExpression = left.toString() + currentOperation;
     }
-    else if (multiply.getActionCommand() == command)
+    else if (multiply.getActionCommand().equals(command))
     {
       currentOperation = "*";
       partialCurrentExpression = left.toString() + currentOperation;
     }
-    else if (divide.getActionCommand() == command)
+    else if (divide.getActionCommand().equals(command))
     {
       currentOperation = "/";
       partialCurrentExpression = left.toString() + currentOperation;
     }
-    else if (equals.getActionCommand() == command)
+    else if (equals.getActionCommand().equals(command))
     {
       switch (currentOperation)
       {
