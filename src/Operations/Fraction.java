@@ -1,6 +1,5 @@
-package Operations;
 /**
- * A mutable Fraction Object
+ * A immutable Fraction Object
  */
 public class Fraction
 {
@@ -16,7 +15,7 @@ public class Fraction
    * @param denominator
    * @throws IllegalArgumentException
    */
-  public Fraction(int numerator, int denominator) throws IllegalArgumentException
+  public Fraction(final int numerator, final int denominator) throws IllegalArgumentException
   {
     if (denominator == 0)
     {
@@ -36,7 +35,8 @@ public class Fraction
    * @param sign
    * @throws IllegalArgumentException
    */
-  public Fraction(int numerator, int denominator, boolean sign) throws IllegalArgumentException
+  public Fraction(final int numerator, final int denominator, final boolean sign)
+      throws IllegalArgumentException
   {
     if (denominator == 0)
     {
@@ -57,7 +57,8 @@ public class Fraction
    * @param wholeNumber
    * @throws IllegalArgumentException
    */
-  public Fraction(int numerator, int denominator, int wholeNumber) throws IllegalArgumentException
+  public Fraction(final int numerator, final int denominator, final int wholeNumber)
+      throws IllegalArgumentException
   {
     if (denominator == 0)
     {
@@ -70,8 +71,8 @@ public class Fraction
     this.sign = false;
   }
 
-  public Fraction(int numerator, int denominator, int wholeNumber, boolean sign)
-      throws IllegalArgumentException
+  public Fraction(final int numerator, final int denominator, final int wholeNumber,
+      final boolean sign) throws IllegalArgumentException
   {
     if (denominator == 0)
     {
@@ -81,46 +82,6 @@ public class Fraction
     this.numerator = numerator;
     this.denominator = denominator;
     this.wholeNumber = wholeNumber;
-    this.sign = sign;
-  }
-
-  /**
-   * Sets the numerator with this Fraction object.
-   * 
-   * @param numerator
-   */
-  public void setNumerator(int numerator)
-  {
-    this.numerator = numerator;
-  }
-
-  /**
-   * Sets the denominator with this Fraction object.
-   * 
-   * @param denominator
-   */
-  public void setDenominator(int denominator)
-  {
-    this.denominator = denominator;
-  }
-
-  /**
-   * Sets the whole number with this Fraction object.
-   * 
-   * @param wholeNumber
-   */
-  public void setWholeNumber(int wholeNumber)
-  {
-    this.wholeNumber = wholeNumber;
-  }
-
-  /**
-   * Sets the sign with this Fraction object.
-   * 
-   * @param sign
-   */
-  public void setSign(boolean sign)
-  {
     this.sign = sign;
   }
 
@@ -206,7 +167,7 @@ public class Fraction
    * @param inZ
    * @return
    */
-  public int gcd(int inE, int inZ)
+  public int gcd(final int inE,final int inZ)
   {
     int num0 = 0, num1 = 0;
     int arr[] = new int[2];
