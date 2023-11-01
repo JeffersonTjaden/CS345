@@ -103,7 +103,7 @@ public class Operator
     }
     else
     {
-      numerator = ((-1) * f1.getNumerator() * f2.getDenominator())
+      numerator = (f1.getNumerator() * f2.getDenominator())
           + (f2.getNumerator() * f1.getDenominator());
 
       denominator = (f1.getDenominator() * f2.getDenominator());
