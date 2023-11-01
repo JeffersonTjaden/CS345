@@ -67,9 +67,6 @@ public class Operator
       case "division":
         Division(f1, f2);
         break;
-      default:
-        // Error unknown operator
-        break;
     }
     result.mixedNumbers();
     result.simplifyingFraction();
