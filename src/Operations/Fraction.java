@@ -120,9 +120,14 @@ public class Fraction
    * 
    * @return the sign
    */
-  public boolean getSign()
+  public int getSign()
   {
-    return sign;
+    if(sign) {
+      return -1;
+    }
+    else {
+      return 1;
+    }
   }
 
   /**
