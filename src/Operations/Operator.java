@@ -99,6 +99,7 @@ public class Operator
       ComputedFraction.setSign(false);
     }
     ComputedFraction.mixedNumbers();
+    //ComputedFraction.simplifyingFraction();
   }
 
   /**
@@ -141,6 +142,7 @@ public class Operator
       ComputedFraction = new Fraction(numerator, denominator);
     }
     ComputedFraction.mixedNumbers();
+  //ComputedFraction.simplifyingFraction();
   }
 
   /**
@@ -163,6 +165,7 @@ public class Operator
     }
 
     ComputedFraction.mixedNumbers();
+  //ComputedFraction.simplifyingFraction();
   }
 
   /**
@@ -185,6 +188,7 @@ public class Operator
     }
     
     ComputedFraction.mixedNumbers();
+  //ComputedFraction.simplifyingFraction();
   }
 
   /**
