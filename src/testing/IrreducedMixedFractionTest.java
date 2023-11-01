@@ -135,4 +135,15 @@ class IrreducedMixedFractionTest
     IrreducedMixedFraction f3 = new IrreducedMixedFraction(w3, n3, d3);
     IrreducedMixedFraction.gcd(f3, f1);
   }
+  
+  @Test
+  void changeSign()
+  {
+    IrreducedMixedFraction f = new IrreducedMixedFraction(1, 2, 3);
+    f.changeSign();
+    assertEquals(-1, f.getWhole());
+    f = new IrreducedMixedFraction(2, 3);
+    f.changeSign();
+    assertEquals(-2, f.getNumerator());
+  }
 }

@@ -97,9 +97,9 @@ public class IrreducedMixedFraction
   }
   public void changeSign() {
     if (whole != 0) {
-        whole = -whole;
+        whole = whole * -1;
     } else {
-        numerator = -numerator;
+        numerator = numerator * -1;
     }
   }
 }

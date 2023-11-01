@@ -54,22 +54,34 @@ public class OperationsTest
     assertEquals(6, result.getDenominator());
     
     // One Fraction Negative
-    IrreducedMixedFraction left4 = new IrreducedMixedFraction(-1, 3);
+    IrreducedMixedFraction left4 = new IrreducedMixedFraction(1, 3);
     IrreducedMixedFraction right4 = new IrreducedMixedFraction(2, 3);
+    left4.changeSign();
     result = Operations.add(left4, right4);
+    result.changeSign();
     assertEquals(0, result.getWhole());
-    // assertEquals(-1, result.getNumerator());
+    assertEquals(-1, result.getNumerator());
     assertEquals(3, result.getDenominator());
     
     // Both Negative
-    
-    
-    // Denominator Zero
-    
+    IrreducedMixedFraction left5 = new IrreducedMixedFraction(1, 3);
+    IrreducedMixedFraction right5 = new IrreducedMixedFraction(2, 3);
+    left5.changeSign();
+    right5.changeSign();
+    result = Operations.add(left5, right5);
+    result.changeSign();
+    assertEquals(0, result.getWhole());
+    assertEquals(3, result.getNumerator());
+    assertEquals(3, result.getDenominator());
     
     // Result is Zero
-    
-    
+    IrreducedMixedFraction left6 = new IrreducedMixedFraction(1, 3);
+    IrreducedMixedFraction right6 = new IrreducedMixedFraction(1, 3);
+    left6.changeSign();
+    result = Operations.add(left6, right6);;
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(3, result.getDenominator());
   }
   
   /**
@@ -85,24 +97,81 @@ public class OperationsTest
     assertEquals(357372, result.getNumerator());
     assertEquals(893*442, result.getDenominator());
     
-    // One Fraction Zero
+    // First Fraction Zero
+    left = new IrreducedMixedFraction(0, 5);
+    right = new IrreducedMixedFraction(2, 5);
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(-2, result.getNumerator());
+    assertEquals(5, result.getDenominator());
     
+    // Second Fraction Zero
+    left = new IrreducedMixedFraction(2, 5);
+    right = new IrreducedMixedFraction(0, 5);
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(2, result.getNumerator());
+    assertEquals(5, result.getDenominator());
     
     // Both Fractions Zero
+    left = new IrreducedMixedFraction(0, 5);
+    right = new IrreducedMixedFraction(0, 3);
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(15, result.getDenominator());
     
+    // First Fraction Negative
+    left = new IrreducedMixedFraction(1, 5);
+    left.changeSign();
+    right = new IrreducedMixedFraction(2, 5);
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(-3, result.getNumerator());
+    assertEquals(5, result.getDenominator());
     
-    // One Fraction Negative
-    
+    // Second Fraction Negative
+    left = new IrreducedMixedFraction(1, 5);
+    right = new IrreducedMixedFraction(2, 5);
+    right.changeSign();
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(3, result.getNumerator());
+    assertEquals(5, result.getDenominator());
     
     // Both Negative
-    
-    
-    // Denominator Zero
-    
-    
+    left = new IrreducedMixedFraction(1, 5);
+    right = new IrreducedMixedFraction(2, 5);
+    left.changeSign();
+    right.changeSign();
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(1, result.getNumerator());
+    assertEquals(5, result.getDenominator());
+
     // Result is Zero
+    left = new IrreducedMixedFraction(3, 5);
+    right = new IrreducedMixedFraction(3, 5);
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(5, result.getDenominator());
     
+    // Result is Zero but with different fractions
+    left = new IrreducedMixedFraction(3, 5);
+    right = new IrreducedMixedFraction(15, 25);
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(125, result.getDenominator());
     
+    // Whole Number Test
+    left = new IrreducedMixedFraction(1, 3, 5);
+    right = new IrreducedMixedFraction(1, 15, 25);
+    result = Operations.subtract(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(125, result.getDenominator());
   }
   
   /**
@@ -120,23 +189,39 @@ public class OperationsTest
     assertEquals(792, result.getDenominator());
     
     // One Fraction Zero
-    
+    left = new IrreducedMixedFraction(2, 5);
+    right = new IrreducedMixedFraction(0, 5);
+    result = Operations.multiply(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(25, result.getDenominator());
     
     // Both Fractions Zero
-    
+    left = new IrreducedMixedFraction(0, 0, 5);
+    right = new IrreducedMixedFraction(0, 0, 3);
+    result = Operations.multiply(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(15, result.getDenominator());
     
     // One Fraction Negative
-    
+    left = new IrreducedMixedFraction(2, 5);
+    left.changeSign();
+    right = new IrreducedMixedFraction(3, 5);
+    result = Operations.multiply(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(-6, result.getNumerator());
+    assertEquals(25, result.getDenominator());
     
     // Both Negative
-    
-    
-    // Denominator Zero
-    
-    
-    // Result is Zero
-    
-    
+    left = new IrreducedMixedFraction(2, 5);
+    right = new IrreducedMixedFraction(3, 5);
+    left.changeSign();
+    right.changeSign();
+    result = Operations.multiply(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(6, result.getNumerator());
+    assertEquals(25, result.getDenominator());
   }
   
   /**
@@ -153,20 +238,32 @@ public class OperationsTest
     assertEquals(1241, result.getNumerator());
     assertEquals(1529, result.getDenominator());
     
-    // One Fraction Zero
+    // First Fraction Zero
+    left = new IrreducedMixedFraction(0, 3);
+    right = new IrreducedMixedFraction(1, 9);
+    result = Operations.divide(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(3, result.getDenominator());
     
+    // Second Fraction Zero
+    left = new IrreducedMixedFraction(2, 3);
+    right = new IrreducedMixedFraction(0, 9);
+    // result = Operations.divide(left, right);
+    // assertEquals(0, result.getWhole());
+    // assertEquals(0, result.getNumerator());
+    // assertEquals(3, result.getDenominator());
     
     // Both Fractions Zero
     
     
-    // One Fraction Negative
+    // First Fraction Negative
+    
+    
+    // Second Fraction Negative
     
     
     // Both Negative
-    
-    
-    // Denominator Zero
-    
     
   }
 }
