@@ -7,6 +7,8 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.TextArea;
+import java.awt.TextComponent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,6 +21,9 @@ import javax.swing.JPanel;
 
 public class Calculator extends JFrame
 {
+  private Container content = getContentPane();
+  private GridBagConstraints c = new GridBagConstraints();
+
   public Calculator()
   {
     setupLayout();
@@ -67,137 +72,143 @@ public class Calculator extends JFrame
     setupMenu();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    setTitle("Calculator by ferguszo");
+    setTitle("Fragile Calculator");
 
-    Container content = getContentPane();
-    content.setLayout(new BorderLayout(50, 50));
+    content = getContentPane();
+    content.setLayout(new GridBagLayout());
+    display();
+    softButtons();
 
-    content.add(softButtons(), BorderLayout.SOUTH);
-    content.add(new JLabel(), BorderLayout.WEST); // Blank Labels to give gaps
-    content.add(new JLabel(), BorderLayout.EAST);
     ImageIcon picture = new ImageIcon("Fragile_Logo.png");
     JLabel icon = new JLabel(picture);
-    content.add(icon, BorderLayout.NORTH);
 
     Canvas display = new Canvas();
     display.setBackground(Color.LIGHT_GRAY);
-    content.add(display);
 
     setVisible(true);
     setSize(400, 600);
   }
 
-  private Component softButtons()
-  {
-    JPanel buttons = new JPanel();
-    buttons.setLayout(new GridBagLayout());
-
-    GridBagConstraints c = new GridBagConstraints();
+  private void display(){
+    TextArea display = new TextArea();
+    display.setEditable(false);
+    c.gridx = 0;
+    c.gridy = 1;
+    c.gridheight = 2;
+    c.gridwidth = 5;
     c.fill = GridBagConstraints.HORIZONTAL;
+    content.add(display, c);
+  }
+
+  private void softButtons() // This method will create the button scheme
+  {
+    c.fill = GridBagConstraints.BOTH;
+    c.gridheight = 1;
+    c.gridwidth = 1;
+    c.weightx = .5;
+    c.weighty = .5;
 
     JButton reset = new JButton("R");
     c.gridx = 0;
-    c.gridy = 0;
-    buttons.add(reset, c);
+    c.gridy = 3;
+    content.add(reset, c);
 
     JButton clear = new JButton("C");
     c.gridx = 1;
-    c.gridy = 0;
-    buttons.add(clear, c);
+    c.gridy = 3;
+    content.add(clear, c);
 
     JButton back = new JButton(Character.toString((char) 171));
     c.gridx = 2;
-    c.gridy = 0;
-    buttons.add(back, c);
+    c.gridy = 3;
+    content.add(back, c);
     
     JButton add = new JButton("+");
     c.gridx = (3);
-    c.gridy = (0);
-    buttons.add(add, c);
+    c.gridy = (3);
+    content.add(add, c);
     
 
     JButton sign = new JButton(Character.toString((char) 177));
     c.gridx = (4);
-    c.gridy = (0);
-    buttons.add(sign, c);
+    c.gridy = (3);
+    content.add(sign, c);
     
     JButton seven = new JButton("7");
     c.gridx = 0;
-    c.gridy = 1;
-    buttons.add(seven, c);
+    c.gridy = 4;
+    content.add(seven, c);
     
     JButton eight = new JButton("8");
     c.gridx = 1;
-    c.gridy = 1;
-    buttons.add(eight, c);
+    c.gridy = 4;
+    content.add(eight, c);
     
     JButton nine = new JButton("9");
     c.gridx = 2;
-    c.gridy = 1;
-    buttons.add(nine, c);
+    c.gridy = 4;
+    content.add(nine, c);
     
     JButton minus = new JButton("-");
     c.gridx = 3;
-    c.gridy = 1;
-    buttons.add(minus, c);
+    c.gridy = 4;
+    content.add(minus, c);
     
     JButton four = new JButton("4");
     c.gridx = 0;
-    c.gridy = 2;
-    buttons.add(four, c);
+    c.gridy = 5;
+    content.add(four, c);
     
     JButton five = new JButton("5");
     c.gridx = 1;
-    c.gridy = 2;
-    buttons.add(five, c);
+    c.gridy = 5;
+    content.add(five, c);
     
     JButton six = new JButton("6");
     c.gridx = 2;
-    c.gridy = 2;
-    buttons.add(six, c);
+    c.gridy = 5;
+    content.add(six, c);
     
     JButton multiply = new JButton("X");
     c.gridx = 3;
-    c.gridy = 2;
-    buttons.add(multiply, c);
+    c.gridy = 5;
+    content.add(multiply, c);
     
     JButton one = new JButton("1");
     c.gridx = 0;
-    c.gridy = 3;
-    buttons.add(one, c);
+    c.gridy = 6;
+    content.add(one, c);
     
     JButton two = new JButton("2");
     c.gridx = 1;
-    c.gridy = 3;
-    buttons.add(two, c);
+    c.gridy = 6;
+    content.add(two, c);
     
     JButton three = new JButton("3");
     c.gridx = 2;
-    c.gridy = 3;
-    buttons.add(three, c);
+    c.gridy = 6;
+    content.add(three, c);
     
     JButton divide = new JButton(Character.toString((char) 247));
     c.gridx = 3;
-    c.gridy = 3;
-    buttons.add(divide, c);
+    c.gridy = 6;
+    content.add(divide, c);
     
     JButton bar = new JButton("/");
     c.gridx = 2;
-    c.gridy = 4;
-    buttons.add(bar, c);
+    c.gridy = 7;
+    content.add(bar, c);
     
     JButton equals = new JButton("=");
     c.gridx = 3;
-    c.gridy = 4;
-    buttons.add(equals, c);
+    c.gridy = 7;
+    content.add(equals, c);
     
     JButton zero = new JButton("0");
     c.gridwidth = 2;
     c.gridx = 0;
-    c.gridy = 4;
-    buttons.add(zero, c);
-    
-    return buttons;
+    c.gridy = 7;
+    content.add(zero, c);
   }
 
   public static void main(String[] args)
