@@ -31,11 +31,34 @@ public class Calculator extends JFrame implements ActionListener
   private String partialCurrentExpression;
   private String evaluatedCurrentExpression;
 
+  private JButton zero;
+  private JButton one;
+  private JButton two;
+  private JButton three;
+  private JButton four;
+  private JButton five;
+  private JButton six;
+  private JButton seven;
+  private JButton eight;
+  private JButton nine;
+
+  private JButton add;
+  private JButton minus;
+  private JButton multiply;
+  private JButton divide;
+  private JButton equals;
+
+  private JButton reset;
+  private JButton clear;
+  private JButton back;
+  private JButton sign;
+  private JButton bar;
+
   public Calculator()
   {
     setupLayout();
   }
-  
+
   private void setupMenu()
   {
     // Create a menu bar
@@ -59,7 +82,7 @@ public class Calculator extends JFrame implements ActionListener
     aboutItem.addActionListener(e -> {
       About aboutDialog = new About(Calculator.this);
       aboutDialog.setVisible(true);
-  });
+    });
     JMenuItem helpItem = new JMenuItem("Help");
     // TODO: add an action listener to helpItem if needed
     helpMenu.add(aboutItem);
@@ -96,7 +119,8 @@ public class Calculator extends JFrame implements ActionListener
     setSize(400, 600);
   }
 
-  private void display(){
+  private void display()
+  {
     TextArea display = new TextArea();
     display.setEditable(false);
     c.gridx = 0;
@@ -115,108 +139,107 @@ public class Calculator extends JFrame implements ActionListener
     c.weightx = .5;
     c.weighty = .5;
 
-    JButton reset = new JButton("R");
+    reset = new JButton("R");
     c.gridx = 0;
     c.gridy = 3;
     content.add(reset, c);
 
-    JButton clear = new JButton("C");
+    clear = new JButton("C");
     c.gridx = 1;
     c.gridy = 3;
     content.add(clear, c);
 
-    JButton back = new JButton(Character.toString((char) 171));
+    back = new JButton(Character.toString((char) 171));
     c.gridx = 2;
     c.gridy = 3;
     content.add(back, c);
-    
-    JButton add = new JButton("+");
+
+    add = new JButton("+");
     add.addActionListener(this);
     c.gridx = (3);
     c.gridy = (3);
     content.add(add, c);
-    
 
-    JButton sign = new JButton(Character.toString((char) 177));
+    sign = new JButton(Character.toString((char) 177));
     c.gridx = (4);
     c.gridy = (3);
     content.add(sign, c);
-    
-    JButton seven = new JButton("7");
+
+    seven = new JButton("7");
     c.gridx = 0;
     c.gridy = 4;
     content.add(seven, c);
-    
-    JButton eight = new JButton("8");
+
+    eight = new JButton("8");
     c.gridx = 1;
     c.gridy = 4;
     content.add(eight, c);
-    
-    JButton nine = new JButton("9");
+
+    nine = new JButton("9");
     c.gridx = 2;
     c.gridy = 4;
     content.add(nine, c);
-    
-    JButton minus = new JButton("-");
+
+    minus = new JButton("-");
     minus.addActionListener(this);
     c.gridx = 3;
     c.gridy = 4;
     content.add(minus, c);
-    
-    JButton four = new JButton("4");
+
+    four = new JButton("4");
     c.gridx = 0;
     c.gridy = 5;
     content.add(four, c);
-    
-    JButton five = new JButton("5");
+
+    five = new JButton("5");
     c.gridx = 1;
     c.gridy = 5;
     content.add(five, c);
-    
-    JButton six = new JButton("6");
+
+    six = new JButton("6");
     c.gridx = 2;
     c.gridy = 5;
     content.add(six, c);
-    
-    JButton multiply = new JButton("X");
+
+    multiply = new JButton("X");
     multiply.addActionListener(this);
     c.gridx = 3;
     c.gridy = 5;
     content.add(multiply, c);
-    
-    JButton one = new JButton("1");
+
+    one = new JButton("1");
     c.gridx = 0;
     c.gridy = 6;
     content.add(one, c);
-    
-    JButton two = new JButton("2");
+
+    two = new JButton("2");
     c.gridx = 1;
     c.gridy = 6;
     content.add(two, c);
-    
-    JButton three = new JButton("3");
+
+    three = new JButton("3");
     c.gridx = 2;
     c.gridy = 6;
     content.add(three, c);
-    
-    JButton divide = new JButton(Character.toString((char) 247));
+
+    divide = new JButton(Character.toString((char) 247));
     divide.addActionListener(this);
     c.gridx = 3;
     c.gridy = 6;
     content.add(divide, c);
-    
-    JButton bar = new JButton("/");
+
+    bar = new JButton("/");
     c.gridx = 2;
     c.gridy = 7;
     content.add(bar, c);
-    
-    JButton equals = new JButton("=");
-    equals.addActionCommand(this);
+
+    equals = new JButton("=");
+    equals.addActionListener(this);
     c.gridx = 3;
     c.gridy = 7;
     content.add(equals, c);
-    
-    JButton zero = new JButton("0");
+
+    zero = new JButton("0");
     c.gridwidth = 2;
     c.gridx = 0;
     c.gridy = 7;
@@ -228,20 +251,30 @@ public class Calculator extends JFrame implements ActionListener
   {
     // TODO Auto-generated method stub
     String command = e.getActionCommand();
-    if (add.getActionCommand() == command) {
+    if (add.getActionCommand() == command)
+    {
       currentOperation = "+";
       partialCurrentExpression = left.toString() + currentOperation;
-    } else if (minus.getActionCommand() == command) {
+    }
+    else if (minus.getActionCommand() == command)
+    {
       currentOperation = "-";
       partialCurrentExpression = left.toString() + currentOperation;
-    } else if (multiply.getActionCommand() == command) {
+    }
+    else if (multiply.getActionCommand() == command)
+    {
       currentOperation = "*";
       partialCurrentExpression = left.toString() + currentOperation;
-    } else if (divide.getActionCommand() == command) {
+    }
+    else if (divide.getActionCommand() == command)
+    {
       currentOperation = "/";
       partialCurrentExpression = left.toString() + currentOperation;
-    } else if (equals.getActionCommand() == command) {
-      switch (currentOperation) {
+    }
+    else if (equals.getActionCommand() == command)
+    {
+      switch (currentOperation)
+      {
         case "+":
           result = Operations.add(left, right);
           evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
@@ -256,6 +289,7 @@ public class Calculator extends JFrame implements ActionListener
           evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
       }
     }
+  }
 
   public static void main(String[] args)
   {
