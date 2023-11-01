@@ -17,25 +17,29 @@ public class Operator
    * @param operation
    * @throws IllegalArgumentException
    */
-  public Operator(final Fraction f1,final Fraction f2,final String operation) throws IllegalArgumentException
+  public Operator(final Fraction f1, final Fraction f2, final String operation)
+      throws IllegalArgumentException
   {
     boolean inEnum = false;
-    
+
     if (f1 == null || f2 == null)
     {
       throw new IllegalArgumentException();
     }
-    
-    for(String operator : Operators) {
-      if(operation.equalsIgnoreCase(operator)) {
+
+    for (String operator : Operators)
+    {
+      if (operation.equalsIgnoreCase(operator))
+      {
         inEnum = true;
       }
     }
-    
-    if(!inEnum) {
+
+    if (!inEnum)
+    {
       throw new IllegalArgumentException();
     }
-    
+
     this.f1 = f1;
     this.f2 = f2;
 
@@ -175,7 +179,7 @@ public class Operator
   /**
    * Multiplication Operator
    */
-  private void Multiplication(final Fraction f1,final Fraction f2)
+  private void Multiplication(final Fraction f1, final Fraction f2)
   {
     int numerator, denominator;
 
@@ -189,7 +193,8 @@ public class Operator
     {
       result = new Fraction(numerator, denominator, true);
     }
-    else {
+    else
+    {
       result = new Fraction(numerator, denominator, false);
     }
   }
@@ -197,7 +202,7 @@ public class Operator
   /**
    * Division Operator
    */
-  private void Division(final Fraction f1,final Fraction f2)
+  private void Division(final Fraction f1, final Fraction f2)
   {
     int numerator, denominator;
 
@@ -206,13 +211,13 @@ public class Operator
 
     numerator = (f1.getNumerator() * f2.getDenominator());
     denominator = (f1.getDenominator() * f2.getNumerator());
-    
 
     if (f1.getSign() ^ f2.getSign())
     {
       result = new Fraction(numerator, denominator, true);
     }
-    else {
+    else
+    {
       result = new Fraction(numerator, denominator, false);
     }
   }
