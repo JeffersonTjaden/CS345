@@ -67,6 +67,12 @@ class FractionTest
   }
   
   @Test
+  void negativeConstructor()
+  {
+    
+  }
+  
+  @Test
   void getAndSetWholeNumeratorDenominator()
   {
     int numerator = 1;
