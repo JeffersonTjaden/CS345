@@ -7,23 +7,37 @@ public class Operator
   private Fraction f2;
   private Fraction result;
   private String operator;
+  private final String[] Operators = {"addition", "subtraction", "multiplication", "division"};
 
   /**
    * Constructs a Operator with passed parameters
    * 
-   * @param F1
-   * @param F2
+   * @param f1
+   * @param f2
    * @param operation
    * @throws IllegalArgumentException
    */
-  public Operator(Fraction F1, Fraction F2, String operation) throws IllegalArgumentException
+  public Operator(final Fraction f1,final Fraction f2,final String operation) throws IllegalArgumentException
   {
-    if (F1 == null || F2 == null)
+    boolean inEnum = false;
+    
+    if (f1 == null || f2 == null)
     {
       throw new IllegalArgumentException();
     }
-    this.f1 = F1;
-    this.f2 = F2;
+    
+    for(String operator : Operators) {
+      if(operation.equalsIgnoreCase(operator)) {
+        inEnum = true;
+      }
+    }
+    
+    if(!inEnum) {
+      throw new IllegalArgumentException();
+    }
+    
+    this.f1 = f1;
+    this.f2 = f2;
 
     this.operator = operation.toLowerCase();
   }
@@ -53,6 +67,8 @@ public class Operator
         // Error unknown operator
         break;
     }
+    result.mixedNumbers();
+    result.simplifyingFraction();
     return result;
   }
 
@@ -97,14 +113,10 @@ public class Operator
     {
       numerator = Math.abs(numerator);
       result = new Fraction(numerator, denominator, true);
-      result.mixedNumbers();
-      result.simplifyingFraction();
     }
     else
     {
       result = new Fraction(numerator, denominator, false);
-      result.mixedNumbers();
-      result.simplifyingFraction();
     }
   }
 
@@ -153,21 +165,17 @@ public class Operator
     {
       numerator = Math.abs(numerator);
       result = new Fraction(numerator, denominator, true);
-      result.mixedNumbers();
-      result.simplifyingFraction();
     }
     else
     {
       result = new Fraction(numerator, denominator, false);
-      result.mixedNumbers();
-      result.simplifyingFraction();
     }
   }
 
   /**
    * Multiplication Operator
    */
-  private void Multiplication(Fraction f1, Fraction f2)
+  private void Multiplication(final Fraction f1,final Fraction f2)
   {
     int numerator, denominator;
 
@@ -176,38 +184,37 @@ public class Operator
 
     numerator = (f1.getNumerator() * f2.getNumerator());
     denominator = (f1.getDenominator() * f2.getDenominator());
-    result = new Fraction(numerator, denominator);
 
     if (f1.getSign() ^ f2.getSign())
     {
-      result.setSign(true);
+      result = new Fraction(numerator, denominator, true);
     }
-
-    result.mixedNumbers();
-    result.simplifyingFraction();
+    else {
+      result = new Fraction(numerator, denominator, false);
+    }
   }
 
   /**
    * Division Operator
    */
-  private void Division(Fraction F1, Fraction F2)
+  private void Division(final Fraction f1,final Fraction f2)
   {
     int numerator, denominator;
 
-    F1.expandingFraction();
-    F2.expandingFraction();
+    f1.expandingFraction();
+    f2.expandingFraction();
 
-    numerator = (F1.getNumerator() * F2.getDenominator());
-    denominator = (F1.getDenominator() * F2.getNumerator());
-    result = new Fraction(numerator, denominator);
+    numerator = (f1.getNumerator() * f2.getDenominator());
+    denominator = (f1.getDenominator() * f2.getNumerator());
+    
 
-    if (F1.getSign() ^ F2.getSign())
+    if (f1.getSign() ^ f2.getSign())
     {
-      result.setSign(true);
+      result = new Fraction(numerator, denominator, true);
     }
-
-    result.mixedNumbers();
-    result.simplifyingFraction();
+    else {
+      result = new Fraction(numerator, denominator, false);
+    }
   }
 
   /**
