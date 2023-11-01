@@ -249,19 +249,37 @@ public class OperationsTest
     // Second Fraction Zero
     left = new IrreducedMixedFraction(2, 3);
     right = new IrreducedMixedFraction(0, 9);
-    // result = Operations.divide(left, right);
-    // assertEquals(0, result.getWhole());
-    // assertEquals(0, result.getNumerator());
-    // assertEquals(3, result.getDenominator());
+    try
+    {
+      result = Operations.divide(left, right);
+    }
+    catch (IllegalArgumentException e)
+    {
+      // Expected.
+    }
+    
+    
     
     // Both Fractions Zero
     
     
     // First Fraction Negative
-    
+    left = new IrreducedMixedFraction(2, 3);
+    right = new IrreducedMixedFraction(1, 9);
+    left.changeSign();
+    result = Operations.divide(left, right);
+    assertEquals(0, result.getWhole());
+    assertEquals(-18, result.getNumerator());
+    assertEquals(3, result.getDenominator());
     
     // Second Fraction Negative
-    
+    left = new IrreducedMixedFraction(2, 3);
+    right = new IrreducedMixedFraction(1, 9);
+    right.changeSign();
+    result = Operations.divide(left, right);
+    assertEquals(0, result.getWhole());
+    //assertEquals(-18, result.getNumerator());
+    // assertEquals(3, result.getDenominator());
     
     // Both Negative
     
