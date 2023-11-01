@@ -6,6 +6,8 @@ import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,10 +17,19 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class Calculator extends JFrame
+import utilities.*;
+
+public class Calculator extends JFrame implements ActionListener
 {
   private Container content = getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
+
+  private IrreducedMixedFraction left;
+  private IrreducedMixedFraction right;
+  private IrreducedMixedFraction result;
+  private String currentOperation;
+  private String partialCurrentExpression;
+  private String evaluatedCurrentExpression;
 
   public Calculator()
   {
@@ -120,6 +131,7 @@ public class Calculator extends JFrame
     content.add(back, c);
     
     JButton add = new JButton("+");
+    add.addActionListener(this);
     c.gridx = (3);
     c.gridy = (3);
     content.add(add, c);
@@ -146,6 +158,7 @@ public class Calculator extends JFrame
     content.add(nine, c);
     
     JButton minus = new JButton("-");
+    minus.addActionListener(this);
     c.gridx = 3;
     c.gridy = 4;
     content.add(minus, c);
@@ -166,6 +179,7 @@ public class Calculator extends JFrame
     content.add(six, c);
     
     JButton multiply = new JButton("X");
+    multiply.addActionListener(this);
     c.gridx = 3;
     c.gridy = 5;
     content.add(multiply, c);
@@ -186,6 +200,7 @@ public class Calculator extends JFrame
     content.add(three, c);
     
     JButton divide = new JButton(Character.toString((char) 247));
+    divide.addActionListener(this);
     c.gridx = 3;
     c.gridy = 6;
     content.add(divide, c);
@@ -196,6 +211,7 @@ public class Calculator extends JFrame
     content.add(bar, c);
     
     JButton equals = new JButton("=");
+    equals.addActionCommand(this);
     c.gridx = 3;
     c.gridy = 7;
     content.add(equals, c);
@@ -206,6 +222,40 @@ public class Calculator extends JFrame
     c.gridy = 7;
     content.add(zero, c);
   }
+
+  @Override
+  public void actionPerformed(ActionEvent e)
+  {
+    // TODO Auto-generated method stub
+    String command = e.getActionCommand();
+    if (add.getActionCommand() == command) {
+      currentOperation = "+";
+      partialCurrentExpression = left.toString() + currentOperation;
+    } else if (minus.getActionCommand() == command) {
+      currentOperation = "-";
+      partialCurrentExpression = left.toString() + currentOperation;
+    } else if (multiply.getActionCommand() == command) {
+      currentOperation = "*";
+      partialCurrentExpression = left.toString() + currentOperation;
+    } else if (divide.getActionCommand() == command) {
+      currentOperation = "/";
+      partialCurrentExpression = left.toString() + currentOperation;
+    } else if (equals.getActionCommand() == command) {
+      switch (currentOperation) {
+        case "+":
+          result = Operations.add(left, right);
+          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+        case "-":
+          result = Operations.subtract(left, right);
+          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+        case "*":
+          result = Operations.multiply(left, right);
+          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+        case "/":
+          result = Operations.divide(left, right);
+          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+      }
+    }
 
   public static void main(String[] args)
   {
