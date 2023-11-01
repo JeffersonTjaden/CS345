@@ -167,7 +167,7 @@ public class Fraction
    * @param inZ
    * @return
    */
-  public int gcd(final int inE,final int inZ)
+  public int gcd(final int inE, final int inZ)
   {
     int num0 = 0, num1 = 0;
     int arr[] = new int[2];
