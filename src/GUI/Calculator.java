@@ -23,6 +23,7 @@ public class Calculator extends JFrame implements ActionListener
 {
   private Container content = getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
+  private TextArea display = new TextArea(5, 2);
 
   private IrreducedMixedFraction left;
   private IrreducedMixedFraction right;
@@ -121,7 +122,6 @@ public class Calculator extends JFrame implements ActionListener
 
   private void display()
   {
-    TextArea display = new TextArea();
     display.setEditable(false);
     c.gridx = 0;
     c.gridy = 1;
@@ -140,140 +140,140 @@ public class Calculator extends JFrame implements ActionListener
     c.weighty = .5;
 
     reset = new JButton("R");
-    reset.setActionCommand(actionCommand:"reset");
+    reset.setActionCommand("reset");
     reset.addActionListener(this);
     c.gridx = 0;
     c.gridy = 3;
     content.add(reset, c);
 
     clear = new JButton("C");
-    clear.setActionCommand(actionCommand:"clear");
+    clear.setActionCommand("clear");
     clear.addActionListener(this);
     c.gridx = 1;
     c.gridy = 3;
     content.add(clear, c);
 
     back = new JButton(Character.toString((char) 171));
-    back.setActionCommand(actionCommand:"back");
+    back.setActionCommand("back");
     back.addActionListener(this);
     c.gridx = 2;
     c.gridy = 3;
     content.add(back, c);
 
     add = new JButton("+");
-    add.setActionCommand(actionCommand:"add");
+    add.setActionCommand("add");
     add.addActionListener(this);
     c.gridx = (3);
     c.gridy = (3);
     content.add(add, c);
 
     sign = new JButton(Character.toString((char) 177));
-    sign.setActionCommand(actionCommand:"sign");
+    sign.setActionCommand("sign");
     sign.addActionListener(this);
     c.gridx = (4);
     c.gridy = (3);
     content.add(sign, c);
 
     seven = new JButton("7");
-    seven.setActionCommand(actionCommand:"seven");
+    seven.setActionCommand("seven");
     seven.addActionListener(this);
     c.gridx = 0;
     c.gridy = 4;
     content.add(seven, c);
 
     eight = new JButton("8");
-    eight.setActionCommand(actionCommand:"eight");
+    eight.setActionCommand("eight");
     eight.addActionListener(this);
     c.gridx = 1;
     c.gridy = 4;
     content.add(eight, c);
 
     nine = new JButton("9");
-    nine.setActionCommand(actionCommand:"nine");
+    nine.setActionCommand("nine");
     nine.addActionListener(this);
     c.gridx = 2;
     c.gridy = 4;
     content.add(nine, c);
 
     minus = new JButton("-");
-    minus.setActionCommand(actionCommand:"minus");
+    minus.setActionCommand("minus");
     minus.addActionListener(this);
     c.gridx = 3;
     c.gridy = 4;
     content.add(minus, c);
 
     four = new JButton("4");
-    four.setActionCommand(actionCommand:"four");
+    four.setActionCommand("four");
     four.addActionListener(this);
     c.gridx = 0;
     c.gridy = 5;
     content.add(four, c);
 
     five = new JButton("5");
-    five.setActionCommand(actionCommand:"five");
+    five.setActionCommand("five");
     five.addActionListener(this);
     c.gridx = 1;
     c.gridy = 5;
     content.add(five, c);
 
     six = new JButton("6");
-    six.setActionCommand(actionCommand:"six");
+    six.setActionCommand("six");
     six.addActionListener(this);
     c.gridx = 2;
     c.gridy = 5;
     content.add(six, c);
 
     multiply = new JButton("X");
-    multiply.setActionCommand(actionCommand:"multiply");
+    multiply.setActionCommand("multiply");
     multiply.addActionListener(this);
     c.gridx = 3;
     c.gridy = 5;
     content.add(multiply, c);
 
     one = new JButton("1");
-    one.setActionCommand(actionCommand:"one");
+    one.setActionCommand("one");
     one.addActionListener(this);
     c.gridx = 0;
     c.gridy = 6;
     content.add(one, c);
 
     two = new JButton("2");
-    two.setActionCommand(actionCommand:"two");
+    two.setActionCommand("two");
     two.addActionListener(this);
     c.gridx = 1;
     c.gridy = 6;
     content.add(two, c);
 
     three = new JButton("3");
-    three.setActionCommand(actionCommand:"three");
+    three.setActionCommand("three");
     three.addActionListener(this);
     c.gridx = 2;
     c.gridy = 6;
     content.add(three, c);
 
     divide = new JButton(Character.toString((char) 247));
-    divide.setActionCommand(actionCommand:"divide");
+    divide.setActionCommand("divide");
     divide.addActionListener(this);
     c.gridx = 3;
     c.gridy = 6;
     content.add(divide, c);
 
     bar = new JButton("/");
-    bar.setActionCommand(actionCommand:"bar");
+    bar.setActionCommand("bar");
     bar.addActionListener(this);
     c.gridx = 2;
     c.gridy = 7;
     content.add(bar, c);
 
     equals = new JButton("=");
-    equals.setActionCommand(actionCommand:"equals");
+    equals.setActionCommand("equals");
     equals.addActionListener(this);
     c.gridx = 3;
     c.gridy = 7;
     content.add(equals, c);
 
     zero = new JButton("0");
-    zero.setActionCommand(actionCommand:"zero");
+    zero.setActionCommand("zero");
     zero.addActionListener(this);
     c.gridwidth = 2;
     c.gridx = 0;
@@ -284,7 +284,7 @@ public class Calculator extends JFrame implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    // TODO Auto-generated method stub
+    /*
     String command = e.getActionCommand();
     if (add.getActionCommand().equals(command))
     {
@@ -323,6 +323,54 @@ public class Calculator extends JFrame implements ActionListener
           result = Operations.divide(left, right);
           evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
       }
+    }
+    */
+    
+    if(e.getActionCommand().equals("zero"))
+    {
+      display.setText(display.getText() + "0");
+    } 
+    else if(e.getActionCommand().equals("one"))
+    {
+      display.setText(display.getText() + "1");
+    }
+    else if(e.getActionCommand().equals("two"))
+    {
+      display.setText(display.getText() + "2");
+    }
+    else if(e.getActionCommand().equals("three"))
+    {
+      display.setText(display.getText() + "3");
+    }
+    else if(e.getActionCommand().equals("four"))
+    {
+      display.setText(display.getText() + "4");
+    }
+    else if(e.getActionCommand().equals("five"))
+    {
+      display.setText(display.getText() + "5");
+    }
+    else if(e.getActionCommand().equals("six"))
+    {
+      display.setText(display.getText() + "6");
+    }
+    else if(e.getActionCommand().equals("seven"))
+    {
+      display.setText(display.getText() + "7");
+    }
+    else if(e.getActionCommand().equals("eight"))
+    {
+      display.setText(display.getText() + "8");
+    }
+    else if(e.getActionCommand().equals("nine"))
+    {
+      display.setText(display.getText() + "9");
+    }
+
+    if(e.getActionCommand().equals("bar"))
+    {
+      left.setNumerator(5);
+      display.setText(display.getText() + "/");
     }
   }
 
