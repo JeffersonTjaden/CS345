@@ -234,12 +234,15 @@ public class Calculator extends JFrame implements ActionListener
     content.add(bar, c);
 
     equals = new JButton("=");
+    equals.setActionCommand(actionCommand:"=");
     equals.addActionListener(this);
     c.gridx = 3;
     c.gridy = 7;
     content.add(equals, c);
 
     zero = new JButton("0");
+    zero.setActionCommand(actionCommand:"zero");
+    zero.addActionListener(this);
     c.gridwidth = 2;
     c.gridx = 0;
     c.gridy = 7;
