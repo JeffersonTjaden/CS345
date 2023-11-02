@@ -140,16 +140,22 @@ public class Calculator extends JFrame implements ActionListener
     c.weighty = .5;
 
     reset = new JButton("R");
+    reset.setActionCommand(actionCommand:"reset");
+    reset.addActionListener(this);
     c.gridx = 0;
     c.gridy = 3;
     content.add(reset, c);
 
     clear = new JButton("C");
+    clear.setActionCommand(actionCommand:"clear");
+    clear.addActionListener(this);
     c.gridx = 1;
     c.gridy = 3;
     content.add(clear, c);
 
     back = new JButton(Character.toString((char) 171));
+    back.setActionCommand(actionCommand:"back");
+    back.addActionListener(this);
     c.gridx = 2;
     c.gridy = 3;
     content.add(back, c);
@@ -218,7 +224,7 @@ public class Calculator extends JFrame implements ActionListener
     content.add(six, c);
 
     multiply = new JButton("X");
-    multiply.setActionCommand(actionCommand:"divide");
+    multiply.setActionCommand(actionCommand:"multiply");
     multiply.addActionListener(this);
     c.gridx = 3;
     c.gridy = 5;
