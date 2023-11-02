@@ -25,8 +25,8 @@ public class Calculator extends JFrame implements ActionListener
   private GridBagConstraints c = new GridBagConstraints();
   private TextArea display = new TextArea(5, 2);
 
-  private IrreducedMixedFraction left;
-  private IrreducedMixedFraction right;
+  private IrreducedMixedFraction left = new IrreducedMixedFraction(0, 1);
+  private IrreducedMixedFraction right = new IrreducedMixedFraction(0, 1);
   private IrreducedMixedFraction result;
   private String currentOperation;
   private String partialCurrentExpression;
@@ -369,7 +369,7 @@ public class Calculator extends JFrame implements ActionListener
 
     if(e.getActionCommand().equals("bar"))
     {
-      left.setNumerator(5);
+      left.setNumerator(Integer.parseInt(display.getText()));
       display.setText(display.getText() + "/");
     }
   }
