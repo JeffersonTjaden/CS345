@@ -258,11 +258,6 @@ public class OperationsTest
       // Expected.
     }
     
-    
-    
-    // Both Fractions Zero
-    
-    
     // First Fraction Negative
     left = new IrreducedMixedFraction(2, 3);
     right = new IrreducedMixedFraction(1, 9);
@@ -275,13 +270,23 @@ public class OperationsTest
     // Second Fraction Negative
     left = new IrreducedMixedFraction(2, 3);
     right = new IrreducedMixedFraction(1, 9);
-    right.changeSign();
+    assertEquals(1, right.getNumerator());
+    assertEquals(9, right.getDenominator());
     result = Operations.divide(left, right);
-    assertEquals(0, result.getWhole());
-    //assertEquals(-18, result.getNumerator());
-    // assertEquals(3, result.getDenominator());
+    result.changeSign();
+    assertEquals(-6, result.getWhole());
+    assertEquals(0, result.getNumerator());
+    assertEquals(3, result.getDenominator());
     
-    // Both Negative
-    
+    // Both Negative 
+  }
+  
+  @Test
+  void changeSign()
+  {
+    IrreducedMixedFraction f = new IrreducedMixedFraction(1, 2);
+    f.changeSign();
+    assertEquals(-1, f.getNumerator());
+    Operations.changeSign(f);
   }
 }

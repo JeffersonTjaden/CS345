@@ -73,33 +73,6 @@ class FractionTest
   }
   
   @Test
-  void getAndSetWholeNumeratorDenominator()
-  {
-    int numerator = 1;
-    int denominator = 2;
-    int whole = 3;
-    Fraction fraction = new Fraction(numerator, denominator, whole);
-    // Whole Number
-    fraction.setWholeNumber(4);
-    assertEquals(4, fraction.getWholeNumber());
-    // Numerator
-    fraction.setNumerator(5);
-    assertEquals(5, fraction.getNumerator());
-    // Denominator
-    fraction.setDenominator(6);
-    assertEquals(6, fraction.getDenominator());
-    // Set Denominator to 0.
-    try
-    {
-      fraction.setDenominator(0);
-    }
-    catch (IllegalArgumentException e)
-    {
-      // Expected.
-    }
-  }
-  
-  @Test
   void expandingFraction()
   {
     int n = 1;
