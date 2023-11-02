@@ -57,6 +57,12 @@ public class Operations
     
     numerator = left.getNumerator() * right.getDenominator();
     denominator = left.getDenominator() * right.getNumerator();
+
+    if(denominator < 0){
+      numerator = -numerator;
+      denominator = Math.abs(denominator);
+    }
+    
     result = new IrreducedMixedFraction(numerator, denominator);
     return result;
   }
