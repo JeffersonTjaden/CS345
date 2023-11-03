@@ -109,6 +109,7 @@ public class Calculator extends JFrame implements ActionListener
   private void setupLayout()
   {
     setupMenu();
+    setupFocusListeners();
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     setTitle("Fragile Calculator");
@@ -120,10 +121,19 @@ public class Calculator extends JFrame implements ActionListener
     display();
     softButtons();
     displayLogo();
+    
 
     setVisible(true);
     setSize(400, 600);
   }
+  
+  private void setupFocusListeners() {
+    FocusIndicatorListener focusIndicator = new FocusIndicatorListener();
+
+    whole.addFocusListener(focusIndicator);
+    numerator.addFocusListener(focusIndicator);
+    denominator.addFocusListener(focusIndicator);
+}
   
   private void displayLogo() {
     ImageIcon picture = new ImageIcon(getClass().getResource("/resources/Fragile_Logo.png"));
@@ -540,6 +550,19 @@ public class Calculator extends JFrame implements ActionListener
     else if(e.getActionCommand().equals("bar"))
     {
       currentTextArea++;
+      if(currentTextArea > 2) currentTextArea = 0; // Loop back to the first text area
+
+      switch(currentTextArea) {
+          case 0:
+              whole.requestFocus();
+              break;
+          case 1:
+              numerator.requestFocus();
+              break;
+          case 2:
+              denominator.requestFocus();
+              break;
+      }
     }
     else if (command.equals(reset.getActionCommand())){
       left = null;
@@ -560,6 +583,8 @@ public class Calculator extends JFrame implements ActionListener
       }
     }
   }
+  
+  
 
   public static void main(String[] args)
   {
