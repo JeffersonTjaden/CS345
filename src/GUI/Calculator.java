@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Container;
@@ -25,7 +26,10 @@ public class Calculator extends JFrame implements ActionListener
 {
   private Container content = getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private TextArea display = new TextArea(5, 2);
+  private TextArea displayText = new TextArea(2, 2);
+  private TextArea whole = new TextArea(2, 2);
+  private TextArea numerator = new TextArea(2, 2);
+  private TextArea denominator = new TextArea(2, 2);
 
   private IrreducedMixedFraction left = new IrreducedMixedFraction(0, 1);
   private IrreducedMixedFraction right = new IrreducedMixedFraction(0, 1);
@@ -33,6 +37,7 @@ public class Calculator extends JFrame implements ActionListener
   private String currentOperation;
   private String partialCurrentExpression;
   private String evaluatedCurrentExpression;
+  private int currentTextArea = 0;
 
   private JButton zero;
   private JButton one;
@@ -115,9 +120,6 @@ public class Calculator extends JFrame implements ActionListener
     softButtons();
     displayLogo();
 
-    Canvas display = new Canvas();
-    display.setBackground(Color.LIGHT_GRAY);
-
     setVisible(true);
     setSize(400, 600);
   }
@@ -145,13 +147,24 @@ public class Calculator extends JFrame implements ActionListener
 
   private void display()
   {
-    display.setEditable(false);
+    displayText.setEditable(false);
+    whole.setEditable(false);
+    numerator.setEditable(false);
+    denominator.setEditable(false);
     c.gridx = 0;
     c.gridy = 1;
     c.gridheight = 2;
-    c.gridwidth = 5;
+    c.gridwidth = 2;
     c.fill = GridBagConstraints.HORIZONTAL;
-    content.add(display, c);
+    content.add(displayText, c);
+    c.gridx = 2;
+    c.gridwidth = 1;
+    content.add(whole, c);
+    c.gridx = 3;
+    content.add(numerator, c);
+    c.gridx = 4;
+    content.add(denominator, c);
+    
   }
   
 
@@ -308,93 +321,190 @@ public class Calculator extends JFrame implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    /*
+    
     String command = e.getActionCommand();
     if (add.getActionCommand().equals(command))
     {
       currentOperation = "+";
+      left = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
       partialCurrentExpression = left.toString() + currentOperation;
+      displayText.setText(partialCurrentExpression);
+      whole.setText("");
+      numerator.setText("");
+      denominator.setText("");
     }
     else if (minus.getActionCommand().equals(command))
     {
       currentOperation = "-";
+      left = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
       partialCurrentExpression = left.toString() + currentOperation;
+      displayText.setText(partialCurrentExpression);
+      whole.setText("");
+      numerator.setText("");
+      denominator.setText("");
     }
     else if (multiply.getActionCommand().equals(command))
     {
       currentOperation = "*";
+      left = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
       partialCurrentExpression = left.toString() + currentOperation;
+      displayText.setText(partialCurrentExpression);
+      whole.setText("");
+      numerator.setText("");
+      denominator.setText("");
     }
     else if (divide.getActionCommand().equals(command))
     {
       currentOperation = "/";
+      left = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
       partialCurrentExpression = left.toString() + currentOperation;
+      displayText.setText(partialCurrentExpression);
+      whole.setText("");
+      numerator.setText("");
+      denominator.setText("");
     }
     else if (equals.getActionCommand().equals(command))
     {
       switch (currentOperation)
       {
         case "+":
+          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
           result = Operations.add(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
+          displayText.setText(evaluatedCurrentExpression);
+          whole.setText("");
+          numerator.setText("");
+          denominator.setText("");
         case "-":
+          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
           result = Operations.subtract(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
+          displayText.setText(evaluatedCurrentExpression);
+          whole.setText("");
+          numerator.setText("");
+          denominator.setText("");
         case "*":
+          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
           result = Operations.multiply(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
+          displayText.setText(evaluatedCurrentExpression);
+          whole.setText("");
+          numerator.setText("");
+          denominator.setText("");
         case "/":
+          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
           result = Operations.divide(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + "=" + result.toString();
+          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
+          displayText.setText(evaluatedCurrentExpression);
+          whole.setText("");
+          numerator.setText("");
+          denominator.setText("");
       }
     }
-    */
-    
-    if(e.getActionCommand().equals("zero"))
+    else if(e.getActionCommand().equals("zero"))
     {
-      display.setText(display.getText() + "0");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "0");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "0");
+      } else {
+        denominator.setText(denominator.getText() + "0");
+      }      
     } 
     else if(e.getActionCommand().equals("one"))
     {
-      display.setText(display.getText() + "1");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "1");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "1");
+      } else {
+        denominator.setText(denominator.getText() + "1");
+      }
     }
     else if(e.getActionCommand().equals("two"))
     {
-      display.setText(display.getText() + "2");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "2");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "2");
+      } else {
+        denominator.setText(denominator.getText() + "2");
+      }
     }
     else if(e.getActionCommand().equals("three"))
     {
-      display.setText(display.getText() + "3");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "3");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "3");
+      } else {
+        denominator.setText(denominator.getText() + "3");
+      }
     }
     else if(e.getActionCommand().equals("four"))
     {
-      display.setText(display.getText() + "4");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "4");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "4");
+      } else {
+        denominator.setText(denominator.getText() + "4");
+      }
     }
     else if(e.getActionCommand().equals("five"))
     {
-      display.setText(display.getText() + "5");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "5");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "5");
+      } else {
+        denominator.setText(denominator.getText() + "5");
+      }
     }
     else if(e.getActionCommand().equals("six"))
     {
-      display.setText(display.getText() + "6");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "6");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "6");
+      } else {
+        denominator.setText(denominator.getText() + "6");
+      }
     }
     else if(e.getActionCommand().equals("seven"))
     {
-      display.setText(display.getText() + "7");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "7");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "7");
+      } else {
+        denominator.setText(denominator.getText() + "7");
+      }
     }
     else if(e.getActionCommand().equals("eight"))
     {
-      display.setText(display.getText() + "8");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "8");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "8");
+      } else {
+        denominator.setText(denominator.getText() + "8");
+      }
     }
     else if(e.getActionCommand().equals("nine"))
     {
-      display.setText(display.getText() + "9");
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText() + "9");
+      } else if (currentTextArea % 3 == 1){
+        numerator.setText(numerator.getText() + "9");
+      } else {
+        denominator.setText(denominator.getText() + "9");
+      }
     }
 
     if(e.getActionCommand().equals("bar"))
     {
-      left.setNumerator(Integer.parseInt(display.getText()));
-      display.setText(display.getText() + "/");
+      currentTextArea++;
     }
   }
 

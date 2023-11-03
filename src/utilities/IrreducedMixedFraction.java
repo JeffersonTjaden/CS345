@@ -102,4 +102,8 @@ public class IrreducedMixedFraction
         numerator = numerator * -1;
     }
   }
+
+  public String toString() {
+    return whole + " " + numerator + "/" + denominator;
+  }
 }
