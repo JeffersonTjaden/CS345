@@ -65,21 +65,31 @@ public class IrreducedMixedFraction
     }
   }
     
-  public void reduce()
-  {
-    while (numerator >= denominator)
-    {
-      numerator -= denominator;
-      whole++;
+  public void reduce() {
+    while (Math.abs(numerator) >= denominator) {
+        if (numerator < 0) {
+            numerator += denominator;
+            whole--;
+        } else {
+            numerator -= denominator;
+            whole++;
+        }
     }
-  }
+    if ((whole < 0 && numerator > 0) || (whole > 0 && numerator < 0)) {
+        numerator = -numerator;
+    }
+}
   
   public void unreduce() {
-    while (whole > 0) {
-      numerator += denominator;
-      whole--;
+    if (whole != 0) {
+        if (whole > 0) {
+            numerator += whole * denominator;
+        } else {
+            numerator -= Math.abs(whole) * denominator;
+        }
+        whole = 0;
     }
-  }
+}
 
   public static void gcd(IrreducedMixedFraction left, IrreducedMixedFraction right)
   {
@@ -97,15 +107,21 @@ public class IrreducedMixedFraction
   }
   public void changeSign() {
     if (whole != 0) {
-        whole = whole * -1;
+        whole = -whole;
     } else {
-        numerator = numerator * -1;
+        numerator = -numerator;
     }
-  }
+    if ((whole < 0 && numerator > 0) || (whole > 0 && numerator < 0)) {
+        numerator = -numerator;
+    }
+}
 
   public String toString() {
     reduce();
-    String result = whole + " " + numerator + "/" + denominator;
-    return result;
-  }
+    if (whole != 0) {
+        return whole + " " + Math.abs(numerator) + "/" + denominator;
+    } else {
+        return numerator + "/" + denominator;
+    }
+}
 }
