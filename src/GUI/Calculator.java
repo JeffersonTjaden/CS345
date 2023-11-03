@@ -550,6 +550,15 @@ public class Calculator extends JFrame implements ActionListener
       currentTextArea = 0;
       currentOperation = null;
     }
+    else if (command.equals(back.getActionCommand())){
+      if (currentTextArea % 3 == 0) {
+        whole.setText(whole.getText().substring(0, whole.getText().length() - 1));
+      } else if (currentTextArea % 3 == 1) {
+        numerator.setText(numerator.getText().substring(0, numerator.getText().length() - 1));
+      } else {
+        denominator.setText(denominator.getText().substring(0, denominator.getText().length() - 1));
+      }
+    }
   }
 
   public static void main(String[] args)
