@@ -82,7 +82,7 @@ public class Calculator extends JFrame implements ActionListener
     // Create View menu with Pie Chart item
     JMenu viewMenu = new JMenu("View");
     JMenuItem pieChartItem = new JMenuItem("Pie Chart");
-    // TODO: add an action listener to pieChartItem if needed
+    // TODO: add an action listener to pieChartItem
     viewMenu.add(pieChartItem);
 
     // Create Help menu with About and Help items
@@ -93,7 +93,7 @@ public class Calculator extends JFrame implements ActionListener
       aboutDialog.setVisible(true);
     });
     JMenuItem helpItem = new JMenuItem("Help");
-    // TODO: add an action listener to helpItem if needed
+    // TODO: add an action listener to helpItem
     helpMenu.add(aboutItem);
     helpMenu.add(helpItem);
 
@@ -138,9 +138,8 @@ public class Calculator extends JFrame implements ActionListener
   private void displayLogo() {
     ImageIcon picture = new ImageIcon(getClass().getResource("/resources/Fragile_Logo.png"));
     
-    // Optional: Resize the image
     Image img = picture.getImage();
-    Image scaledImage = img.getScaledInstance(180, 50, Image.SCALE_SMOOTH); // adjust dimensions as needed
+    Image scaledImage = img.getScaledInstance(180, 50, Image.SCALE_SMOOTH);
     picture = new ImageIcon(scaledImage);
 
     JLabel icon = new JLabel(picture);
@@ -334,23 +333,23 @@ public class Calculator extends JFrame implements ActionListener
     numerator.setText("");
     denominator.setText("");
   }
-
-  @Override
-  public void actionPerformed(ActionEvent e)
-  {
-    
-    String command = e.getActionCommand();
-    if (add.getActionCommand().equals(command))
+  
+    @Override
+    public void actionPerformed(ActionEvent e)
     {
-      currentOperation = "+";
-      if (left == null) {
-        left = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
+      
+      String command = e.getActionCommand();
+      if (add.getActionCommand().equals(command))
+      {
+        currentOperation = "+";
+        if (left == null) {
+          left = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
+        }
+        partialCurrentExpression = left.toString() + currentOperation;
+        displayText.setText(partialCurrentExpression);
+        clearText();
+        currentTextArea = 0;
       }
-      partialCurrentExpression = left.toString() + currentOperation;
-      displayText.setText(partialCurrentExpression);
-      clearText();
-      currentTextArea = 0;
-    }
     else if (minus.getActionCommand().equals(command))
     {
       currentOperation = "-";
@@ -573,15 +572,33 @@ public class Calculator extends JFrame implements ActionListener
       currentTextArea = 0;
       currentOperation = null;
     }
-    else if (command.equals(back.getActionCommand())){
+    else if (command.equals(back.getActionCommand())) {
       if (currentTextArea % 3 == 0) {
-        whole.setText(whole.getText().substring(0, whole.getText().length() - 1));
+          if (whole.getText().isEmpty()) {
+              // move focus to denominator and set currentTextArea accordingly
+              currentTextArea = 2;
+              denominator.requestFocus();
+          } else {
+              whole.setText(whole.getText().substring(0, whole.getText().length() - 1));
+          }
       } else if (currentTextArea % 3 == 1) {
-        numerator.setText(numerator.getText().substring(0, numerator.getText().length() - 1));
+          if (numerator.getText().isEmpty()) {
+              // move focus to the previous section whole and set currentTextArea accordingly
+              currentTextArea = 0;
+              whole.requestFocus();
+          } else {
+              numerator.setText(numerator.getText().substring(0, numerator.getText().length() - 1));
+          }
       } else {
-        denominator.setText(denominator.getText().substring(0, denominator.getText().length() - 1));
+          if (denominator.getText().isEmpty()) {
+              // move focus to the previous section numerator and set currentTextArea accordingly
+              currentTextArea = 1;
+              numerator.requestFocus();
+          } else {
+              denominator.setText(denominator.getText().substring(0, denominator.getText().length() - 1));
+          }
       }
-    }
+  }
   }
   
   
