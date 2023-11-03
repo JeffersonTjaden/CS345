@@ -400,6 +400,43 @@ public class Calculator extends JFrame implements ActionListener
       right = null;
       currentOperation = null;
     }
+    else if (e.getActionCommand().equals("clear"))
+    {
+        if (currentTextArea % 3 == 0) {
+            whole.setText("");
+        } else if (currentTextArea % 3 == 1){
+            numerator.setText("");
+        } else {
+            denominator.setText("");
+        }
+    }
+    else if (e.getActionCommand().equals("sign"))
+    {
+        if (!whole.getText().isEmpty() || !numerator.getText().isEmpty())
+        {
+            // Track if the fields were originally empty
+            boolean wholeWasEmpty = whole.getText().isEmpty();
+            boolean numeratorWasEmpty = numerator.getText().isEmpty();
+
+            int wholeValue = wholeWasEmpty ? 0 : Integer.parseInt(whole.getText());
+            int numeratorValue = numeratorWasEmpty ? 0 : Integer.parseInt(numerator.getText());
+            int denominatorValue = denominator.getText().isEmpty() ? 1 : Integer.parseInt(denominator.getText());
+            
+            IrreducedMixedFraction currentFraction = new IrreducedMixedFraction(wholeValue, numeratorValue, denominatorValue);
+            Operations.changeSign(currentFraction); // Toggle the sign
+            
+            // Only update the text fields if they originally had a value
+            if (!wholeWasEmpty) {
+                whole.setText(Integer.toString(currentFraction.getWhole()));
+            }
+            if (!numeratorWasEmpty) {
+                numerator.setText(Integer.toString(currentFraction.getNumerator()));
+            }
+            if (denominatorValue != 1) {
+                denominator.setText(Integer.toString(currentFraction.getDenominator()));
+            }
+        }
+    }
     else if(e.getActionCommand().equals("zero"))
     {
       if (currentTextArea % 3 == 0) {
