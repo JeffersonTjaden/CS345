@@ -104,6 +104,8 @@ public class IrreducedMixedFraction
   }
 
   public String toString() {
-    return whole + " " + numerator + "/" + denominator;
+    reduce();
+    String result = whole + " " + numerator + "/" + denominator;
+    return result;
   }
 }
