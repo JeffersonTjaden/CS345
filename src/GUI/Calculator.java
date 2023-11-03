@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.server.Operation;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -332,6 +333,7 @@ public class Calculator extends JFrame implements ActionListener
       whole.setText("");
       numerator.setText("");
       denominator.setText("");
+      currentTextArea++;
     }
     else if (minus.getActionCommand().equals(command))
     {
@@ -342,6 +344,7 @@ public class Calculator extends JFrame implements ActionListener
       whole.setText("");
       numerator.setText("");
       denominator.setText("");
+      currentTextArea++;
     }
     else if (multiply.getActionCommand().equals(command))
     {
@@ -352,6 +355,7 @@ public class Calculator extends JFrame implements ActionListener
       whole.setText("");
       numerator.setText("");
       denominator.setText("");
+      currentTextArea++;
     }
     else if (divide.getActionCommand().equals(command))
     {
@@ -362,44 +366,28 @@ public class Calculator extends JFrame implements ActionListener
       whole.setText("");
       numerator.setText("");
       denominator.setText("");
+      currentTextArea++;
     }
     else if (equals.getActionCommand().equals(command))
     {
+      right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
       switch (currentOperation)
       {
         case "+":
-          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
-          result = Operations.add(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
-          displayText.setText(evaluatedCurrentExpression);
-          whole.setText("");
-          numerator.setText("");
-          denominator.setText("");
+          result = Operations.add(left, right);         
         case "-":
-          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
           result = Operations.subtract(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
-          displayText.setText(evaluatedCurrentExpression);
-          whole.setText("");
-          numerator.setText("");
-          denominator.setText("");
         case "*":
-          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
-          result = Operations.multiply(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
-          displayText.setText(evaluatedCurrentExpression);
-          whole.setText("");
-          numerator.setText("");
-          denominator.setText("");
+          result = Operations.multiply(left, right);          
         case "/":
-          right = new IrreducedMixedFraction(Integer.parseInt(whole.getText()), Integer.parseInt(numerator.getText()), Integer.parseInt(denominator.getText()));
-          result = Operations.divide(left, right);
-          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
-          displayText.setText(evaluatedCurrentExpression);
-          whole.setText("");
-          numerator.setText("");
-          denominator.setText("");
+          result = Operations.divide(left, right);                 
       }
+      evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
+      displayText.setText(evaluatedCurrentExpression);
+      whole.setText("");
+      numerator.setText("");
+      denominator.setText("");
+      currentTextArea++;
     }
     else if(e.getActionCommand().equals("zero"))
     {
@@ -501,8 +489,7 @@ public class Calculator extends JFrame implements ActionListener
         denominator.setText(denominator.getText() + "9");
       }
     }
-
-    if(e.getActionCommand().equals("bar"))
+    else if(e.getActionCommand().equals("bar"))
     {
       currentTextArea++;
     }
