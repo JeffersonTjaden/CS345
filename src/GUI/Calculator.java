@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.SwingConstants;
 
 import utilities.*;
 
@@ -107,11 +109,11 @@ public class Calculator extends JFrame implements ActionListener
 
     content = getContentPane();
     content.setLayout(new GridBagLayout());
+    
+    
     display();
     softButtons();
-
-    ImageIcon picture = new ImageIcon("Fragile_Logo.png");
-    JLabel icon = new JLabel(picture);
+    displayLogo();
 
     Canvas display = new Canvas();
     display.setBackground(Color.LIGHT_GRAY);
@@ -119,6 +121,27 @@ public class Calculator extends JFrame implements ActionListener
     setVisible(true);
     setSize(400, 600);
   }
+  
+  private void displayLogo() {
+    ImageIcon picture = new ImageIcon(getClass().getResource("/resources/Fragile_Logo.png"));
+    
+    // Optional: Resize the image
+    Image img = picture.getImage();
+    Image scaledImage = img.getScaledInstance(180, 50, Image.SCALE_SMOOTH); // adjust dimensions as needed
+    picture = new ImageIcon(scaledImage);
+
+    JLabel icon = new JLabel(picture);
+    icon.setHorizontalAlignment(SwingConstants.LEFT);
+
+    c.gridx = 0;
+    c.gridy = 0;
+    c.gridwidth = 5;
+    c.gridheight = 1;
+    c.weightx = 0.5;
+    c.weighty = 0.5;
+    c.fill = GridBagConstraints.BOTH;
+    content.add(icon, c);
+}
 
   private void display()
   {
@@ -130,6 +153,7 @@ public class Calculator extends JFrame implements ActionListener
     c.fill = GridBagConstraints.HORIZONTAL;
     content.add(display, c);
   }
+  
 
   private void softButtons() // This method will create the button scheme
   {
