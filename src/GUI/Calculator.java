@@ -389,6 +389,16 @@ public class Calculator extends JFrame implements ActionListener
       denominator.setText("");
       currentTextArea++;
     }
+    else if (e.getActionCommand().equals("clear"))
+    {
+        if (currentTextArea % 3 == 0) {
+            whole.setText("");
+        } else if (currentTextArea % 3 == 1){
+            numerator.setText("");
+        } else {
+            denominator.setText("");
+        }
+    }
     else if(e.getActionCommand().equals("zero"))
     {
       if (currentTextArea % 3 == 0) {
