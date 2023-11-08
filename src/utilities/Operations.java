@@ -6,69 +6,113 @@ public class Operations
   {
     int numerator;
     int denominator;
+    boolean sign;
     IrreducedMixedFraction result;
 
     left.unreduce();
     right.unreduce();
 
     IrreducedMixedFraction.gcd(left, right);
-    numerator = left.getNumerator() + right.getNumerator();
+
+    if (left.getSign() && right.getSign()) {
+      numerator = left.getNumerator() + right.getNumerator();
+    } else if (left.getSign() && !right.getSign()) {
+      numerator = left.getNumerator() - right.getNumerator();
+    } else if (!left.getSign() && right.getSign()) {
+      numerator = -left.getNumerator() + right.getNumerator();
+    } else {
+      numerator = -left.getNumerator() - right.getNumerator();
+    }
+
     denominator = left.getDenominator();
-    result = new IrreducedMixedFraction(numerator, denominator);
+
+    sign = true;
+    if (numerator < 0){
+      sign = false;
+      numerator = Math.abs(numerator);
+    } 
+
+    result = new IrreducedMixedFraction(numerator, denominator, sign);
     return result;
   }
   
   public static IrreducedMixedFraction subtract(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
+    boolean sign;
     IrreducedMixedFraction result;
 
     left.unreduce();
     right.unreduce();
 
     IrreducedMixedFraction.gcd(left, right);
-    numerator = left.getNumerator() - right.getNumerator();
+
+    if (left.getSign() && right.getSign()) {
+      numerator = left.getNumerator() - right.getNumerator();
+    } else if (left.getSign() && !right.getSign()) {
+      numerator = left.getNumerator() + right.getNumerator();
+    } else if (!left.getSign() && right.getSign()) {
+      numerator = -left.getNumerator() - right.getNumerator();
+    } else {
+      numerator = -left.getNumerator() + right.getNumerator();
+    }
+
     denominator = left.getDenominator();
-    result = new IrreducedMixedFraction(numerator, denominator);
+
+    sign = true;
+    if (numerator < 0){
+      sign = false;
+      numerator = Math.abs(numerator);
+    }
+
+    result = new IrreducedMixedFraction(numerator, denominator, sign);
     return result;
   }
   
   public static IrreducedMixedFraction multiply(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
+    boolean sign;
     IrreducedMixedFraction result;
 
     left.unreduce();
     right.unreduce();
 
+      if (left.getSign() && right.getSign()){
+      sign = true;
+    } else if (left.getSign() || right.getSign()){
+      sign = false;
+    } else {
+      sign = true;
+    }
+
     numerator = left.getNumerator() * right.getNumerator();
     denominator = left.getDenominator() * right.getDenominator();
-    result = new IrreducedMixedFraction(numerator, denominator);
+    result = new IrreducedMixedFraction(numerator, denominator, sign);
     return result;
   }
   
   public static IrreducedMixedFraction divide(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
+    boolean sign;
     IrreducedMixedFraction result;
 
     left.unreduce();
     right.unreduce();   
     
+    if (left.getSign() && right.getSign()){
+      sign = true;
+    } else if (left.getSign() || right.getSign()){
+      sign = false;
+    } else {
+      sign = true;
+    }
     numerator = left.getNumerator() * right.getDenominator();
     denominator = left.getDenominator() * right.getNumerator();
-
-    if(denominator < 0){
-      numerator = -numerator;
-      denominator = Math.abs(denominator);
-    }
     
-    result = new IrreducedMixedFraction(numerator, denominator);
+    result = new IrreducedMixedFraction(numerator, denominator, sign);
     return result;
-  }
-  
-  public static void changeSign(IrreducedMixedFraction fraction) {
-    fraction.changeSign();
   }
   
 }

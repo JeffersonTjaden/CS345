@@ -5,6 +5,7 @@ public class IrreducedMixedFraction
   private int whole;
   private int numerator;
   private int denominator;
+  private boolean sign;
 
   public IrreducedMixedFraction(int numerator, int denominator)
   {
@@ -14,10 +15,23 @@ public class IrreducedMixedFraction
     this.whole = 0;
     this.numerator = numerator;
     this.denominator = denominator;
+    this.sign = true;
+    this.reduce();
+  }
+
+  public IrreducedMixedFraction(int numerator, int denominator, boolean sign)
+  {
+    if (denominator == 0) {
+      throw new IllegalArgumentException();
+    }
+    this.whole = 0;
+    this.numerator = numerator;
+    this.denominator = denominator;
+    this.sign = sign;
     this.reduce();
   }
   
-  public IrreducedMixedFraction(int whole, int numerator, int denominator) {
+  public IrreducedMixedFraction(int whole, int numerator, int denominator, boolean sign) {
     if (denominator == 0)
     {
       throw new IllegalArgumentException();
@@ -25,7 +39,8 @@ public class IrreducedMixedFraction
     this.whole = whole;
     this.numerator = numerator;
     this.denominator = denominator;
-    this.reduce();
+    this.sign = sign;
+    this.reduce();    
   }
 
   public int getWhole()
@@ -41,6 +56,11 @@ public class IrreducedMixedFraction
   public int getDenominator()
   {
     return denominator;
+  }
+
+  public boolean getSign()
+  {
+    return sign;
   }
 
   public void setWhole(int whole)
@@ -63,6 +83,11 @@ public class IrreducedMixedFraction
     {
       this.denominator = denominator;  
     }
+  }
+
+  public void setSign(boolean sign)
+  {
+    this.sign = sign;
   }
     
   public void reduce() {
@@ -105,23 +130,21 @@ public class IrreducedMixedFraction
       right.setDenominator(right.getDenominator() * leftConstant);
     }
   }
-  public void changeSign() {
-    if (whole != 0) {
-        whole = -whole;
-    } else {
-        numerator = -numerator;
-    }
-    if ((whole < 0 && numerator > 0) || (whole > 0 && numerator < 0)) {
-        numerator = -numerator;
-    }
-}
 
   public String toString() {
     reduce();
+    if (sign){
+      if (whole != 0) {
+          return whole + " " + Math.abs(numerator) + "/" + denominator;
+      } else {
+          return numerator + "/" + denominator;
+      }
+  } else {
     if (whole != 0) {
-        return whole + " " + Math.abs(numerator) + "/" + denominator;
-    } else {
-        return numerator + "/" + denominator;
-    }
+          return "-" + whole + " " + Math.abs(numerator) + "/" + denominator;
+      } else {
+          return "-" + numerator + "/" + denominator;
+      }
+  }
 }
 }

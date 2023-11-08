@@ -31,7 +31,9 @@ public class Calculator extends JFrame implements ActionListener
   private String whole = "_";
   private String numerator = "_";
   private String denominator = "_";
-  private String inputOperand = whole + " " + numerator + "/" + denominator;
+  private String signText = "";
+  private boolean signBool = true;
+  private String inputOperand = signText + whole + " " + numerator + "/" + denominator;
 
   private IrreducedMixedFraction left;
   private IrreducedMixedFraction right;
@@ -61,7 +63,7 @@ public class Calculator extends JFrame implements ActionListener
   private JButton reset;
   private JButton clear;
   private JButton back;
-  private JButton sign;
+  private JButton changeSign;
   private JButton bar;
 
   public Calculator()
@@ -204,12 +206,12 @@ public class Calculator extends JFrame implements ActionListener
     c.gridy = (3);
     content.add(add, c);
 
-    sign = new JButton(Character.toString((char) 177));
-    sign.setActionCommand("sign");
-    sign.addActionListener(this);
+    changeSign = new JButton(Character.toString((char) 177));
+    changeSign.setActionCommand("sign");
+    changeSign.addActionListener(this);
     c.gridx = (4);
     c.gridy = (3);
-    content.add(sign, c);
+    content.add(changeSign, c);
 
     seven = new JButton("7");
     seven.setActionCommand("seven");
@@ -322,12 +324,17 @@ public class Calculator extends JFrame implements ActionListener
     whole = "_";
     numerator = "_";
     denominator = "_";
+    signText = "";
     updateCurrentOperand();
   }
 
   private void operatorButtonClicked() {
     if (left == null) {
-          left = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator));
+          signBool = true;
+          if (signText.equals("-")){
+            signBool = false;
+          }
+          left = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
         }
         partialCurrentExpression = left.toString() + currentOperation;
         displayExpression.setText(partialCurrentExpression);
@@ -362,7 +369,11 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if (equals.getActionCommand().equals(command))
     {
-      right = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator));
+      signBool = true;
+      if (signText.equals("-")){
+        signBool = false;
+      }
+      right = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
       switch (currentOperation)
       {
         case "+":
@@ -382,12 +393,17 @@ public class Calculator extends JFrame implements ActionListener
       displayExpression.setText(evaluatedCurrentExpression);
       clearText();
       currentTextArea = 0;
-      left = result;
+      left = null;
       right = null;
       currentOperation = null;
-      whole = String.valueOf(left.getWhole());
-      numerator = String.valueOf(left.getNumerator());
-      denominator = String.valueOf(left.getDenominator());
+      whole = String.valueOf(result.getWhole());
+      numerator = String.valueOf(result.getNumerator());
+      denominator = String.valueOf(result.getDenominator());
+      signText = "";
+      if (!result.getSign()){
+        signText = "-";
+      }
+      result = null;
       updateCurrentOperand();
     }
     else if (e.getActionCommand().equals("clear"))
@@ -396,8 +412,12 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if (e.getActionCommand().equals("sign"))
     {
-        
-        
+        if (signText.length() == 0){
+          signText = "-";
+        } else {
+          signText = "";
+        }
+        updateCurrentOperand();        
     }
     else if(e.getActionCommand().equals("zero"))
     {
@@ -502,7 +522,7 @@ public class Calculator extends JFrame implements ActionListener
 
   private void updateCurrentOperand() {
     
-    inputOperand = whole + " " + numerator + "/" + denominator;
+    inputOperand = signText + whole + " " + numerator + "/" + denominator;
     displayOperand.setText(inputOperand);
   }
   
