@@ -1,7 +1,6 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -155,8 +154,10 @@ public class Calculator extends JFrame implements ActionListener
   {
     displayExpression.setEditable(false);
     displayOperand.setEditable(false);
+    displayOperand.setText(inputOperand);
+    display.setBackground(displayExpression.getBackground());
     display.add(displayExpression, BorderLayout.NORTH);
-    display.add(displayOperand, BorderLayout.SOUTH);
+    display.add(displayOperand, BorderLayout.EAST);
     c.gridx = 0;
     c.gridy = 1;
     c.gridheight = 2;
@@ -321,6 +322,7 @@ public class Calculator extends JFrame implements ActionListener
     whole = "_";
     numerator = "_";
     denominator = "_";
+    updateCurrentOperand();
   }
 
   private void operatorButtonClicked() {
@@ -383,6 +385,10 @@ public class Calculator extends JFrame implements ActionListener
       left = result;
       right = null;
       currentOperation = null;
+      whole = String.valueOf(left.getWhole());
+      numerator = String.valueOf(left.getNumerator());
+      denominator = String.valueOf(left.getDenominator());
+      updateCurrentOperand();
     }
     else if (e.getActionCommand().equals("clear"))
     {
@@ -443,23 +449,29 @@ public class Calculator extends JFrame implements ActionListener
       left = null;
       right = null;
       result = null;
-      displayOperand.setText("");
+      displayExpression.setText("");
       clearText();
       currentTextArea = 0;
       currentOperation = null;
     }
     else if (command.equals(back.getActionCommand())) {
       if (currentTextArea % 3 == 0) {
-          if (whole.length() != 0) {
+          if (whole.length() > 1) {
               whole = whole.substring(0, whole.length() - 1);
+          } else {
+            whole = "_";
           }
       } else if (currentTextArea % 3 == 1) {
-          if (numerator.length() != 0) {
+          if (numerator.length() > 1) {
               numerator = numerator.substring(0, numerator.length() - 1);
+          } else {
+            numerator = "_";
           }
       } else {
-          if (denominator.length() != 0) {
-              denominator = denominator.substring(0, denominator.length() - 1);
+          if (denominator.length() > 1) {
+              denominator = denominator.substring(0, denominator.length() - 1);              
+          } else {
+            denominator = "_";
           }
       }
       updateCurrentOperand();
@@ -489,9 +501,8 @@ public class Calculator extends JFrame implements ActionListener
   }
 
   private void updateCurrentOperand() {
+    
     inputOperand = whole + " " + numerator + "/" + denominator;
-    displayOperand.setAlignmentX(Component.RIGHT_ALIGNMENT);
-    displayOperand.setAlignmentY(Component.BOTTOM_ALIGNMENT);
     displayOperand.setText(inputOperand);
   }
   
