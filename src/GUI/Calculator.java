@@ -461,9 +461,7 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if(e.getActionCommand().equals("bar"))
     {
-      currentTextArea++;
-      
-      
+      currentTextArea++;     
     }
     else if (command.equals(reset.getActionCommand())){
       left = null;
