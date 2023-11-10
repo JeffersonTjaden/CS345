@@ -363,7 +363,7 @@ public class Calculator extends JFrame implements ActionListener
     updateCurrentOperand();
   }
 
-  private void operatorButtonClicked() {
+  private void operatorButtonClicked(String operation) {
     if (left == null) {
           signBool = true;
           if (signText.equals("-")){
@@ -371,7 +371,7 @@ public class Calculator extends JFrame implements ActionListener
           }
           left = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
         }
-        partialCurrentExpression = left.toString() + currentOperation;
+        partialCurrentExpression = left.toString() + operation;
         displayExpression.setText(partialCurrentExpression);
         clearText();
         currentTextArea = 0;
@@ -385,22 +385,30 @@ public class Calculator extends JFrame implements ActionListener
       if (add.getActionCommand().equals(command))
       {
         currentOperation = "+";
-        operatorButtonClicked();
+        operatorButtonClicked("+");
       }
     else if (minus.getActionCommand().equals(command))
     {
       currentOperation = "-";
-      operatorButtonClicked();
+      operatorButtonClicked("-");
     }
     else if (multiply.getActionCommand().equals(command))
     {
       currentOperation = "*";
-      operatorButtonClicked();
+      operatorButtonClicked("*");
     }
     else if (divide.getActionCommand().equals(command))
     {
       currentOperation = Character.toString((char) 247);
-      operatorButtonClicked();
+      operatorButtonClicked("/");
+    }
+    else if (mediant.getActionCommand().equals(command)) {
+      currentOperation = "mediant";
+      operatorButtonClicked("⇹");
+    }
+    else if (intPower.getActionCommand().equals(command)) {
+      currentOperation = "power";
+      operatorButtonClicked("^");
     }
     else if (equals.getActionCommand().equals(command))
     {
@@ -420,9 +428,15 @@ public class Calculator extends JFrame implements ActionListener
         case "*":
           result = Operations.multiply(left, right);
           break;          
-        default:
+        case "/":
           result = Operations.divide(left, right);
-          break;                 
+          break; 
+        case "mediant":
+          result = Operations.mediant(left, right);
+          break;
+        case "power":
+          result = Operations.exponent(left, right.getWhole());
+          break;              
       }
       evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
       displayExpression.setText(evaluatedCurrentExpression);
