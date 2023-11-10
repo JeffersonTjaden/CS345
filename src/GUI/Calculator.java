@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -65,6 +66,10 @@ public class Calculator extends JFrame implements ActionListener
   private JButton back;
   private JButton changeSign;
   private JButton bar;
+  private JButton mediant;
+  private JButton intPower;
+  private JButton simplification;
+  private JButton invert;
 
   public Calculator()
   {
@@ -163,7 +168,7 @@ public class Calculator extends JFrame implements ActionListener
     c.gridx = 0;
     c.gridy = 1;
     c.gridheight = 2;
-    c.gridwidth = 5;
+    c.gridwidth = 6;
     c.fill = GridBagConstraints.HORIZONTAL;
     content.add(display, c);
     
@@ -206,10 +211,18 @@ public class Calculator extends JFrame implements ActionListener
     c.gridy = (3);
     content.add(add, c);
 
+    mediant = new JButton("⇹");
+    mediant.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+    mediant.setActionCommand("mediant");
+    mediant.addActionListener(this);
+    c.gridx = 4;
+    c.gridy = 3;
+    content.add(mediant, c);
+
     changeSign = new JButton(Character.toString((char) 177));
     changeSign.setActionCommand("sign");
     changeSign.addActionListener(this);
-    c.gridx = (4);
+    c.gridx = (5);
     c.gridy = (3);
     content.add(changeSign, c);
 
@@ -241,6 +254,20 @@ public class Calculator extends JFrame implements ActionListener
     c.gridy = 4;
     content.add(minus, c);
 
+    intPower = new JButton("?");
+    intPower.setActionCommand("intPower");
+    intPower.addActionListener(this);
+    c.gridx = 4;
+    c.gridy = 4;
+    content.add(intPower, c);
+
+    invert = new JButton("Inv");
+    invert.setActionCommand("invert");
+    invert.addActionListener(this);
+    c.gridx = 5;
+    c.gridy = 4;
+    content.add(invert, c);
+
     four = new JButton("4");
     four.setActionCommand("four");
     four.addActionListener(this);
@@ -268,6 +295,14 @@ public class Calculator extends JFrame implements ActionListener
     c.gridx = 3;
     c.gridy = 5;
     content.add(multiply, c);
+
+    simplification = new JButton(" ↡");
+    simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+    simplification.setActionCommand("simplification");
+    simplification.addActionListener(this);
+    c.gridx = 5;
+    c.gridy = 5;
+    content.add(simplification, c);
 
     one = new JButton("1");
     one.setActionCommand("one");
@@ -364,7 +399,7 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if (divide.getActionCommand().equals(command))
     {
-      currentOperation = "/";
+      currentOperation = Character.toString((char) 247);
       operatorButtonClicked();
     }
     else if (equals.getActionCommand().equals(command))
@@ -385,7 +420,7 @@ public class Calculator extends JFrame implements ActionListener
         case "*":
           result = Operations.multiply(left, right);
           break;          
-        case "/":
+        default:
           result = Operations.divide(left, right);
           break;                 
       }
