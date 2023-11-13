@@ -19,6 +19,7 @@ public class PieChartCanvas extends Canvas
   private int denominator;
   private int xPos;
   private int yPos;
+  private boolean sign;
   private final int size = 22;
   private final int numCircles;
   /**
@@ -31,6 +32,7 @@ public class PieChartCanvas extends Canvas
     this.whole = fraction.getWhole();
     this.numerator = fraction.getNumerator();
     this.denominator = fraction.getDenominator();
+    this.sign = fraction.getSign();
     numCircles = (int) Math.ceil(whole + (float)(numerator)/denominator);
   }
   /**
@@ -42,7 +44,8 @@ public class PieChartCanvas extends Canvas
     xPos = 0;
     int rows = numCircles * size/getWidth();
     yPos = getHeight()/2 - ((rows - 1) / 2) * (size);
-    g.setColor(Color.RED);
+    if (sign) g.setColor(Color.RED);
+    else g.setColor(Color.GREEN);
     int angle = (int)(((double)(numerator)/denominator) * 360);
     for (int i = 0; i < whole; i++)
     {

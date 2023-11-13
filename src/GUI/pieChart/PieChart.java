@@ -30,7 +30,7 @@ public class PieChart extends JFrame
   public PieChart(final IrreducedMixedFraction op1, final IrreducedMixedFraction op2,
       final IrreducedMixedFraction ans, final String operator)
   {
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     setTitle("Current Expression");
     setSize(600, 300);
     setLayout(new GridLayout(2, 3));

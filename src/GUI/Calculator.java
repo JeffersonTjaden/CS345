@@ -493,6 +493,7 @@ public class Calculator extends JFrame implements ActionListener
       {
         case "+":
           result = Operations.add(left, right);
+          pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
           pieChartOps.add(result);
@@ -501,6 +502,7 @@ public class Calculator extends JFrame implements ActionListener
           break;         
         case "-":
           result = Operations.subtract(left, right);
+          pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
           pieChartOps.add(result);
@@ -509,6 +511,7 @@ public class Calculator extends JFrame implements ActionListener
           break;
         case "*":
           result = Operations.multiply(left, right);
+          pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
           pieChartOps.add(result);
@@ -517,6 +520,7 @@ public class Calculator extends JFrame implements ActionListener
           break;          
         case "/":
           result = Operations.divide(left, right);
+          pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
           pieChartOps.add(result);
