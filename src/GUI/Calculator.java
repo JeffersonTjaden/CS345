@@ -366,18 +366,47 @@ public class Calculator extends JFrame implements ActionListener
 
   private void operatorButtonClicked(String operation) {
     if (left == null) {          
-          left = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
+          setOperand();
         }
         partialCurrentExpression = left.toString() + operation;
         displayExpression.setText(partialCurrentExpression);
         clearText();
         currentTextArea = 0;
   }
+
+  private void setOperand() {
+    int whole;
+    int numerator;
+    int denominator;
+
+    if (!this.whole.equals("_")) {
+      whole = Integer.parseInt(this.whole);
+    } else {
+      whole = 0;
+    }
+    if (!this.numerator.equals("_")){
+      numerator = Integer.parseInt(this.numerator);
+    } else {
+      numerator = 0;
+    }
+    if (!this.denominator.equals("_")){
+      denominator = Integer.parseInt(this.denominator);
+      if (denominator == 0) {
+        denominator = 1;
+      }  
+    } else {
+      denominator = 1;
+    }
+    if (left == null) {
+      left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    } else {
+      right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    }
+  }
   
     @Override
     public void actionPerformed(ActionEvent e)
-    {
-      
+    {      
       String command = e.getActionCommand();
       if (add.getActionCommand().equals(command))
       {
@@ -408,7 +437,7 @@ public class Calculator extends JFrame implements ActionListener
       operatorButtonClicked("^");
     }
     else if (invert.getActionCommand().equals(command)) {
-      left = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
+      setOperand();
       left.invert();
       whole = String.valueOf(left.getWhole());
       numerator = String.valueOf(left.getNumerator());
@@ -417,7 +446,7 @@ public class Calculator extends JFrame implements ActionListener
       left = null;
     }
     else if (simplification.getActionCommand().equals(command)){
-      left = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
+      setOperand();
       left.simplify();
       whole = String.valueOf(left.getWhole());
       numerator = String.valueOf(left.getNumerator());
@@ -427,15 +456,7 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if (equals.getActionCommand().equals(command))
     {
-      signBool = true;
-      if (signText.equals("-")){
-        signBool = false;
-      }
-      if (currentOperation.equals("power")){
-        right = new IrreducedMixedFraction(Integer.parseInt(whole), signBool);
-      } else {
-        right = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
-      }
+      setOperand();
       switch (currentOperation)
       {
         case "+":
@@ -451,7 +472,11 @@ public class Calculator extends JFrame implements ActionListener
           result = Operations.divide(left, right);
           break;         
         case "power":
-          result = Operations.exponent(left, right.getWhole());
+          if (signBool) {
+            result = Operations.exponent(left, right.getWhole());
+          } else {
+            result = Operations.exponent(left, -right.getWhole());
+          }
           break;   
         case "mediant":
           result = Operations.mediant(left, right);

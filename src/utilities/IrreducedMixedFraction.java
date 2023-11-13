@@ -173,6 +173,9 @@ private int simplifyHelper(int numerator, int denominator) {
     if (numerator != 0) {
       str += " " + numerator + "/" + denominator;
     }
+    if (whole == 0 && numerator == 0) {
+      str = "0";
+    }
     return str;
 }
 }
