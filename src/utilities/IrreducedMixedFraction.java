@@ -7,6 +7,13 @@ public class IrreducedMixedFraction
   private int denominator;
   private boolean sign;
 
+  public IrreducedMixedFraction(int whole, boolean sign) {
+    this.whole = whole;
+    numerator = 0;
+    denominator = 1;
+    this.sign = sign;
+  }
+
   public IrreducedMixedFraction(int numerator, int denominator)
   {
     if (denominator == 0) {
@@ -116,6 +123,29 @@ public class IrreducedMixedFraction
     }
 }
 
+public void invert() {
+  unreduce();
+  int temp = numerator;
+  numerator = denominator;
+  denominator = temp;
+  reduce();
+}
+
+public void simplify() {
+  unreduce();
+  int divisor = simplifyHelper(numerator, denominator);
+  numerator /= divisor;
+  denominator /= divisor;
+  reduce();
+}
+
+private int simplifyHelper(int numerator, int denominator) {
+  if (denominator == 0) {
+    return numerator;
+  }
+  return simplifyHelper(denominator, numerator % denominator);
+}
+
   public static void gcd(IrreducedMixedFraction left, IrreducedMixedFraction right)
   {
     if (left.getDenominator() != right.getDenominator())
@@ -133,18 +163,16 @@ public class IrreducedMixedFraction
 
   public String toString() {
     reduce();
-    if (sign){
-      if (whole != 0) {
-          return whole + " " + Math.abs(numerator) + "/" + denominator;
-      } else {
-          return numerator + "/" + denominator;
-      }
-  } else {
+    String str = "";
+    if (!sign) {
+      str += "-";
+    }
     if (whole != 0) {
-          return "-" + whole + " " + Math.abs(numerator) + "/" + denominator;
-      } else {
-          return "-" + numerator + "/" + denominator;
-      }
-  }
+      str += whole;
+    }
+    if (numerator != 0) {
+      str += " " + numerator + "/" + denominator;
+    }
+    return str;
 }
 }
