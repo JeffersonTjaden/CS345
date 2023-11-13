@@ -169,7 +169,7 @@ public class Calculator extends JFrame implements ActionListener
 
     setTitle("Fragile Calculator");
 
-    content = getContentPane();
+    content = (JPanel) getContentPane();
     content.setLayout(new GridBagLayout());
     
     
