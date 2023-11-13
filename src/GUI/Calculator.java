@@ -360,27 +360,53 @@ public class Calculator extends JFrame implements ActionListener
     numerator = "_";
     denominator = "_";
     signText = "";
+    signBool = true;
     updateCurrentOperand();
   }
 
   private void operatorButtonClicked(String operation) {
-    if (left == null) {
-          signBool = true;
-          if (signText.equals("-")){
-            signBool = false;
-          }
-          left = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
+    if (left == null) {          
+          setOperand();
         }
         partialCurrentExpression = left.toString() + operation;
         displayExpression.setText(partialCurrentExpression);
         clearText();
         currentTextArea = 0;
   }
+
+  private void setOperand() {
+    int whole;
+    int numerator;
+    int denominator;
+
+    if (!this.whole.equals("_")) {
+      whole = Integer.parseInt(this.whole);
+    } else {
+      whole = 0;
+    }
+    if (!this.numerator.equals("_")){
+      numerator = Integer.parseInt(this.numerator);
+    } else {
+      numerator = 0;
+    }
+    if (!this.denominator.equals("_")){
+      denominator = Integer.parseInt(this.denominator);
+      if (denominator == 0) {
+        denominator = 1;
+      }  
+    } else {
+      denominator = 1;
+    }
+    if (left == null) {
+      left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    } else {
+      right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    }
+  }
   
     @Override
     public void actionPerformed(ActionEvent e)
-    {
-      
+    {      
       String command = e.getActionCommand();
       if (add.getActionCommand().equals(command))
       {
@@ -399,8 +425,8 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if (divide.getActionCommand().equals(command))
     {
-      currentOperation = Character.toString((char) 247);
-      operatorButtonClicked("/");
+      currentOperation = "/";
+      operatorButtonClicked(Character.toString((char) 247));
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
@@ -410,13 +436,27 @@ public class Calculator extends JFrame implements ActionListener
       currentOperation = "power";
       operatorButtonClicked("^");
     }
+    else if (invert.getActionCommand().equals(command)) {
+      setOperand();
+      left.invert();
+      whole = String.valueOf(left.getWhole());
+      numerator = String.valueOf(left.getNumerator());
+      denominator = String.valueOf(left.getDenominator());
+      updateCurrentOperand();
+      left = null;
+    }
+    else if (simplification.getActionCommand().equals(command)){
+      setOperand();
+      left.simplify();
+      whole = String.valueOf(left.getWhole());
+      numerator = String.valueOf(left.getNumerator());
+      denominator = String.valueOf(left.getDenominator());
+      updateCurrentOperand();
+      left = null;
+    }
     else if (equals.getActionCommand().equals(command))
     {
-      signBool = true;
-      if (signText.equals("-")){
-        signBool = false;
-      }
-      right = new IrreducedMixedFraction(Integer.parseInt(whole), Integer.parseInt(numerator), Integer.parseInt(denominator), signBool);
+      setOperand();
       switch (currentOperation)
       {
         case "+":
@@ -430,13 +470,17 @@ public class Calculator extends JFrame implements ActionListener
           break;          
         case "/":
           result = Operations.divide(left, right);
-          break; 
+          break;         
+        case "power":
+          if (signBool) {
+            result = Operations.exponent(left, right.getWhole());
+          } else {
+            result = Operations.exponent(left, -right.getWhole());
+          }
+          break;   
         case "mediant":
           result = Operations.mediant(left, right);
-          break;
-        case "power":
-          result = Operations.exponent(left, right.getWhole());
-          break;              
+          break;          
       }
       evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
       displayExpression.setText(evaluatedCurrentExpression);
@@ -449,8 +493,10 @@ public class Calculator extends JFrame implements ActionListener
       numerator = String.valueOf(result.getNumerator());
       denominator = String.valueOf(result.getDenominator());
       signText = "";
+      signBool = true;
       if (!result.getSign()){
         signText = "-";
+        signBool = false;
       }
       result = null;
       updateCurrentOperand();
@@ -463,8 +509,10 @@ public class Calculator extends JFrame implements ActionListener
     {
         if (signText.length() == 0){
           signText = "-";
+          signBool = false;
         } else {
           signText = "";
+          signBool = true;
         }
         updateCurrentOperand();        
     }
@@ -510,7 +558,9 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if(e.getActionCommand().equals("bar"))
     {
-      currentTextArea++;     
+      if (currentOperation == null || !currentOperation.equals("power")) {
+        currentTextArea++;
+      }
     }
     else if (command.equals(reset.getActionCommand())){
       left = null;

@@ -123,8 +123,13 @@ public class Operations
 
     operand.unreduce();
 
-    numerator = (int) Math.pow(operand.getNumerator(), power);
-    denominator = (int) Math.pow(operand.getDenominator(), power);
+    if (power >= 0) {
+      numerator = (int) Math.pow(operand.getNumerator(), power);
+      denominator = (int) Math.pow(operand.getDenominator(), power);
+    } else {
+      numerator = (int) Math.pow(operand.getDenominator(), Math.abs(power));
+      denominator = (int) Math.pow(operand.getNumerator(), Math.abs(power));
+    }
 
     sign = true;
     if (!operand.getSign() && power % 2 == 1) {
