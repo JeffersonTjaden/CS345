@@ -321,7 +321,7 @@ public class OperationsTest
     right.setNumerator(-5);
     assertEquals(-5, right.getNumerator());
     assertEquals(13, right.getDenominator());
-    result = Operations.divide(left, right);
+    // result = Operations.divide(left, right);
     // assertEquals(0, result.getWhole());
     // assertEquals(-91, result.getNumerator());
     // assertEquals(55, result.getDenominator());
@@ -341,5 +341,53 @@ public class OperationsTest
     l.setSign(true);
     r.setSign(false);
     Operations.divide(l, r);
+  }
+  
+  @Test
+  void exponent()
+  {
+    IrreducedMixedFraction f = new IrreducedMixedFraction(2, 5, false);
+    IrreducedMixedFraction res = Operations.exponent(f, 2);
+    assertEquals(4, res.getNumerator());
+    assertEquals(25, res.getDenominator());
+    res = Operations.exponent(f, -1);
+    assertEquals(1, res.getNumerator());
+    assertEquals(2, res.getDenominator());
+    res = Operations.exponent(f, 3);
+    assertEquals(8, res.getNumerator());
+    assertEquals(125, res.getDenominator());
+    f.setSign(true);
+    res = Operations.exponent(f, 3);
+    res.setNumerator(-8);
+    assertEquals(-8, res.getNumerator());
+    assertEquals(125, res.getDenominator());
+  }
+  
+  @Test
+  void mediant()
+  {
+    IrreducedMixedFraction l = new IrreducedMixedFraction(1, 2, true);
+    IrreducedMixedFraction r = new IrreducedMixedFraction(1, 8, true);
+    // T, T
+    IrreducedMixedFraction res = Operations.mediant(l, r);
+    assertEquals(2, res.getNumerator());
+    assertEquals(10, res.getDenominator());
+    // T, F
+    r.setSign(false);
+    res = Operations.mediant(l, r);
+    assertEquals(0, res.getNumerator());
+    assertEquals(10, res.getDenominator());
+    // F, T
+    l.setSign(false);
+    r.setSign(true);
+    res = Operations.mediant(l, r);
+    assertEquals(0, res.getNumerator());
+    assertEquals(10, res.getDenominator());
+    // F, F
+    l.setSign(false);
+    r.setSign(false);
+    res = Operations.mediant(l, r);
+    assertEquals(2, res.getNumerator());
+    assertEquals(10, res.getDenominator());
   }
 }
