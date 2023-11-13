@@ -4,8 +4,6 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import javax.swing.border.LineBorder;
-
 import utilities.IrreducedMixedFraction;
 
 /**
@@ -16,10 +14,13 @@ import utilities.IrreducedMixedFraction;
 public class PieChartCanvas extends Canvas
 {
   private static final long serialVersionUID = 1L;
-  private IrreducedMixedFraction fraction;
+  private int whole;
+  private int numerator;
+  private int denominator;
   private int xPos;
   private int yPos;
-  private final int size = 24;
+  private final int size = 22;
+  private final int numCircles;
   /**
    * Creates a new PieChartCanvas representative of an IrreducedMixedFraction.
    * @param fraction The number to be represented
@@ -27,9 +28,10 @@ public class PieChartCanvas extends Canvas
   public PieChartCanvas(final IrreducedMixedFraction fraction)
   {
     setBackground(Color.DARK_GRAY);
-    this.fraction = fraction;
-    xPos = 0;
-    yPos=20;
+    this.whole = fraction.getWhole();
+    this.numerator = fraction.getNumerator();
+    this.denominator = fraction.getDenominator();
+    numCircles = (int) Math.ceil(whole + (float)(numerator)/denominator);
   }
   /**
    * Paints the canvas with whole number circles and a numerator/denominator partial circle.
@@ -37,9 +39,12 @@ public class PieChartCanvas extends Canvas
    */
   public void paint(final Graphics g)
   {
+    xPos = 0;
+    int rows = numCircles * size/getWidth();
+    yPos = getHeight()/2 - ((rows - 1) / 2) * (size);
     g.setColor(Color.RED);
-    int angle = (int)(((double)(fraction.getNumerator())/fraction.getDenominator()) * 360);
-    for (int i = 0; i < fraction.getWhole(); i++)
+    int angle = (int)(((double)(numerator)/denominator) * 360);
+    for (int i = 0; i < whole; i++)
     {
       g.fillOval(xPos, yPos, size, size);
       xPos += size;

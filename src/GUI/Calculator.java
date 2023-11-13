@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,10 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
+import GUI.pieChart.PieChart;
 import utilities.*;
 
 public class Calculator extends JFrame implements ActionListener
@@ -35,6 +38,8 @@ public class Calculator extends JFrame implements ActionListener
   private String signText = "";
   private boolean signBool = true;
   private String inputOperand = signText + whole + " " + numerator + "/" + denominator;
+  private ArrayList<Object> pieChartOps = new ArrayList<Object>();
+  private boolean canCreatePieChart;
 
   private IrreducedMixedFraction left;
   private IrreducedMixedFraction right;
@@ -90,13 +95,28 @@ public class Calculator extends JFrame implements ActionListener
     // Create View menu with Pie Chart item
     JMenu viewMenu = new JMenu("View");
     JMenuItem pieChartItem = new JMenuItem("Pie Chart");
+    pieChartItem.addActionListener(e ->
+    {
+      if(canCreatePieChart)
+      {
+        new PieChart((IrreducedMixedFraction) pieChartOps.get(0), 
+            (IrreducedMixedFraction) pieChartOps.get(1),
+            (IrreducedMixedFraction) pieChartOps.get(2), (String) pieChartOps.get(3));
+      } else
+      {
+        JOptionPane.showMessageDialog(this, "Please complete an add, subtract, "
+            + "multiply, or divide operation to view a pie chart representation",
+            "Unable to create pie chart", JOptionPane.ERROR_MESSAGE);
+      }
+    });
     // TODO: add an action listener to pieChartItem
     viewMenu.add(pieChartItem);
 
     // Create Help menu with About and Help items
     JMenu helpMenu = new JMenu("Help");
     JMenuItem aboutItem = new JMenuItem("About");
-    aboutItem.addActionListener(e -> {
+    aboutItem.addActionListener(e -> 
+    {
       About aboutDialog = new About(Calculator.this);
       aboutDialog.setVisible(true);
     });
@@ -137,7 +157,8 @@ public class Calculator extends JFrame implements ActionListener
   
 
   
-  private void displayLogo() {
+  private void displayLogo() 
+  {
     ImageIcon picture = new ImageIcon(getClass().getResource("/resources/Fragile_Logo.png"));
     
     Image img = picture.getImage();
@@ -155,7 +176,7 @@ public class Calculator extends JFrame implements ActionListener
     c.weighty = 0.5;
     c.fill = GridBagConstraints.BOTH;
     content.add(icon, c);
-}
+  }
 
   private void display()
   {
@@ -364,14 +385,16 @@ public class Calculator extends JFrame implements ActionListener
     updateCurrentOperand();
   }
 
-  private void operatorButtonClicked(String operation) {
-    if (left == null) {          
-          setOperand();
-        }
-        partialCurrentExpression = left.toString() + operation;
-        displayExpression.setText(partialCurrentExpression);
-        clearText();
-        currentTextArea = 0;
+  private void operatorButtonClicked(final String operation) 
+  {
+    if (left == null) 
+    {          
+      setOperand();
+    }
+    partialCurrentExpression = left.toString() + operation;
+    displayExpression.setText(partialCurrentExpression);
+    clearText();
+    currentTextArea = 0;
   }
 
   private void setOperand() {
@@ -379,40 +402,49 @@ public class Calculator extends JFrame implements ActionListener
     int numerator;
     int denominator;
 
-    if (!this.whole.equals("_")) {
+    if (!this.whole.equals("_")) 
+    {
       whole = Integer.parseInt(this.whole);
-    } else {
+    } else 
+    {
       whole = 0;
     }
-    if (!this.numerator.equals("_")){
+    if (!this.numerator.equals("_"))
+    {
       numerator = Integer.parseInt(this.numerator);
-    } else {
+    } else 
+    {
       numerator = 0;
     }
-    if (!this.denominator.equals("_")){
+    if (!this.denominator.equals("_"))
+    {
       denominator = Integer.parseInt(this.denominator);
-      if (denominator == 0) {
+      if (denominator == 0) 
+      {
         denominator = 1;
       }  
-    } else {
+    } else 
+    {
       denominator = 1;
     }
-    if (left == null) {
+    if (left == null) 
+    {
       left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
-    } else {
+    } else 
+    {
       right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
     }
   }
   
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {      
-      String command = e.getActionCommand();
-      if (add.getActionCommand().equals(command))
-      {
-        currentOperation = "+";
-        operatorButtonClicked("+");
-      }
+  @Override
+  public void actionPerformed(final ActionEvent e)
+  {      
+    String command = e.getActionCommand();
+    if (add.getActionCommand().equals(command))
+    {
+      currentOperation = "+";
+      operatorButtonClicked("+");
+    }
     else if (minus.getActionCommand().equals(command))
     {
       currentOperation = "-";
@@ -461,28 +493,53 @@ public class Calculator extends JFrame implements ActionListener
       {
         case "+":
           result = Operations.add(left, right);
+          pieChartOps.add(left);
+          pieChartOps.add(right);
+          pieChartOps.add(result);
+          pieChartOps.add("+");
+          canCreatePieChart = true;
           break;         
         case "-":
           result = Operations.subtract(left, right);
+          pieChartOps.add(left);
+          pieChartOps.add(right);
+          pieChartOps.add(result);
+          pieChartOps.add("-");
+          canCreatePieChart = true;
           break;
         case "*":
           result = Operations.multiply(left, right);
+          pieChartOps.add(left);
+          pieChartOps.add(right);
+          pieChartOps.add(result);
+          pieChartOps.add("*");
+          canCreatePieChart = true;
           break;          
         case "/":
           result = Operations.divide(left, right);
+          pieChartOps.add(left);
+          pieChartOps.add(right);
+          pieChartOps.add(result);
+          pieChartOps.add("÷");
+          canCreatePieChart = true;
           break;         
         case "power":
-          if (signBool) {
+          if (signBool) 
+          {
             result = Operations.exponent(left, right.getWhole());
-          } else {
+          } else 
+          {
             result = Operations.exponent(left, -right.getWhole());
           }
           break;   
         case "mediant":
           result = Operations.mediant(left, right);
-          break;          
+          break;
+        default:
+          break;
       }
-      evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + result.toString();
+      evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
+          + result.toString();
       displayExpression.setText(evaluatedCurrentExpression);
       clearText();
       currentTextArea = 0;
@@ -494,7 +551,8 @@ public class Calculator extends JFrame implements ActionListener
       denominator = String.valueOf(result.getDenominator());
       signText = "";
       signBool = true;
-      if (!result.getSign()){
+      if (!result.getSign())
+      {
         signText = "-";
         signBool = false;
       }
@@ -503,7 +561,7 @@ public class Calculator extends JFrame implements ActionListener
     }
     else if (e.getActionCommand().equals("clear"))
     {
-       clearText();
+      clearText();
     }
     else if (e.getActionCommand().equals("sign"))
     {

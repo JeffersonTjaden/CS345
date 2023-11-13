@@ -3,10 +3,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -75,13 +73,4 @@ public class PieChart extends JFrame
     strField.setBorder(border);
     return strField;
   }
-  /*
-  public static void main(String[] args)
-  {
-    IrreducedMixedFraction op1 = new IrreducedMixedFraction(2, 2, 3, true);
-    IrreducedMixedFraction op2 = new IrreducedMixedFraction(4, 5, 7, true);
-    IrreducedMixedFraction ans = new IrreducedMixedFraction(7, 8, 21, true);
-    new PieChart(op1, op2, ans, "+");
-  }
-  */
 }
