@@ -125,9 +125,11 @@ public class IrreducedMixedFraction
 
 public void invert() {
   unreduce();
-  int temp = numerator;
-  numerator = denominator;
-  denominator = temp;
+  if (numerator != 0) {
+    int temp = numerator;
+    numerator = denominator;
+    denominator = temp;
+  }
   reduce();
 }
 
