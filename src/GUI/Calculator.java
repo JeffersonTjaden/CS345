@@ -232,7 +232,7 @@ public class Calculator extends JFrame implements ActionListener
     c.gridy = (3);
     content.add(add, c);
 
-    mediant = new JButton("⇹");
+    mediant = new JButton("↔");
     mediant.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     mediant.setActionCommand("mediant");
     mediant.addActionListener(this);
@@ -275,7 +275,7 @@ public class Calculator extends JFrame implements ActionListener
     c.gridy = 4;
     content.add(minus, c);
 
-    intPower = new JButton("?");
+    intPower = new JButton("xⁿ");
     intPower.setActionCommand("intPower");
     intPower.addActionListener(this);
     c.gridx = 4;
@@ -317,7 +317,7 @@ public class Calculator extends JFrame implements ActionListener
     c.gridy = 5;
     content.add(multiply, c);
 
-    simplification = new JButton(" ↡");
+    simplification = new JButton("↓");
     simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     simplification.setActionCommand("simplification");
     simplification.addActionListener(this);
