@@ -27,7 +27,7 @@ import utilities.*;
 
 public class Calculator extends JFrame implements ActionListener
 {
-  private Container content = getContentPane();
+  private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
   private JPanel display = new JPanel(new BorderLayout());
   private JTextArea displayExpression = new JTextArea(1, 5);
@@ -78,9 +78,36 @@ public class Calculator extends JFrame implements ActionListener
 
   public Calculator()
   {
+    setupInputMap();
     setupLayout();
   }
 
+  private void setupInputMap() {
+    InputMap inputMap = content.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD0, 0), "0");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD1, 0), "1");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD2, 0), "2");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD3, 0), "3");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD4, 0), "4");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD5, 0), "5");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD6, 0), "6");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD7, 0), "7");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD8, 0), "8");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD9, 0), "9");
+    
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0), "\u232B");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, 0), "C");
+    
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "=");
+    
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_MULTIPLY, 0), "\u00D7");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DIVIDE, 0), "\u00F7");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, 0), "-");
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ADD, 0), "+");
+    
+    inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DECIMAL, 0), ".");
+  }
+  
   private void setupMenu()
   {
     // Create a menu bar
@@ -221,6 +248,8 @@ public class Calculator extends JFrame implements ActionListener
     back = new JButton(Character.toString((char) 171));
     back.setActionCommand("back");
     back.addActionListener(this);
+    ActionMap actionMap = content.getActionMap();
+    actionMap.put("\u232B", new ClickAction(back));
     c.gridx = 2;
     c.gridy = 3;
     content.add(back, c);
@@ -228,6 +257,8 @@ public class Calculator extends JFrame implements ActionListener
     add = new JButton("+");
     add.setActionCommand("add");
     add.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("+", new ClickAction(add));
     c.gridx = (3);
     c.gridy = (3);
     content.add(add, c);
@@ -250,6 +281,8 @@ public class Calculator extends JFrame implements ActionListener
     seven = new JButton("7");
     seven.setActionCommand("seven");
     seven.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("7", new ClickAction(seven));
     c.gridx = 0;
     c.gridy = 4;
     content.add(seven, c);
@@ -257,6 +290,8 @@ public class Calculator extends JFrame implements ActionListener
     eight = new JButton("8");
     eight.setActionCommand("eight");
     eight.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("8", new ClickAction(eight));
     c.gridx = 1;
     c.gridy = 4;
     content.add(eight, c);
@@ -264,6 +299,8 @@ public class Calculator extends JFrame implements ActionListener
     nine = new JButton("9");
     nine.setActionCommand("nine");
     nine.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("9", new ClickAction(nine));
     c.gridx = 2;
     c.gridy = 4;
     content.add(nine, c);
@@ -271,6 +308,8 @@ public class Calculator extends JFrame implements ActionListener
     minus = new JButton("-");
     minus.setActionCommand("minus");
     minus.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("-", new ClickAction(minus));
     c.gridx = 3;
     c.gridy = 4;
     content.add(minus, c);
@@ -292,6 +331,8 @@ public class Calculator extends JFrame implements ActionListener
     four = new JButton("4");
     four.setActionCommand("four");
     four.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("4", new ClickAction(four));
     c.gridx = 0;
     c.gridy = 5;
     content.add(four, c);
@@ -299,6 +340,8 @@ public class Calculator extends JFrame implements ActionListener
     five = new JButton("5");
     five.setActionCommand("five");
     five.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("5", new ClickAction(five));
     c.gridx = 1;
     c.gridy = 5;
     content.add(five, c);
@@ -306,6 +349,8 @@ public class Calculator extends JFrame implements ActionListener
     six = new JButton("6");
     six.setActionCommand("six");
     six.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("6", new ClickAction(six));
     c.gridx = 2;
     c.gridy = 5;
     content.add(six, c);
@@ -313,6 +358,8 @@ public class Calculator extends JFrame implements ActionListener
     multiply = new JButton("X");
     multiply.setActionCommand("multiply");
     multiply.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("\u00D7", new ClickAction(multiply));
     c.gridx = 3;
     c.gridy = 5;
     content.add(multiply, c);
@@ -328,6 +375,8 @@ public class Calculator extends JFrame implements ActionListener
     one = new JButton("1");
     one.setActionCommand("one");
     one.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("1", new ClickAction(one));
     c.gridx = 0;
     c.gridy = 6;
     content.add(one, c);
@@ -335,6 +384,8 @@ public class Calculator extends JFrame implements ActionListener
     two = new JButton("2");
     two.setActionCommand("two");
     two.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("2", new ClickAction(two));
     c.gridx = 1;
     c.gridy = 6;
     content.add(two, c);
@@ -342,6 +393,8 @@ public class Calculator extends JFrame implements ActionListener
     three = new JButton("3");
     three.setActionCommand("three");
     three.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("3", new ClickAction(three));
     c.gridx = 2;
     c.gridy = 6;
     content.add(three, c);
@@ -349,6 +402,8 @@ public class Calculator extends JFrame implements ActionListener
     divide = new JButton(Character.toString((char) 247));
     divide.setActionCommand("divide");
     divide.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("\u00F7", new ClickAction(divide));
     c.gridx = 3;
     c.gridy = 6;
     content.add(divide, c);
@@ -356,6 +411,8 @@ public class Calculator extends JFrame implements ActionListener
     bar = new JButton("/");
     bar.setActionCommand("bar");
     bar.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put(".", new ClickAction(bar));
     c.gridx = 2;
     c.gridy = 7;
     content.add(bar, c);
@@ -363,6 +420,8 @@ public class Calculator extends JFrame implements ActionListener
     equals = new JButton("=");
     equals.setActionCommand("equals");
     equals.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("=", new ClickAction(equals));
     c.gridx = 3;
     c.gridy = 7;
     content.add(equals, c);
