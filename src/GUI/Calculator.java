@@ -116,21 +116,15 @@ public class Calculator extends JFrame implements ActionListener
     
     inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DECIMAL, 0), ".");
   }
-  
-  private void setupMenu()
+
+  private void setupLayout()
   {
-    // Create a menu bar
-    JMenuBar menuBar = new JMenuBar();
-
-    // Create File menu with Exit item
-    JMenu fileMenu = new JMenu("File");
-    JMenuItem exitItem = new JMenuItem("Exit");
-    exitItem.addActionListener(e -> System.exit(0)); // Close the application on selecting Exit
-    fileMenu.add(exitItem);
-
-    // Create View menu with Pie Chart item
-    JMenu viewMenu = new JMenu("View");
-    JMenuItem pieChartItem = new JMenuItem("Pie Chart");
+    // Menu bar
+    MenuSetup menuSetup = new MenuSetup(this);
+    JMenuBar menuBar = menuSetup.createMenuBar();
+    setJMenuBar(menuBar);
+    // Pie chart functionality
+    JMenuItem pieChartItem = menuSetup.getPieChartMenuItem();
     pieChartItem.addActionListener(e ->
     {
       if(canCreatePieChart)
@@ -145,34 +139,6 @@ public class Calculator extends JFrame implements ActionListener
             "Unable to create pie chart", JOptionPane.ERROR_MESSAGE);
       }
     });
-    // TODO: add an action listener to pieChartItem
-    viewMenu.add(pieChartItem);
-
-    // Create Help menu with About and Help items
-    JMenu helpMenu = new JMenu("Help");
-    JMenuItem aboutItem = new JMenuItem("About");
-    aboutItem.addActionListener(e -> 
-    {
-      About aboutDialog = new About(Calculator.this);
-      aboutDialog.setVisible(true);
-    });
-    JMenuItem helpItem = new JMenuItem("Help");
-    // TODO: add an action listener to helpItem
-    helpMenu.add(aboutItem);
-    helpMenu.add(helpItem);
-
-    // Add menus to menu bar
-    menuBar.add(fileMenu);
-    menuBar.add(viewMenu);
-    menuBar.add(helpMenu);
-
-    // Set the menu bar to the frame
-    setJMenuBar(menuBar);
-  }
-
-  private void setupLayout()
-  {
-    setupMenu();
     
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
