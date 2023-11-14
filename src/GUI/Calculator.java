@@ -1,17 +1,21 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
+import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -19,8 +23,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyleContext;
+import javax.swing.text.StyledDocument;
 
 import GUI.pieChart.PieChart;
 import utilities.*;
@@ -30,8 +39,8 @@ public class Calculator extends JFrame implements ActionListener
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
   private JPanel display = new JPanel(new BorderLayout());
-  private JTextArea displayExpression = new JTextArea(1, 5);
-  private JTextArea displayOperand = new JTextArea(1, 5);
+  private JTextPane displayExpression = new JTextPane();
+  private JTextPane displayOperand = new JTextPane();
   private String whole = "_";
   private String numerator = "_";
   private String denominator = "_";
@@ -221,6 +230,8 @@ public class Calculator extends JFrame implements ActionListener
     content.add(display, c);
     
   }
+  
+  
   
 
   private void softButtons() // This method will create the button scheme
@@ -495,6 +506,8 @@ public class Calculator extends JFrame implements ActionListener
     }
   }
   
+  
+  
   @Override
   public void actionPerformed(final ActionEvent e)
   {      
@@ -503,29 +516,35 @@ public class Calculator extends JFrame implements ActionListener
     {
       currentOperation = "+";
       operatorButtonClicked("+");
+      updateCurrentOperand();
     }
     else if (minus.getActionCommand().equals(command))
     {
       currentOperation = "-";
       operatorButtonClicked("-");
+      updateCurrentOperand();
     }
     else if (multiply.getActionCommand().equals(command))
     {
       currentOperation = "*";
       operatorButtonClicked("*");
+      updateCurrentOperand();
     }
     else if (divide.getActionCommand().equals(command))
     {
       currentOperation = "/";
       operatorButtonClicked(Character.toString((char) 247));
+      updateCurrentOperand();
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
       operatorButtonClicked("⇹");
+      updateCurrentOperand();
     }
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
       operatorButtonClicked("^");
+      updateCurrentOperand();
     }
     else if (invert.getActionCommand().equals(command)) {
       setOperand();
@@ -680,7 +699,8 @@ public class Calculator extends JFrame implements ActionListener
     else if(e.getActionCommand().equals("bar"))
     {
       if (currentOperation == null || !currentOperation.equals("power")) {
-        currentTextArea++;
+        currentTextArea = (currentTextArea + 1) % 3;
+        updateCurrentOperand();
       }
     }
     else if (command.equals(reset.getActionCommand())){
@@ -691,25 +711,38 @@ public class Calculator extends JFrame implements ActionListener
       clearText();
       currentTextArea = 0;
       currentOperation = null;
+      updateCurrentOperand();
     }
     else if (command.equals(back.getActionCommand())) {
-      if (currentTextArea % 3 == 0) {
-          if (whole.length() > 1) {
+      if (currentTextArea % 3 == 0) { // Focus is on 'whole'
+          if (!whole.equals("_") && whole.length() > 1) {
               whole = whole.substring(0, whole.length() - 1);
-          } else {
+          }
+          else if (!whole.equals("_") && whole.length() == 1) {
             whole = "_";
           }
-      } else if (currentTextArea % 3 == 1) {
-          if (numerator.length() > 1) {
+          else if (whole.equals("_")) {
+            currentTextArea = 2;
+          }
+      } else if (currentTextArea % 3 == 1) { // Focus is on 'numerator'
+          if (!numerator.equals("_") && numerator.length() > 1) {
               numerator = numerator.substring(0, numerator.length() - 1);
-          } else {
+          }
+          else if (!numerator.equals("_") && numerator.length() == 1) {
             numerator = "_";
           }
-      } else {
-          if (denominator.length() > 1) {
-              denominator = denominator.substring(0, denominator.length() - 1);              
-          } else {
+          else if (numerator.equals("_")) {
+            currentTextArea = 0;
+          }
+      } else { // Focus is on 'denominator'
+          if (!denominator.equals("_") && denominator.length() > 1) {
+              denominator = denominator.substring(0, denominator.length() - 1);
+          } 
+          else if (!denominator.equals("_") && denominator.length() == 1) {
             denominator = "_";
+          }
+          else if (denominator.equals("_")) {
+            currentTextArea = 1;
           }
       }
       updateCurrentOperand();
@@ -739,10 +772,34 @@ public class Calculator extends JFrame implements ActionListener
   }
 
   private void updateCurrentOperand() {
-    
-    inputOperand = signText + whole + " " + numerator + "/" + denominator;
-    displayOperand.setText(inputOperand);
-  }
+    StyledDocument doc = displayOperand.getStyledDocument();
+   
+    javax.swing.text.Style defaultStyle = displayOperand.getStyle(StyleContext.DEFAULT_STYLE);
+    javax.swing.text.Style focusedStyle = displayOperand.addStyle("FocusedStyle", null);
+    StyleConstants.setBackground(focusedStyle, Color.LIGHT_GRAY);
+
+    try {
+        doc.remove(0, doc.getLength());
+
+        doc.insertString(doc.getLength(), signText, defaultStyle);
+        
+        if (currentTextArea % 3 == 0) {
+            doc.insertString(doc.getLength(), whole + " ", focusedStyle);
+            doc.insertString(doc.getLength(), numerator + "/", defaultStyle);
+            doc.insertString(doc.getLength(), denominator, defaultStyle);
+        } else if (currentTextArea % 3 == 1) {
+            doc.insertString(doc.getLength(), whole + " ", defaultStyle);
+            doc.insertString(doc.getLength(), numerator + "/", focusedStyle);
+            doc.insertString(doc.getLength(), denominator, defaultStyle);
+        } else {
+            doc.insertString(doc.getLength(), whole + " ", defaultStyle);
+            doc.insertString(doc.getLength(), numerator + "/", defaultStyle);
+            doc.insertString(doc.getLength(), denominator, focusedStyle);
+        }
+
+    } catch (BadLocationException e) {
+    }
+}
   
 
   public static void main(String[] args)
