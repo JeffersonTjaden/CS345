@@ -123,7 +123,7 @@ public class Calculator extends JFrame implements ActionListener
     MenuSetup menuSetup = new MenuSetup(this);
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
-    // Pie chart functionality
+    //Pie chart functionality
     JMenuItem pieChartItem = menuSetup.getPieChartMenuItem();
     pieChartItem.addActionListener(e ->
     {
