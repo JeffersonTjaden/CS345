@@ -46,6 +46,8 @@ public class Calculator extends JFrame implements ActionListener
   private String denominator = "_";
   private String signText = "";
   private boolean signBool = true;
+  private boolean isReducedForm;
+  private boolean isProperForm;
   private String inputOperand = signText + whole + " " + numerator + "/" + denominator;
   private ArrayList<Object> pieChartOps = new ArrayList<Object>();
   private boolean canCreatePieChart;
@@ -120,10 +122,10 @@ public class Calculator extends JFrame implements ActionListener
   private void setupLayout()
   {
     // Menu bar
-    MenuSetup menuSetup = new MenuSetup(this);
+    MenuSetup menuSetup = new MenuSetup(this, this);
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
-    //Pie chart functionality
+    // Pie chart functionality
     JMenuItem pieChartItem = menuSetup.getPieChartMenuItem();
     pieChartItem.addActionListener(e ->
     {
@@ -536,7 +538,7 @@ public class Calculator extends JFrame implements ActionListener
       switch (currentOperation)
       {
         case "+":
-          result = Operations.add(left, right);
+          result = Operations.add(left, right, this.isProperForm, this.isReducedForm);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -545,7 +547,7 @@ public class Calculator extends JFrame implements ActionListener
           canCreatePieChart = true;
           break;         
         case "-":
-          result = Operations.subtract(left, right);
+          result = Operations.subtract(left, right, this.isProperForm, this.isReducedForm);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -554,7 +556,7 @@ public class Calculator extends JFrame implements ActionListener
           canCreatePieChart = true;
           break;
         case "*":
-          result = Operations.multiply(left, right);
+          result = Operations.multiply(left, right, this.isProperForm, this.isReducedForm);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -563,7 +565,7 @@ public class Calculator extends JFrame implements ActionListener
           canCreatePieChart = true;
           break;          
         case "/":
-          result = Operations.divide(left, right);
+          result = Operations.divide(left, right, this.isProperForm, this.isReducedForm);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -574,14 +576,14 @@ public class Calculator extends JFrame implements ActionListener
         case "power":
           if (signBool) 
           {
-            result = Operations.exponent(left, right.getWhole());
+            result = Operations.exponent(left, right.getWhole(), this.isProperForm, this.isReducedForm);
           } else 
           {
-            result = Operations.exponent(left, -right.getWhole());
+            result = Operations.exponent(left, -right.getWhole(), this.isProperForm, this.isReducedForm);
           }
           break;   
         case "mediant":
-          result = Operations.mediant(left, right);
+          result = Operations.mediant(left, right, this.isProperForm, this.isReducedForm);
           break;
         default:
           break;
@@ -766,6 +768,14 @@ public class Calculator extends JFrame implements ActionListener
     } catch (BadLocationException e) {
     }
 }
+  
+  public void setProperForm(boolean isProper) {
+    this.isProperForm = isProper;
+  }
+  
+  public void setReducedForm(boolean isReduced) {
+    this.isReducedForm = isReduced;
+  }
   
 
   public static void main(String[] args)

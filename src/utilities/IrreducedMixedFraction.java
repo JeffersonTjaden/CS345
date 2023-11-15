@@ -23,7 +23,6 @@ public class IrreducedMixedFraction
     this.numerator = numerator;
     this.denominator = denominator;
     this.sign = true;
-    this.reduce();
   }
 
   public IrreducedMixedFraction(int numerator, int denominator, boolean sign)
@@ -35,7 +34,6 @@ public class IrreducedMixedFraction
     this.numerator = numerator;
     this.denominator = denominator;
     this.sign = sign;
-    this.reduce();
   }
   
   public IrreducedMixedFraction(int whole, int numerator, int denominator, boolean sign) {
@@ -46,8 +44,7 @@ public class IrreducedMixedFraction
     this.whole = whole;
     this.numerator = numerator;
     this.denominator = denominator;
-    this.sign = sign;
-    this.reduce();    
+    this.sign = sign;    
   }
 
   public int getWhole()
@@ -133,6 +130,12 @@ public void invert() {
   reduce();
 }
 
+public void simplifyMode() {
+  int divisor = simplifyHelper(numerator, denominator);
+  numerator /= divisor;
+  denominator /= divisor;
+}
+
 public void simplify() {
   unreduce();
   int divisor = simplifyHelper(numerator, denominator);
@@ -164,7 +167,6 @@ private int simplifyHelper(int numerator, int denominator) {
   }
 
   public String toString() {
-    reduce();
     String str = "";
     if (!sign) {
       str += "-";

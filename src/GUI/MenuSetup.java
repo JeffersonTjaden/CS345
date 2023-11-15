@@ -12,9 +12,11 @@ public class MenuSetup
 {
   private JFrame parentFrame;
   private JMenuItem pieChartItem;
+  private Calculator calculator;
   
-  public MenuSetup(JFrame parentFrame) {
+  public MenuSetup(JFrame parentFrame, Calculator calculator) {
     this.parentFrame = parentFrame;
+    this.calculator = calculator;
   }
   
   public JMenuBar createMenuBar() {
@@ -35,7 +37,8 @@ public class MenuSetup
     JMenu modeMenu = new JMenu("Mode");
     JCheckBoxMenuItem properItem = new JCheckBoxMenuItem("Proper");
     JCheckBoxMenuItem reducedItem = new JCheckBoxMenuItem("Reduced");
-    // TODO: Add action listeners and manage state for properItem and reducedItem
+    properItem.addActionListener(e -> calculator.setProperForm(properItem.isSelected()));
+    reducedItem.addActionListener(e -> calculator.setReducedForm(reducedItem.isSelected()));
     modeMenu.add(properItem);
     modeMenu.add(reducedItem);
 
