@@ -23,11 +23,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-<<<<<<< HEAD
 import javax.swing.JTextArea;
-=======
 import javax.swing.JTextPane;
->>>>>>> branch 'main' of https://github.com/bernstdh/F23Team1C
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
