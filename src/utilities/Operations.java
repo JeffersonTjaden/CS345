@@ -2,7 +2,7 @@ package utilities;
 public class Operations
 {
   public static IrreducedMixedFraction add(IrreducedMixedFraction left,
-      IrreducedMixedFraction right, boolean isProperForm, boolean isReducedForm)
+      IrreducedMixedFraction right)
   {
     int numerator;
     int denominator;
@@ -33,16 +33,10 @@ public class Operations
     } 
 
     result = new IrreducedMixedFraction(numerator, denominator, sign);
-    if (isProperForm) {
-      result.reduce();
-    }
-    if (isReducedForm) {
-      result.simplifyMode();
-    }
     return result;
   }
   
-  public static IrreducedMixedFraction subtract(IrreducedMixedFraction left, IrreducedMixedFraction right, boolean isProperForm, boolean isReducedForm) {
+  public static IrreducedMixedFraction subtract(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
     boolean sign;
@@ -72,16 +66,10 @@ public class Operations
     }
 
     result = new IrreducedMixedFraction(numerator, denominator, sign);
-    if (isProperForm) {
-      result.reduce();
-    }
-    if (isReducedForm) {
-      result.simplifyMode();
-    }
     return result;
   }
   
-  public static IrreducedMixedFraction multiply(IrreducedMixedFraction left, IrreducedMixedFraction right, boolean isProperForm, boolean isReducedForm) {
+  public static IrreducedMixedFraction multiply(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
     boolean sign;
@@ -101,16 +89,10 @@ public class Operations
     numerator = left.getNumerator() * right.getNumerator();
     denominator = left.getDenominator() * right.getDenominator();
     result = new IrreducedMixedFraction(numerator, denominator, sign);
-    if (isProperForm) {
-      result.reduce();
-    }
-    if (isReducedForm) {
-      result.simplifyMode();
-    }
     return result;
   }
   
-  public static IrreducedMixedFraction divide(IrreducedMixedFraction left, IrreducedMixedFraction right, boolean isProperForm, boolean isReducedForm) {
+  public static IrreducedMixedFraction divide(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
     boolean sign;
@@ -130,16 +112,10 @@ public class Operations
     denominator = left.getDenominator() * right.getNumerator();
     
     result = new IrreducedMixedFraction(numerator, denominator, sign);
-    if (isProperForm) {
-      result.reduce();
-    }
-    if (isReducedForm) {
-      result.simplifyMode();
-    }
     return result;
   }
 
-  public static IrreducedMixedFraction exponent(IrreducedMixedFraction operand, int power, boolean isProperForm, boolean isReducedForm) {
+  public static IrreducedMixedFraction exponent(IrreducedMixedFraction operand, int power) {
     int numerator;
     int denominator;
     boolean sign;
@@ -161,16 +137,10 @@ public class Operations
     }
 
     result = new IrreducedMixedFraction(numerator, denominator, sign);
-    if (isProperForm) {
-      result.reduce();
-    }
-    if (isReducedForm) {
-      result.simplifyMode();
-    }
     return result;
   }
   
-  public static IrreducedMixedFraction mediant(IrreducedMixedFraction left, IrreducedMixedFraction right, boolean isProperForm, boolean isReducedForm) {
+  public static IrreducedMixedFraction mediant(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
     boolean sign;
@@ -198,12 +168,6 @@ public class Operations
     }
 
     result = new IrreducedMixedFraction(numerator, denominator, sign);
-    if (isProperForm) {
-      result.reduce();
-    }
-    if (isReducedForm) {
-      result.simplifyMode();
-    }
     return result;
   }
 }

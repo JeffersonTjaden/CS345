@@ -448,6 +448,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {          
       setOperand();
     }
+    if (isProperForm) {
+      left.reduce();
+    }
+    if (isReducedForm) {
+      left.simplify();
+    }
     partialCurrentExpression = left.toString() + operation;
     displayExpression.setText(partialCurrentExpression);
     clearText();
@@ -566,10 +572,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     else if (equals.getActionCommand().equals(command))
     {
       setOperand();
+      IrreducedMixedFraction leftTemp = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
+      IrreducedMixedFraction rightTemp = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
       switch (currentOperation)
-      {
+      {        
         case "+":
-          result = Operations.add(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.add(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -578,7 +586,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;         
         case "-":
-          result = Operations.subtract(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.subtract(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -587,7 +595,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;
         case "*":
-          result = Operations.multiply(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.multiply(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -596,7 +604,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;          
         case "/":
-          result = Operations.divide(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.divide(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -607,12 +615,19 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
         case "power":
           if (signBool) 
           {
+<<<<<<< Updated upstream
             result = Operations.exponent(left, right.getWhole(), this.isProperForm,
                 this.isReducedForm);
           } else 
           {
             result = Operations.exponent(left, -right.getWhole(), this.isProperForm,
                 this.isReducedForm);
+=======
+            result = Operations.exponent(left, right.getWhole());
+          } else 
+          {
+            result = Operations.exponent(left, -right.getWhole());
+>>>>>>> Stashed changes
           }
           pieChartOps.clear();
           pieChartOps.add(left);
@@ -621,15 +636,27 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           pieChartOps.add("^");
           break;   
         case "mediant":
+<<<<<<< Updated upstream
           result = Operations.mediant(left, right, this.isProperForm, this.isReducedForm);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
           pieChartOps.add(result);
           pieChartOps.add("↔");
+=======
+          result = Operations.mediant(left, right);
+>>>>>>> Stashed changes
           break;
         default:
           break;
+      }
+      if (isProperForm) {
+        right.reduce();
+        result.reduce();
+      }
+      if (isReducedForm) {
+        right.simplify();
+        result.simplify();
       }
       evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
           + result.toString();

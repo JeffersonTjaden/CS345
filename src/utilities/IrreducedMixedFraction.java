@@ -137,11 +137,9 @@ public void simplifyMode() {
 }
 
 public void simplify() {
-  unreduce();
   int divisor = simplifyHelper(numerator, denominator);
   numerator /= divisor;
   denominator /= divisor;
-  reduce();
 }
 
 private int simplifyHelper(int numerator, int denominator) {
