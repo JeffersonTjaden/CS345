@@ -127,13 +127,6 @@ public void invert() {
     numerator = denominator;
     denominator = temp;
   }
-  reduce();
-}
-
-public void simplifyMode() {
-  int divisor = simplifyHelper(numerator, denominator);
-  numerator /= divisor;
-  denominator /= divisor;
 }
 
 public void simplify() {
