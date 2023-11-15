@@ -2,12 +2,15 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -24,7 +27,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
@@ -35,7 +40,7 @@ import javax.swing.text.StyledDocument;
 import GUI.pieChart.PieChart;
 import utilities.*;
 
-public class Calculator extends JFrame implements ActionListener
+public class Calculator extends JFrame implements ActionListener, ComponentListener
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
@@ -92,10 +97,14 @@ public class Calculator extends JFrame implements ActionListener
   private JButton simplification;
   private JButton invert;
 
+  private JTextField calcHistory;
+  private JWindow history;
+
   public Calculator()
   {
     setupInputMap();
     setupLayout();
+    displayHistory();
   }
 
   private void setupInputMap() {
@@ -126,6 +135,8 @@ public class Calculator extends JFrame implements ActionListener
 
   private void setupLayout()
   {
+    pack();
+
     // Menu bar
     MenuSetup menuSetup = new MenuSetup(this, this);
     JMenuBar menuBar = menuSetup.createMenuBar();
@@ -162,6 +173,8 @@ public class Calculator extends JFrame implements ActionListener
 
     setVisible(true);
     setSize(400, 600);
+    setAlwaysOnTop(true);
+    addComponentListener(this);
   }
   
 
@@ -794,6 +807,52 @@ public class Calculator extends JFrame implements ActionListener
     this.isReducedForm = isReduced;
   }
   
+    public void displayHistory(){
+    history = new JWindow();
+    history.setSize(400, getHeight()/2);
+    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
+    history.setLayout(new BorderLayout());
+
+    JButton toggle = new JButton(">");
+    toggle.setPreferredSize(new Dimension(50, 50));
+
+    toggle.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e){
+        if(history.getLocation().getX() < getLocation().getX() + getWidth()/2){
+          history.setLocation((int)history.getLocation().getX() + 300, (int)history.getLocation().getY());
+          toggle.setLabel("<");
+        } else{
+          history.setLocation((int)history.getLocation().getX() - 300, (int)history.getLocation().getY());
+          toggle.setLabel(">");
+        }
+      }
+    });
+
+    calcHistory = new JTextField();
+    history.add(calcHistory, BorderLayout.CENTER);
+    history.add(toggle, BorderLayout.EAST);
+    history.setVisible(true);
+  }
+
+  @Override
+  public void componentResized(ComponentEvent e) {
+    history.setSize(400, getHeight()/2);
+    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
+  }
+
+  @Override
+  public void componentMoved(ComponentEvent e) {
+    history.setVisible(false);
+    history.setVisible(true);
+    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
+    System.out.println(history.getLocation());
+  }
+
+  @Override
+  public void componentShown(ComponentEvent e) {};
+
+  @Override
+  public void componentHidden(ComponentEvent e) {};
 
   public static void main(String[] args)
   {
