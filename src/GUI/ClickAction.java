@@ -1,4 +1,8 @@
 package GUI;
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'main' of https://github.com/bernstdh/F23Team1C
 import java.awt.event.*;
 import javax.swing.*;
 
