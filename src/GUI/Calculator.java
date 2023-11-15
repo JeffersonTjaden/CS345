@@ -455,10 +455,20 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   }
 
   private void setOperand() {
-    int whole;
-    int numerator;
-    int denominator;
+    int whole = parseWhole();
+    int numerator = parseNumerator();
+    int denominator = parseDenominator();
+    if (left == null) 
+    {
+      left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    } else 
+    {
+      right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    }
+  }
 
+  private int parseWhole() {
+    int whole;
     if (!this.whole.equals("_")) 
     {
       whole = Integer.parseInt(this.whole);
@@ -466,6 +476,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       whole = 0;
     }
+    return whole;
+  }
+
+  private int parseNumerator() {
+    int numerator;
     if (!this.numerator.equals("_"))
     {
       numerator = Integer.parseInt(this.numerator);
@@ -473,6 +488,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       numerator = 0;
     }
+    return numerator;
+  }
+
+  private int parseDenominator() {
+    int denominator;
     if (!this.denominator.equals("_"))
     {
       denominator = Integer.parseInt(this.denominator);
@@ -484,13 +504,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       denominator = 1;
     }
-    if (left == null) 
-    {
-      left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
-    } else 
-    {
-      right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
-    }
+    return denominator;
   }
   
   
@@ -534,22 +548,20 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       updateCurrentOperand();
     }
     else if (invert.getActionCommand().equals(command)) {
-      setOperand();
-      left.invert();
-      whole = String.valueOf(left.getWhole());
-      numerator = String.valueOf(left.getNumerator());
-      denominator = String.valueOf(left.getDenominator());
+      IrreducedMixedFraction temp = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
+      temp.invert();
+      whole = String.valueOf(temp.getWhole());
+      numerator = String.valueOf(temp.getNumerator());
+      denominator = String.valueOf(temp.getDenominator());
       updateCurrentOperand();
-      left = null;
     }
     else if (simplification.getActionCommand().equals(command)){
-      setOperand();
-      left.simplify();
-      whole = String.valueOf(left.getWhole());
-      numerator = String.valueOf(left.getNumerator());
-      denominator = String.valueOf(left.getDenominator());
+      IrreducedMixedFraction temp = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
+      temp.simplify();
+      whole = String.valueOf(temp.getWhole());
+      numerator = String.valueOf(temp.getNumerator());
+      denominator = String.valueOf(temp.getDenominator());
       updateCurrentOperand();
-      left = null;
     }
     else if (equals.getActionCommand().equals(command))
     {
