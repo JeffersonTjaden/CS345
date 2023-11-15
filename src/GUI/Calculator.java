@@ -612,6 +612,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           break;   
         case "mediant":
           result = Operations.mediant(left, right);
+          pieChartOps.clear();
+          pieChartOps.add(left);
+          pieChartOps.add(right);
+          pieChartOps.add(result);
+          pieChartOps.add("⇹");
           break;
         default:
           break;
