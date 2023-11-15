@@ -99,6 +99,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   private JTextField calcHistory;
   private JWindow history;
+  private boolean expand = true;
 
   public Calculator()
   {
@@ -818,11 +819,13 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
     toggle.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e){
-        if(history.getLocation().getX() < getLocation().getX() + getWidth()/2){
-          history.setLocation((int)history.getLocation().getX() + 300, (int)history.getLocation().getY());
+        if(expand){
+          history.setSize(history.getWidth() + 300, history.getHeight());
+          expand = false;
           toggle.setLabel("<");
         } else{
-          history.setLocation((int)history.getLocation().getX() - 300, (int)history.getLocation().getY());
+          history.setSize(history.getWidth() - 300, history.getHeight());
+          expand = true;
           toggle.setLabel(">");
         }
       }
@@ -836,16 +839,15 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   @Override
   public void componentResized(ComponentEvent e) {
-    history.setSize(400, getHeight()/2);
-    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
+    history.setSize(getWidth(), getHeight()/2);
+    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + getHeight()/4);
   }
 
   @Override
   public void componentMoved(ComponentEvent e) {
     history.setVisible(false);
     history.setVisible(true);
-    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
-    System.out.println(history.getLocation());
+    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + getHeight()/4);
   }
 
   @Override
