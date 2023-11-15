@@ -142,22 +142,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     MenuSetup menuSetup = new MenuSetup(this, this);
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
-    // Pie chart functionality
-    JMenuItem pieChartItem = menuSetup.getPieChartMenuItem();
-    pieChartItem.addActionListener(e ->
-    {
-      if(canCreatePieChart)
-      {
-        new PieChart((IrreducedMixedFraction) pieChartOps.get(0), 
-            (IrreducedMixedFraction) pieChartOps.get(1),
-            (IrreducedMixedFraction) pieChartOps.get(2), (String) pieChartOps.get(3));
-      } else
-      {
-        JOptionPane.showMessageDialog(this, "Please complete a binary operation"
-            + " to view a pie chart representation",
-            "Unable to create pie chart", JOptionPane.ERROR_MESSAGE);
-      }
-    });
     
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -838,6 +822,14 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     } catch (BadLocationException e) {
     }
 }
+  
+  public boolean getCanCreatePieChart() {
+    return canCreatePieChart;
+  }
+  
+  public ArrayList<Object> getPieChartOps() {
+    return pieChartOps;
+  }
   
   public void setProperForm(boolean isProper) {
     this.isProperForm = isProper;

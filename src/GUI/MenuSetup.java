@@ -6,7 +6,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+
+import GUI.pieChart.PieChart;
+import utilities.IrreducedMixedFraction;
 
 public class MenuSetup
 {
@@ -45,6 +49,17 @@ public class MenuSetup
     // Create View menu with Pie Chart item
     JMenu viewMenu = new JMenu("View");
     pieChartItem = new JMenuItem("Pie Chart");
+    pieChartItem.addActionListener(e -> {
+      if(calculator.getCanCreatePieChart()) {
+          new PieChart((IrreducedMixedFraction) calculator.getPieChartOps().get(0), 
+              (IrreducedMixedFraction) calculator.getPieChartOps().get(1),
+              (IrreducedMixedFraction) calculator.getPieChartOps().get(2), (String) calculator.getPieChartOps().get(3));
+      } else {
+          JOptionPane.showMessageDialog(parentFrame, "Please complete a binary operation"
+              + " to view a pie chart representation",
+              "Unable to create pie chart", JOptionPane.ERROR_MESSAGE);
+      }
+    });
     viewMenu.add(pieChartItem);
     
     // Style menu
@@ -82,10 +97,6 @@ public class MenuSetup
     menuBar.add(helpMenu);
     
     return menuBar;
-  }
-  
-  public JMenuItem getPieChartMenuItem() {
-    return pieChartItem;
   }
 }
 
