@@ -599,19 +599,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
         case "power":
           if (signBool) 
           {
-<<<<<<< Updated upstream
-            result = Operations.exponent(left, right.getWhole(), this.isProperForm,
-                this.isReducedForm);
-          } else 
-          {
-            result = Operations.exponent(left, -right.getWhole(), this.isProperForm,
-                this.isReducedForm);
-=======
             result = Operations.exponent(left, right.getWhole());
           } else 
           {
             result = Operations.exponent(left, -right.getWhole());
->>>>>>> Stashed changes
           }
           pieChartOps.clear();
           pieChartOps.add(left);
@@ -620,16 +611,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           pieChartOps.add("^");
           break;   
         case "mediant":
-<<<<<<< Updated upstream
-          result = Operations.mediant(left, right, this.isProperForm, this.isReducedForm);
-          pieChartOps.clear();
-          pieChartOps.add(left);
-          pieChartOps.add(right);
-          pieChartOps.add(result);
-          pieChartOps.add("↔");
-=======
           result = Operations.mediant(left, right);
->>>>>>> Stashed changes
           break;
         default:
           break;
