@@ -29,6 +29,7 @@ public class PieChartCanvas extends Canvas
   public PieChartCanvas(final IrreducedMixedFraction fraction)
   {
     setBackground(Color.DARK_GRAY);
+    fraction.reduce();
     this.whole = fraction.getWhole();
     this.numerator = fraction.getNumerator();
     this.denominator = fraction.getDenominator();

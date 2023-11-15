@@ -42,6 +42,7 @@ public class Calculator extends JFrame implements ActionListener
   private JPanel display = new JPanel(new BorderLayout());
   private JTextPane displayExpression = new JTextPane();
   private JTextPane displayOperand = new JTextPane();
+  
   private String whole = "_";
   private String numerator = "_";
   private String denominator = "_";
@@ -50,9 +51,12 @@ public class Calculator extends JFrame implements ActionListener
   private boolean isReducedForm;
   private boolean isProperForm;
   private String inputOperand = signText + whole + " " + numerator + "/" + denominator;
+  
   private ArrayList<Object> pieChartOps = new ArrayList<Object>();
   private boolean canCreatePieChart;
 
+  private ArrayList<String> sessionHistory = new ArrayList<String>();
+  
   private IrreducedMixedFraction left;
   private IrreducedMixedFraction right;
   private IrreducedMixedFraction result;
@@ -137,8 +141,8 @@ public class Calculator extends JFrame implements ActionListener
             (IrreducedMixedFraction) pieChartOps.get(2), (String) pieChartOps.get(3));
       } else
       {
-        JOptionPane.showMessageDialog(this, "Please complete an add, subtract, "
-            + "multiply, or divide operation to view a pie chart representation",
+        JOptionPane.showMessageDialog(this, "Please complete a binary operation"
+            + " to view a pie chart representation",
             "Unable to create pie chart", JOptionPane.ERROR_MESSAGE);
       }
     });
@@ -577,14 +581,26 @@ public class Calculator extends JFrame implements ActionListener
         case "power":
           if (signBool) 
           {
-            result = Operations.exponent(left, right.getWhole(), this.isProperForm, this.isReducedForm);
+            result = Operations.exponent(left, right.getWhole(), this.isProperForm,
+                this.isReducedForm);
           } else 
           {
-            result = Operations.exponent(left, -right.getWhole(), this.isProperForm, this.isReducedForm);
+            result = Operations.exponent(left, -right.getWhole(), this.isProperForm,
+                this.isReducedForm);
           }
+          pieChartOps.clear();
+          pieChartOps.add(left);
+          pieChartOps.add(right);
+          pieChartOps.add(result);
+          pieChartOps.add("^");
           break;   
         case "mediant":
           result = Operations.mediant(left, right, this.isProperForm, this.isReducedForm);
+          pieChartOps.clear();
+          pieChartOps.add(left);
+          pieChartOps.add(right);
+          pieChartOps.add(result);
+          pieChartOps.add("↔");
           break;
         default:
           break;
