@@ -36,6 +36,7 @@ import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
@@ -650,6 +651,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           + result.toString();
       displayExpression.setText(evaluatedCurrentExpression);
       calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
+      System.out.println(calcHistory.getText());
       clearText();
       currentTextArea = 0;
       left = null;
@@ -845,52 +847,53 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     this.isReducedForm = isReduced;
   }
   
-    public void displayHistory(){
-      history = new JWindow();
-      history.setSize(400, getHeight()/2);
-      history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
-      history.setLayout(new BorderLayout());
+  public void displayHistory(){
+    history = new JWindow();
+    history.setSize(400, getHeight()/2);
+    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
+    history.setLayout(new BorderLayout());
 
-      JButton toggle = new JButton(">");
-      toggle.setPreferredSize(new Dimension(50, 50));
+    JButton toggle = new JButton(">");
+    toggle.setPreferredSize(new Dimension(50, 50));
 
-      toggle.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e){
-          if(expand){
-            for(int i = 0; i < 30; i++){
-              history.setSize(history.getWidth() + 10, history.getHeight());
-              try {
-                TimeUnit.MILLISECONDS.sleep(5);
-              } catch (InterruptedException e1) {e1.printStackTrace();}
-            }
-            expand = false;
-            toggle.setLabel("<");
-          } else{
-            while(history.getWidth() > getWidth()){
-              history.setSize(history.getWidth() - 10, history.getHeight());
-              try {
-                TimeUnit.MILLISECONDS.sleep(5);
-              } catch (InterruptedException e1) {e1.printStackTrace();}
-            }
-            expand = true;
-            toggle.setLabel(">");
+    toggle.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e){
+        if(expand){
+          for(int i = 0; i < 30; i++){
+            history.setSize(history.getWidth() + 10, history.getHeight());
+            try {
+              TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e1) {e1.printStackTrace();}
           }
+          expand = false;
+          toggle.setLabel("<");
+        } else{
+          while(history.getWidth() > getWidth()){
+            history.setSize(history.getWidth() - 10, history.getHeight());
+            try {
+              TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e1) {e1.printStackTrace();}
+          }
+          expand = true;
+          toggle.setLabel(">");
         }
-      });
+      }
+    });
 
-      JPanel historyPanel = new JPanel();
+    calcHistory = new JTextPane();
 
-      historyPanel.setLayout(new BorderLayout());
-      calcHistory = new JTextPane();
-      calcHistory.setBackground(getBackground());
-      scrollable = new JScrollPane(calcHistory);
-      scrollable.setBorder(null);
-      
-      historyPanel.add(scrollable, BorderLayout.EAST);
+    // These four lines are used to align the text to the right
+    StyledDocument style = calcHistory.getStyledDocument();
+    SimpleAttributeSet align = new SimpleAttributeSet();
+    StyleConstants.setAlignment(align, StyleConstants.ALIGN_RIGHT);
+    style.setParagraphAttributes(0, style.getLength(), align, false);
 
-      history.add(historyPanel, BorderLayout.CENTER);
-      history.add(toggle, BorderLayout.EAST);
-      history.setVisible(true);
+    scrollable = new JScrollPane(calcHistory);
+    scrollable.setBorder(null);
+
+    history.add(scrollable, BorderLayout.CENTER);
+    history.add(toggle, BorderLayout.EAST);
+    history.setVisible(true);
   }
 
   @Override
@@ -901,8 +904,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   @Override
   public void componentMoved(ComponentEvent e) {
-    history.setVisible(false);
-    history.setVisible(true);
     history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + getHeight()/4);
   }
 
