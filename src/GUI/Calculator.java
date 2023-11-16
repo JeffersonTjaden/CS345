@@ -443,6 +443,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {          
       setOperand();
     }
+    if (isProperForm) {
+      left.reduce();
+    }
+    if (isReducedForm) {
+      left.simplify();
+    }
     partialCurrentExpression = left.toString() + operation;
     displayExpression.setText(partialCurrentExpression);
     clearText();
@@ -450,10 +456,20 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   }
 
   private void setOperand() {
-    int whole;
-    int numerator;
-    int denominator;
+    int whole = parseWhole();
+    int numerator = parseNumerator();
+    int denominator = parseDenominator();
+    if (left == null) 
+    {
+      left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    } else 
+    {
+      right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
+    }
+  }
 
+  private int parseWhole() {
+    int whole;
     if (!this.whole.equals("_")) 
     {
       whole = Integer.parseInt(this.whole);
@@ -461,6 +477,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       whole = 0;
     }
+    return whole;
+  }
+
+  private int parseNumerator() {
+    int numerator;
     if (!this.numerator.equals("_"))
     {
       numerator = Integer.parseInt(this.numerator);
@@ -468,6 +489,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       numerator = 0;
     }
+    return numerator;
+  }
+
+  private int parseDenominator() {
+    int denominator;
     if (!this.denominator.equals("_"))
     {
       denominator = Integer.parseInt(this.denominator);
@@ -479,13 +505,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       denominator = 1;
     }
-    if (left == null) 
-    {
-      left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
-    } else 
-    {
-      right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
-    }
+    return denominator;
   }
   
   
@@ -529,30 +549,30 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       updateCurrentOperand();
     }
     else if (invert.getActionCommand().equals(command)) {
-      setOperand();
-      left.invert();
-      whole = String.valueOf(left.getWhole());
-      numerator = String.valueOf(left.getNumerator());
-      denominator = String.valueOf(left.getDenominator());
+      IrreducedMixedFraction temp = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
+      temp.invert();
+      whole = String.valueOf(temp.getWhole());
+      numerator = String.valueOf(temp.getNumerator());
+      denominator = String.valueOf(temp.getDenominator());
       updateCurrentOperand();
-      left = null;
     }
     else if (simplification.getActionCommand().equals(command)){
-      setOperand();
-      left.simplify();
-      whole = String.valueOf(left.getWhole());
-      numerator = String.valueOf(left.getNumerator());
-      denominator = String.valueOf(left.getDenominator());
+      IrreducedMixedFraction temp = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
+      temp.simplify();
+      whole = String.valueOf(temp.getWhole());
+      numerator = String.valueOf(temp.getNumerator());
+      denominator = String.valueOf(temp.getDenominator());
       updateCurrentOperand();
-      left = null;
     }
     else if (equals.getActionCommand().equals(command))
     {
       setOperand();
+      IrreducedMixedFraction leftTemp = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
+      IrreducedMixedFraction rightTemp = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
       switch (currentOperation)
-      {
+      {        
         case "+":
-          result = Operations.add(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.add(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -561,7 +581,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;         
         case "-":
-          result = Operations.subtract(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.subtract(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -570,7 +590,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;
         case "*":
-          result = Operations.multiply(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.multiply(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -579,7 +599,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;          
         case "/":
-          result = Operations.divide(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.divide(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
@@ -590,12 +610,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
         case "power":
           if (signBool) 
           {
-            result = Operations.exponent(left, right.getWhole(), this.isProperForm,
-                this.isReducedForm);
+            result = Operations.exponent(left, right.getWhole());
           } else 
           {
-            result = Operations.exponent(left, -right.getWhole(), this.isProperForm,
-                this.isReducedForm);
+            result = Operations.exponent(left, -right.getWhole());
           }
           pieChartOps.clear();
           pieChartOps.add(left);
@@ -604,15 +622,23 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           pieChartOps.add("^");
           break;   
         case "mediant":
-          result = Operations.mediant(left, right, this.isProperForm, this.isReducedForm);
+          result = Operations.mediant(left, right);
           pieChartOps.clear();
           pieChartOps.add(left);
           pieChartOps.add(right);
           pieChartOps.add(result);
-          pieChartOps.add("↔");
+          pieChartOps.add("⇹");
           break;
         default:
           break;
+      }
+      if (isProperForm) {
+        right.reduce();
+        result.reduce();
+      }
+      if (isReducedForm) {
+        right.simplify();
+        result.simplify();
       }
       evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
           + result.toString();
