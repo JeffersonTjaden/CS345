@@ -429,6 +429,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     zero = new JButton("0");
     zero.setActionCommand("zero");
     zero.addActionListener(this);
+    actionMap = content.getActionMap();
+    actionMap.put("0", new ClickAction(zero));
     c.gridwidth = 2;
     c.gridx = 0;
     c.gridy = 7;
