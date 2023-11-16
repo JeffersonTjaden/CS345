@@ -103,7 +103,17 @@ public class MenuSetup
       aboutDialog.setVisible(true);
     });
     JMenuItem helpItem = new JMenuItem(messages.getString("help.item"));
-    // TODO: add an action listener to helpItem
+    helpItem.addActionListener(e ->{
+      File htmlFile = new File("src/resources/help.html");
+      try
+      {
+        Desktop.getDesktop().browse(htmlFile.toURI());
+      }
+      catch (IOException e1)
+      {
+        e1.printStackTrace();
+      }
+    });
     helpMenu.add(aboutItem);
     helpMenu.add(helpItem);
 

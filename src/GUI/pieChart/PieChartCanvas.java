@@ -2,7 +2,10 @@ package GUI.pieChart;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
+
+import javax.swing.JTextField;
 
 import utilities.IrreducedMixedFraction;
 
@@ -20,8 +23,8 @@ public class PieChartCanvas extends Canvas
   private int xPos;
   private int yPos;
   private boolean sign;
-  private final int size = 22;
-  private final int numCircles;
+  private final int size = 30;
+  private final Integer numCircles;
   /**
    * Creates a new PieChartCanvas representative of an IrreducedMixedFraction.
    * @param fraction The number to be represented
@@ -48,15 +51,28 @@ public class PieChartCanvas extends Canvas
     if (sign) g.setColor(Color.RED);
     else g.setColor(Color.GREEN);
     int angle = (int)(((double)(numerator)/denominator) * 360);
-    for (int i = 0; i < whole; i++)
+    if (numCircles <= 100)
     {
-      g.fillOval(xPos, yPos, size, size);
-      xPos += size;
-      if (xPos + size >= this.getWidth())
+      for (int i = 0; i < whole; i++)
       {
-        xPos = 0;
-        yPos += size;
+        g.fillOval(xPos, yPos, size, size);
+        xPos += size;
+        if (xPos + size >= this.getWidth())
+        {
+          xPos = 0;
+          yPos += size;
+        }
       }
+    } else
+    {
+      Font font = new Font("Serif", Font.BOLD, 15);
+      g.fillOval(xPos, yPos, size, size);
+      g.setColor(Color.BLACK);
+      g.setFont(font);
+      g.drawString(numCircles.toString(), xPos+5, yPos+20);
+      xPos += size;
+      if (sign) g.setColor(Color.RED);
+      else g.setColor(Color.GREEN);
     }
     g.fillArc(xPos, yPos, size, size, 0, -1 * angle);
   }

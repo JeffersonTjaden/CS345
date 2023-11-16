@@ -33,7 +33,8 @@ public class PieChart extends JFrame
    * @param operator The operator
    **/
   public PieChart(final IrreducedMixedFraction op1, final IrreducedMixedFraction op2,
-      final IrreducedMixedFraction ans, final String operator, final ResourceBundle messages, final MenuSetup menuSetup)
+      final IrreducedMixedFraction ans, final String operator,
+      final ResourceBundle messages, final MenuSetup menuSetup)
   {
     this.menuSetup = menuSetup;
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -61,12 +62,14 @@ public class PieChart extends JFrame
     add(panel4);
     add(new PieChartCanvas(ans));
     setVisible(true);
-    addWindowListener(new WindowAdapter() {
+    addWindowListener(new WindowAdapter() 
+    {
       @Override
-      public void windowClosing(WindowEvent e) {
-          PieChart.this.menuSetup.getCheckBoxMenuItem().setSelected(false);
+      public void windowClosing(final WindowEvent e) 
+      {
+        PieChart.this.menuSetup.getCheckBoxMenuItem().setSelected(false);
       }
-  });
+    });
   }
   private JPanel makePanel()
   {
