@@ -2,6 +2,7 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -25,6 +26,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
@@ -102,9 +106,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JButton invert;
 
   //History display objects
-  private JTextField calcHistory;
+  private JTextPane calcHistory;
   private JWindow history;
   private boolean expand = true;
+  private JScrollPane scrollable;
 
   public Calculator()
   {
@@ -643,6 +648,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
           + result.toString();
       displayExpression.setText(evaluatedCurrentExpression);
+      calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
       clearText();
       currentTextArea = 0;
       left = null;
@@ -861,8 +867,13 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       }
     });
 
-    calcHistory = new JTextField();
-    history.add(calcHistory, BorderLayout.CENTER);
+    calcHistory = new JTextPane();
+    calcHistory.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
+    scrollable = new JScrollPane(calcHistory);
+    scrollable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+    history.add(scrollable, BorderLayout.CENTER);
     history.add(toggle, BorderLayout.EAST);
     history.setVisible(true);
   }
