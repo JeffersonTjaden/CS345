@@ -49,7 +49,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private GridBagConstraints c = new GridBagConstraints();
   private JPanel display = new JPanel(new BorderLayout());
   private JTextPane displayExpression = new JTextPane();
-  private JTextPane displayOperand = new JTextPane();
+  private JLabel displayOperand = new JLabel();
   
   private ResourceBundle messages;
   
@@ -206,7 +206,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private void display()
   {
     displayExpression.setEditable(false);
-    displayOperand.setEditable(false);
     displayOperand.setText(inputOperand);
     display.setBackground(displayExpression.getBackground());
     display.add(displayExpression, BorderLayout.NORTH);
@@ -804,33 +803,27 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   }
 
   private void updateCurrentOperand() {
-    StyledDocument doc = displayOperand.getStyledDocument();
-   
-    javax.swing.text.Style defaultStyle = displayOperand.getStyle(StyleContext.DEFAULT_STYLE);
-    javax.swing.text.Style focusedStyle = displayOperand.addStyle("FocusedStyle", null);
-    StyleConstants.setBackground(focusedStyle, Color.LIGHT_GRAY);
+    String text = "";
+    String wholePart = whole + " ";
+    String numeratorPart = numerator + "/";
+    String denominatorPart = denominator;
 
-    try {
-        doc.remove(0, doc.getLength());
+    String focusedStyle = "<span style='background-color:#D3D3D3; color:black;'>%s</span>"; // Changed color for visibility
 
-        doc.insertString(doc.getLength(), signText, defaultStyle);
-        
-        if (currentTextArea % 3 == 0) {
-            doc.insertString(doc.getLength(), whole + " ", focusedStyle);
-            doc.insertString(doc.getLength(), numerator + "/", defaultStyle);
-            doc.insertString(doc.getLength(), denominator, defaultStyle);
-        } else if (currentTextArea % 3 == 1) {
-            doc.insertString(doc.getLength(), whole + " ", defaultStyle);
-            doc.insertString(doc.getLength(), numerator + "/", focusedStyle);
-            doc.insertString(doc.getLength(), denominator, defaultStyle);
-        } else {
-            doc.insertString(doc.getLength(), whole + " ", defaultStyle);
-            doc.insertString(doc.getLength(), numerator + "/", defaultStyle);
-            doc.insertString(doc.getLength(), denominator, focusedStyle);
-        }
-
-    } catch (BadLocationException e) {
+    switch (currentTextArea % 3) {
+        case 0:
+            text = String.format(focusedStyle, wholePart) + numeratorPart + denominatorPart;
+            break;
+        case 1:
+            text = wholePart + String.format(focusedStyle, numeratorPart) + denominatorPart;
+            break;
+        case 2:
+            text = wholePart + numeratorPart + String.format(focusedStyle, denominatorPart);
+            break;
     }
+
+    text = "<html>" + signText + text + "</html>";
+    displayOperand.setText(text);
 }
   
   public boolean getCanCreatePieChart() {
