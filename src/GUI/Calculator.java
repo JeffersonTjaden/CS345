@@ -111,7 +111,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     this(Locale.getDefault());
   }
   
-  //Overloaded constructor accepting a Locale
+  //Overloaded constructor accepting a Locale.
   public Calculator(Locale locale) {
       setupInputMap();
       setupLayout(locale);
