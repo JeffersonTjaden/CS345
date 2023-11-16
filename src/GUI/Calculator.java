@@ -13,6 +13,8 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
@@ -37,7 +39,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
-import GUI.pieChart.PieChart;
 import utilities.*;
 
 public class Calculator extends JFrame implements ActionListener, ComponentListener
@@ -48,13 +49,17 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JTextPane displayExpression = new JTextPane();
   private JTextPane displayOperand = new JTextPane();
   
+  private ResourceBundle messages;
+  
   private String whole = "_";
   private String numerator = "_";
   private String denominator = "_";
   private String signText = "";
   private boolean signBool = true;
+  
   private boolean isReducedForm;
   private boolean isProperForm;
+  
   private String inputOperand = signText + whole + " " + numerator + "/" + denominator;
   
   private ArrayList<Object> pieChartOps = new ArrayList<Object>();
@@ -103,9 +108,14 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   public Calculator()
   {
-    setupInputMap();
-    setupLayout();
-    displayHistory();
+    this(Locale.getDefault());
+  }
+  
+  //Overloaded constructor accepting a Locale
+  public Calculator(Locale locale) {
+      setupInputMap();
+      setupLayout(locale);
+      displayHistory();
   }
 
   private void setupInputMap() {
@@ -134,18 +144,19 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_DECIMAL, 0), ".");
   }
 
-  private void setupLayout()
+  private void setupLayout(Locale locale)
   {
+    this.messages = ResourceBundle.getBundle("resources.MessagesBundle", locale);
     pack();
 
     // Menu bar
-    MenuSetup menuSetup = new MenuSetup(this, this);
+    MenuSetup menuSetup = new MenuSetup(this, this, locale);
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
     
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-    setTitle("Fragile Calculator");
+    setTitle(messages.getString("calculator.title"));
 
     content = (JPanel) getContentPane();
     content.setLayout(new GridBagLayout());
@@ -694,6 +705,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       clearText();
       currentTextArea = 0;
       currentOperation = null;
+      canCreatePieChart = false;
       updateCurrentOperand();
     }
     else if (command.equals(back.getActionCommand())) {
@@ -850,6 +862,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   public static void main(String[] args)
   {
-    new Calculator();
+    Locale locale = Locale.getDefault();
+    
+    if (args.length == 2) {
+      locale = new Locale(args[0], args[1]);
+    }
+    new Calculator(locale);
   }
 }

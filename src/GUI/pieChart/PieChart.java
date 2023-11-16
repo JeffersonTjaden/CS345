@@ -2,6 +2,7 @@ package GUI.pieChart;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,10 +29,10 @@ public class PieChart extends JFrame
    * @param operator The operator
    **/
   public PieChart(final IrreducedMixedFraction op1, final IrreducedMixedFraction op2,
-      final IrreducedMixedFraction ans, final String operator)
+      final IrreducedMixedFraction ans, final String operator, final ResourceBundle messages)
   {
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    setTitle("Current Expression");
+    setTitle(messages.getString("pieChart.title"));
     setSize(600, 300);
     setLayout(new GridLayout(2, 3));
     String eq = "=";
