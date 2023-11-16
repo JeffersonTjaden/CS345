@@ -1,8 +1,6 @@
 package GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -13,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -27,23 +27,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
 import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
 import javax.swing.text.StyledDocument;
 
 import utilities.*;
 
-public class Calculator extends JFrame implements ActionListener, ComponentListener
+public class Calculator extends JFrame implements ActionListener, ComponentListener, WindowStateListener
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
@@ -178,6 +173,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     setSize(400, 600);
     setAlwaysOnTop(true);
     addComponentListener(this);
+    addWindowStateListener(this);
   }
   
 
@@ -907,6 +903,15 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   @Override
   public void componentHidden(ComponentEvent e) {};
+
+  @Override
+  public void windowStateChanged(WindowEvent e) {
+    if(history.isVisible()){
+      history.setVisible(false);
+    } else{
+      history.setVisible(true);
+    }
+  }
 
   public static void main(String[] args)
   {
