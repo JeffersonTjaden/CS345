@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.ActionMap;
 import javax.swing.ImageIcon;
@@ -856,11 +857,21 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     toggle.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e){
         if(expand){
-          history.setSize(history.getWidth() + 300, history.getHeight());
+          for(int i = 0; i < 30; i++){
+            history.setSize(history.getWidth() + 10, history.getHeight());
+            try {
+              TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e1) {e1.printStackTrace();}
+          }
           expand = false;
           toggle.setLabel("<");
         } else{
-          history.setSize(history.getWidth() - 300, history.getHeight());
+          while(history.getWidth() > getWidth()){
+            history.setSize(history.getWidth() - 10, history.getHeight());
+            try {
+              TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e1) {e1.printStackTrace();}
+          }
           expand = true;
           toggle.setLabel(">");
         }
