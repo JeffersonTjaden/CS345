@@ -18,7 +18,8 @@ import utilities.IrreducedMixedFraction;
 public class MenuSetup
 {
   private JFrame parentFrame;
-  private JMenuItem pieChartItem;
+  private JCheckBoxMenuItem pieChartItem;
+  private PieChart pieChartWindow;
   private Calculator calculator;
   private ResourceBundle messages;
   
@@ -53,15 +54,26 @@ public class MenuSetup
 
     // Create View menu with Pie Chart item
     JMenu viewMenu = new JMenu(messages.getString("view.menu"));
-    pieChartItem = new JMenuItem(messages.getString("pieChart.item"));
+    pieChartItem = new JCheckBoxMenuItem(messages.getString("pieChart.item"));
     pieChartItem.addActionListener(e -> {
-      if(calculator.getCanCreatePieChart()) {
-          new PieChart((IrreducedMixedFraction) calculator.getPieChartOps().get(0), 
-              (IrreducedMixedFraction) calculator.getPieChartOps().get(1),
-              (IrreducedMixedFraction) calculator.getPieChartOps().get(2), (String) calculator.getPieChartOps().get(3), messages);
+      if (pieChartItem.isSelected()) {
+          if (calculator.getCanCreatePieChart()) {
+              pieChartWindow = new PieChart(
+                  (IrreducedMixedFraction) calculator.getPieChartOps().get(0),
+                  (IrreducedMixedFraction) calculator.getPieChartOps().get(1),
+                  (IrreducedMixedFraction) calculator.getPieChartOps().get(2),
+                  (String) calculator.getPieChartOps().get(3),
+                  messages, this);
+          } else {
+              pieChartItem.setSelected(false);  // Uncheck if creation not possible
+              JOptionPane.showMessageDialog(parentFrame, messages.getString("error.dialog.message"),
+                  messages.getString("error.dialog.title"), JOptionPane.ERROR_MESSAGE);
+          }
       } else {
-          JOptionPane.showMessageDialog(parentFrame, messages.getString("error.dialog.message"),
-              messages.getString("error.dialog.title"), JOptionPane.ERROR_MESSAGE);
+          if (pieChartWindow != null) {
+              pieChartWindow.dispose();
+              pieChartWindow = null;
+          }
       }
     });
     viewMenu.add(pieChartItem);
@@ -72,6 +84,7 @@ public class MenuSetup
     JRadioButtonMenuItem barItem = new JRadioButtonMenuItem(messages.getString("bar.item"));
     JRadioButtonMenuItem slashItem = new JRadioButtonMenuItem(messages.getString("slash.item"));
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
+    barItem.setSelected(true);
     // TODO: Add action listeners for style menu items
     styleGroup.add(barItem);
     styleGroup.add(slashItem);
@@ -101,6 +114,10 @@ public class MenuSetup
     menuBar.add(helpMenu);
     
     return menuBar;
+  }
+  
+  public JCheckBoxMenuItem getCheckBoxMenuItem() {
+    return pieChartItem;
   }
 }
 

@@ -2,6 +2,8 @@ package GUI.pieChart;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
@@ -10,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
+import GUI.MenuSetup;
 import utilities.IrreducedMixedFraction;
 /**
  * Draws pie charts in order to represent mixed numbers.
@@ -21,6 +24,7 @@ public class PieChart extends JFrame
   private static final long serialVersionUID = 1L;
   private Font font = new Font(Font.SERIF, Font.PLAIN, 30);
   private LineBorder border = new LineBorder(Color.DARK_GRAY, 1);
+  private MenuSetup menuSetup;
   /**
    * Creates a new pie chart window given three fractions that represent a whole expression.
    * @param op1 The first operand
@@ -29,8 +33,9 @@ public class PieChart extends JFrame
    * @param operator The operator
    **/
   public PieChart(final IrreducedMixedFraction op1, final IrreducedMixedFraction op2,
-      final IrreducedMixedFraction ans, final String operator, final ResourceBundle messages)
+      final IrreducedMixedFraction ans, final String operator, final ResourceBundle messages, final MenuSetup menuSetup)
   {
+    this.menuSetup = menuSetup;
     setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     setTitle(messages.getString("pieChart.title"));
     setSize(600, 300);
@@ -56,6 +61,12 @@ public class PieChart extends JFrame
     add(panel4);
     add(new PieChartCanvas(ans));
     setVisible(true);
+    addWindowListener(new WindowAdapter() {
+      @Override
+      public void windowClosing(WindowEvent e) {
+          PieChart.this.menuSetup.getCheckBoxMenuItem().setSelected(false);
+      }
+  });
   }
   private JPanel makePanel()
   {
