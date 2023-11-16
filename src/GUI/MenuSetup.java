@@ -64,6 +64,7 @@ public class MenuSetup
                   (IrreducedMixedFraction) calculator.getPieChartOps().get(2),
                   (String) calculator.getPieChartOps().get(3),
                   messages, this);
+              pieChartWindow.setAlwaysOnTop(true);
           } else {
               pieChartItem.setSelected(false);  // Uncheck if creation not possible
               JOptionPane.showMessageDialog(parentFrame, messages.getString("error.dialog.message"),

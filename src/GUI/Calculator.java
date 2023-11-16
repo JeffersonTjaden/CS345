@@ -23,12 +23,8 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JWindow;
@@ -75,6 +71,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private String evaluatedCurrentExpression;
   private int currentTextArea = 0;
 
+  //Number Buttons
   private JButton zero;
   private JButton one;
   private JButton two;
@@ -86,12 +83,14 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JButton eight;
   private JButton nine;
 
+  //Operations Buttons
   private JButton add;
   private JButton minus;
   private JButton multiply;
   private JButton divide;
   private JButton equals;
 
+  //Action Buttons
   private JButton reset;
   private JButton clear;
   private JButton back;
@@ -102,6 +101,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JButton simplification;
   private JButton invert;
 
+  //History display objects
   private JTextField calcHistory;
   private JWindow history;
   private boolean expand = true;
