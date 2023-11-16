@@ -846,47 +846,51 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   }
   
     public void displayHistory(){
-    history = new JWindow();
-    history.setSize(400, getHeight()/2);
-    history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
-    history.setLayout(new BorderLayout());
+      history = new JWindow();
+      history.setSize(400, getHeight()/2);
+      history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
+      history.setLayout(new BorderLayout());
 
-    JButton toggle = new JButton(">");
-    toggle.setPreferredSize(new Dimension(50, 50));
+      JButton toggle = new JButton(">");
+      toggle.setPreferredSize(new Dimension(50, 50));
 
-    toggle.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e){
-        if(expand){
-          for(int i = 0; i < 30; i++){
-            history.setSize(history.getWidth() + 10, history.getHeight());
-            try {
-              TimeUnit.MILLISECONDS.sleep(5);
-            } catch (InterruptedException e1) {e1.printStackTrace();}
+      toggle.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e){
+          if(expand){
+            for(int i = 0; i < 30; i++){
+              history.setSize(history.getWidth() + 10, history.getHeight());
+              try {
+                TimeUnit.MILLISECONDS.sleep(5);
+              } catch (InterruptedException e1) {e1.printStackTrace();}
+            }
+            expand = false;
+            toggle.setLabel("<");
+          } else{
+            while(history.getWidth() > getWidth()){
+              history.setSize(history.getWidth() - 10, history.getHeight());
+              try {
+                TimeUnit.MILLISECONDS.sleep(5);
+              } catch (InterruptedException e1) {e1.printStackTrace();}
+            }
+            expand = true;
+            toggle.setLabel(">");
           }
-          expand = false;
-          toggle.setLabel("<");
-        } else{
-          while(history.getWidth() > getWidth()){
-            history.setSize(history.getWidth() - 10, history.getHeight());
-            try {
-              TimeUnit.MILLISECONDS.sleep(5);
-            } catch (InterruptedException e1) {e1.printStackTrace();}
-          }
-          expand = true;
-          toggle.setLabel(">");
         }
-      }
-    });
+      });
 
-    calcHistory = new JTextPane();
-    calcHistory.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+      JPanel historyPanel = new JPanel();
 
-    scrollable = new JScrollPane(calcHistory);
-    scrollable.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+      historyPanel.setLayout(new BorderLayout());
+      calcHistory = new JTextPane();
+      calcHistory.setBackground(getBackground());
+      scrollable = new JScrollPane(calcHistory);
+      scrollable.setBorder(null);
+      
+      historyPanel.add(scrollable, BorderLayout.EAST);
 
-    history.add(scrollable, BorderLayout.CENTER);
-    history.add(toggle, BorderLayout.EAST);
-    history.setVisible(true);
+      history.add(historyPanel, BorderLayout.CENTER);
+      history.add(toggle, BorderLayout.EAST);
+      history.setVisible(true);
   }
 
   @Override
