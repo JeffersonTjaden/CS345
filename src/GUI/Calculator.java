@@ -568,6 +568,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     else if (simplification.getActionCommand().equals(command)){
       IrreducedMixedFraction temp = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
       temp.simplify();
+      temp.reduce();
       whole = String.valueOf(temp.getWhole());
       numerator = String.valueOf(temp.getNumerator());
       denominator = String.valueOf(temp.getDenominator());
