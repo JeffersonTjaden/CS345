@@ -469,7 +469,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     int whole = parseWhole();
     int numerator = parseNumerator();
     int denominator = parseDenominator();
-    if (left == null) 
+    if (denominator == 0) {
+      displayExpression.setText("Hey everybody we got a dingus alert, somebody call the dingus police");
+    }
+    else if (left == null)
     {
       left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
     } else 
@@ -506,11 +509,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     int denominator;
     if (!this.denominator.equals("_"))
     {
-      denominator = Integer.parseInt(this.denominator);
-      if (denominator == 0) 
-      {
-        denominator = 1;
-      }  
+      denominator = Integer.parseInt(this.denominator); 
     } else 
     {
       denominator = 1;
