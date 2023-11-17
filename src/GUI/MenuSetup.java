@@ -136,7 +136,7 @@ public class MenuSetup
     menuBar.add(fileMenu);
     menuBar.add(modeMenu);
     menuBar.add(viewMenu);
-    menuBar.add(styleMenu);
+    //menuBar.add(styleMenu);//
     menuBar.add(helpMenu);
     
     return menuBar;
