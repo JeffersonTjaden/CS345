@@ -608,7 +608,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;          
         case "/":
-        if (right.getWhole() != 0 && right.getNumerator() != 0) {
+        if (right.getWhole() != 0 || right.getNumerator() != 0) {
           result = Operations.divide(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
