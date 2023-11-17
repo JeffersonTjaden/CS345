@@ -3,6 +3,8 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -13,6 +15,10 @@ import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -885,6 +891,36 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     history.add(scrollable, BorderLayout.CENTER);
     history.add(toggle, BorderLayout.EAST);
     history.setVisible(true);
+  }
+  
+  public void printHistory() {
+    PrinterJob printerJob = PrinterJob.getPrinterJob();
+    printerJob.setJobName("Calculator History");
+
+    printerJob.setPrintable(new Printable() {
+        @Override
+        public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+            if (pageIndex > 0) {
+                return NO_SUCH_PAGE;
+            }
+
+            Graphics2D g2d = (Graphics2D) graphics;
+            g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+            // Print the content of calcHistory
+            calcHistory.printAll(graphics);
+
+            return PAGE_EXISTS;
+        }
+    });
+
+    boolean doPrint = printerJob.printDialog();
+    if (doPrint) {
+        try {
+            printerJob.print();
+        } catch (PrinterException e) {
+        }
+    }
   }
 
   @Override

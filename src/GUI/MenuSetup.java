@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.Desktop;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -44,7 +46,12 @@ public class MenuSetup
     // Create File menu with Exit item
     JMenu fileMenu = new JMenu(messages.getString("file.menu"));
     JMenuItem printSessionItem = new JMenuItem(messages.getString("printSession.item"));
-    // TODO: Add action listener for printSessionItem
+    printSessionItem.addActionListener(new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+          calculator.printHistory();
+      }
+    });
     fileMenu.add(printSessionItem);
     
     JMenuItem exitItem = new JMenuItem(messages.getString("exit.item"));
