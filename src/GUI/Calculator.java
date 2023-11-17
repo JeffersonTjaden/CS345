@@ -608,6 +608,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           canCreatePieChart = true;
           break;          
         case "/":
+        if (right.getWhole() != 0 && right.getNumerator() != 0) {
           result = Operations.divide(leftTemp, rightTemp);
           pieChartOps.clear();
           pieChartOps.add(left);
@@ -615,6 +616,9 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           pieChartOps.add(result);
           pieChartOps.add("÷");
           canCreatePieChart = true;
+        } else {
+          displayExpression.setText("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
+        }
           break;         
         case "power":
           if (signBool) 
