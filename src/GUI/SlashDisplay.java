@@ -45,8 +45,8 @@ public class SlashDisplay extends Display {
         clearOperand();
     }
 
-    public void setEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, IrreducedMixedFraction result) {
-        displayExpression.setText(left.toString() + operation + right.toString() + "=" + result.toString());
+    public void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result) {
+        displayExpression.setText(displayExpression.getText() + right.toString() + "=" + result.toString());
     }
 
     public void setOperand(IrreducedMixedFraction operand) {

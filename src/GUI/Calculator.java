@@ -570,7 +570,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       }
       evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
           + result.toString();
-      display.setEvaluatedExpression(left, currentOperation, right, result);
+      display.setEvaluatedExpression(right, result);
       calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
       System.out.println(calcHistory.getText());
       left = null;
