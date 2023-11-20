@@ -48,7 +48,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private Display display;
+  private Display display = new BarDisplay();;
   
   private ResourceBundle messages;
   
@@ -161,7 +161,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     content.setLayout(new GridBagLayout());
     
     
-    display();
+    display(this.display);
     softButtons();
     displayLogo();
     
@@ -196,18 +196,21 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     content.add(icon, c);
   }
 
-  private void display()
+  private void display(Display newDisplay)
   {
-    display = new BarDisplay();
-    slashDisplay = true;
-    solidusDisplay = false;
-    barDisplay = false;
+    if (this.display != null) {
+      content.remove(this.display);
+    }
+
+    this.display = newDisplay;
     c.gridx = 0;
     c.gridy = 1;
     c.gridheight = 2;
     c.gridwidth = 6;
     c.fill = GridBagConstraints.HORIZONTAL;
     content.add(display, c);
+    content.revalidate();
+    content.repaint();
   }
   
   
@@ -766,6 +769,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     } else{
       history.setVisible(true);
     }
+  }
+  
+  public void changeDisplay(Display newDisplay) {
+    display(newDisplay);
   }
 
   public static void main(String[] args)

@@ -98,8 +98,17 @@ public class MenuSetup
     JMenu styleMenu = new JMenu(messages.getString("style.menu"));
     ButtonGroup styleGroup = new ButtonGroup();
     JRadioButtonMenuItem barItem = new JRadioButtonMenuItem(messages.getString("bar.item"));
+    barItem.addActionListener(e -> {
+      calculator.changeDisplay(new BarDisplay());
+    });
     JRadioButtonMenuItem slashItem = new JRadioButtonMenuItem(messages.getString("slash.item"));
+    slashItem.addActionListener(e -> {
+      calculator.changeDisplay(new SlashDisplay());
+    });
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
+    solidusItem.addActionListener(e -> {
+      calculator.changeDisplay(new SolidusDisplay());
+  });
     barItem.setSelected(true);
     // TODO: Add action listeners for style menu items
     styleGroup.add(barItem);
@@ -136,7 +145,7 @@ public class MenuSetup
     menuBar.add(fileMenu);
     menuBar.add(modeMenu);
     menuBar.add(viewMenu);
-    //menuBar.add(styleMenu);//
+    menuBar.add(styleMenu);
     menuBar.add(helpMenu);
     
     return menuBar;
