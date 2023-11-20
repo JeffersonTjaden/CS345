@@ -25,7 +25,7 @@ public abstract class Display extends JPanel {
 
     public abstract void setPartialExpression(IrreducedMixedFraction left, String operation);
 
-    public abstract void setEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, IrreducedMixedFraction result);
+    public abstract void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result);
 
     public abstract void setOperand(IrreducedMixedFraction operand);
 

@@ -46,9 +46,8 @@ public class SolidusDisplay extends Display {
     }
 
     @Override
-    public void setEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right,
-            IrreducedMixedFraction result) {
-        displayExpression.setText("<html>" + left.toSolidusString() + operation + right.toSolidusString() + "=" + result.toSolidusString() + "</html>");
+    public void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result) {
+        displayExpression.setText(displayExpression.getText().substring(0, displayExpression.getText().length() - 7) + right.toSolidusString() + "=" + result.toSolidusString() + "</html>");
     }
 
     @Override

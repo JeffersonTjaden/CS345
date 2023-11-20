@@ -6,31 +6,24 @@ import utilities.*;
 
 public class BarDisplay extends Display {
 
-    private JPanel expressionDisplay;
+    private JPanel displayExpression;
+    private JPanel displayOperand;
 
-    private JPanel leftDisplay;
     private JLabel leftWhole;
     private JLabel leftFraction;
 
-    private JPanel rightDisplay;
     private JLabel rightWhole;
     private JLabel rightFraction;
 
-    private JPanel resultDisplay;
     private JLabel resultWhole;
     private JLabel resultFraction;
 
-    private JPanel operandDisplay;
     private JLabel operandWhole;
     private JLabel operandFraction;
 
     public BarDisplay() {
-        expressionDisplay = new JPanel();
-        leftDisplay = new JPanel();
-        rightDisplay = new JPanel();
-        resultDisplay = new JPanel();
-        resultDisplay.setAlignmentX(LEFT_ALIGNMENT);
-        operandDisplay = new JPanel();
+        displayExpression = new JPanel();
+        displayOperand = new JPanel();
 
         leftWhole = new JLabel();
         leftFraction = new JLabel();
@@ -42,37 +35,25 @@ public class BarDisplay extends Display {
         operandFraction = new JLabel();
 
         setLayout(new BorderLayout());
-        expressionDisplay.setLayout(new FlowLayout());
-        leftDisplay.setLayout(new BorderLayout());
-        rightDisplay.setLayout(new BorderLayout());
-        resultDisplay.setLayout(new BorderLayout());
-        operandDisplay.setLayout(new BorderLayout());
+        displayExpression.setLayout(new FlowLayout());
+        displayOperand.setLayout(new FlowLayout());
 
-        add(expressionDisplay, BorderLayout.NORTH);
-        add(operandDisplay, BorderLayout.EAST);
+        add(displayExpression, BorderLayout.NORTH);
+        add(displayOperand, BorderLayout.EAST);
 
-        expressionDisplay.add(leftDisplay);
-        expressionDisplay.add(rightDisplay);
-        expressionDisplay.add(resultDisplay);
+        displayExpression.add(leftWhole, BorderLayout.WEST);
+        displayExpression.add(leftFraction, BorderLayout.CENTER);
+        displayExpression.add(rightWhole, BorderLayout.WEST);
+        displayExpression.add(rightFraction, BorderLayout.CENTER);
+        displayExpression.add(resultWhole, BorderLayout.WEST);
+        displayExpression.add(resultFraction, BorderLayout.CENTER);
 
-        leftDisplay.add(leftWhole, BorderLayout.WEST);
-        leftDisplay.add(leftFraction, BorderLayout.CENTER);
-
-        rightDisplay.add(rightWhole, BorderLayout.WEST);
-        rightDisplay.add(rightFraction, BorderLayout.CENTER);
-
-        resultDisplay.add(resultWhole, BorderLayout.WEST);
-        resultDisplay.add(resultFraction, BorderLayout.CENTER);
-
-        operandDisplay.add(operandWhole, BorderLayout.WEST);
-        operandDisplay.add(operandFraction, BorderLayout.CENTER);
+        displayOperand.add(operandWhole, BorderLayout.WEST);
+        displayOperand.add(operandFraction, BorderLayout.CENTER);
 
         setBackground(Color.white);
-        expressionDisplay.setBackground(getBackground());
-        leftDisplay.setBackground(getBackground());
-        rightDisplay.setBackground(getBackground());
-        resultDisplay.setBackground(getBackground());
-        operandDisplay.setBackground(getBackground());
+        displayExpression.setBackground(getBackground());
+        displayOperand.setBackground(getBackground());
 
         whole = "_";
         numerator = "_";
@@ -89,35 +70,32 @@ public class BarDisplay extends Display {
 
     @Override
     public void setPartialExpression(IrreducedMixedFraction left, String operation) {
-        leftWhole.setText(left.getWhole() + " ");
-        leftFraction.setText("<html>" + left.getNumerator() + "<hr/>" + left.getDenominator() + "</html>");
+        String sign = "";
+        if (!left.getSign()) {
+            sign = "-";
+        }
+        leftWhole.setText(sign + left.getWhole() + " ");
+        leftFraction.setText("<html><div style='text-align: center'>" + left.getNumerator() + "<hr/>" + left.getDenominator() + "</div></html>");
         rightWhole.setText(" " + operation);
         clearOperand();
     }
 
     @Override
-    public void setEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right,
+    public void setEvaluatedExpression(IrreducedMixedFraction right,
             IrreducedMixedFraction result) {
         String sign = "";
-        if (!left.getSign()){
-            sign = "-";
-        }
-        leftWhole.setText(sign + left.getWhole() + " ");
-        leftFraction.setText("<html>" + left.getDenominator() + "<hr/>" + left.getDenominator() + "</html>");
-
-        sign = "";
         if (!right.getSign()){
             sign = "-";
         }
-        rightWhole.setText(" " + operation + " " + sign + right.getWhole() + " ");
-        rightFraction.setText("<html>" + right.getNumerator() + "<hr/>" + right.getDenominator() + "</html>");
+        rightWhole.setText(" " + sign + right.getWhole() + " ");
+        rightFraction.setText("<html><div style='text-align: center'>" + right.getNumerator() + "<hr/>" + right.getDenominator() + "</div></html>");
 
         sign = "";
         if (!result.getSign()) {
             sign = "-";
         }
         resultWhole.setText(" = " + sign + result.getWhole() + " ");
-        resultFraction.setText("<html>" + result.getNumerator() + "<hr/>" + result.getDenominator() + "</html>");
+        resultFraction.setText("<html><div style='text-align: center'>" + result.getNumerator() + "<hr/>" + result.getDenominator() + "</div></html>");
     }
 
     @Override
@@ -137,7 +115,7 @@ public class BarDisplay extends Display {
     @Override
     protected void updateOperand() {
         operandWhole.setText(signText + whole + " ");
-        operandFraction.setText("<html>" + numerator + "<hr/>" + denominator + "</html>");
+        operandFraction.setText("<html><div style='text-align: center'>" + numerator + "<hr/>" + denominator + "</div></html>");
     }
 
     @Override
