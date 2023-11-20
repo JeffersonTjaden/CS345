@@ -10,7 +10,9 @@ public class Operations
     IrreducedMixedFraction result;
 
     left.unreduce();
+    left.simplify();
     right.unreduce();
+    right.simplify();
 
     IrreducedMixedFraction.gcd(left, right);
 
@@ -43,7 +45,9 @@ public class Operations
     IrreducedMixedFraction result;
 
     left.unreduce();
+    left.simplify();
     right.unreduce();
+    right.simplify();
 
     IrreducedMixedFraction.gcd(left, right);
 
@@ -76,7 +80,9 @@ public class Operations
     IrreducedMixedFraction result;
 
     left.unreduce();
+    left.simplify();
     right.unreduce();
+    right.simplify();
 
       if (left.getSign() && right.getSign()){
       sign = true;
@@ -99,7 +105,9 @@ public class Operations
     IrreducedMixedFraction result;
 
     left.unreduce();
-    right.unreduce();   
+    left.simplify();
+    right.unreduce();
+    right.simplify();   
     
     if (left.getSign() && right.getSign()){
       sign = true;
@@ -122,6 +130,7 @@ public class Operations
     IrreducedMixedFraction result;
 
     operand.unreduce();
+    operand.simplify();
 
     if (power >= 0) {
       numerator = (int) Math.pow(operand.getNumerator(), power);

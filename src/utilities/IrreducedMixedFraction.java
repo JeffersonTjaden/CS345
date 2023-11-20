@@ -158,6 +158,9 @@ private int simplifyHelper(int numerator, int denominator) {
   }
 
   public String toString() {
+    if (whole == 0 && numerator == 0) {
+      return "0";
+    }
     String str = "";
     if (!sign) {
       str += "-";
@@ -167,10 +170,24 @@ private int simplifyHelper(int numerator, int denominator) {
     }
     if (numerator != 0) {
       str += " " + numerator + "/" + denominator;
-    }
-    if (whole == 0 && numerator == 0) {
-      str = "0";
-    }
+    }    
     return str;
+}
+
+public String toSolidusString() {
+  if (whole == 0 && numerator == 0) {
+    return "0";
+  }
+  String str = "";
+  if (!sign) {
+    str += "-";
+  }
+  if (whole != 0) {
+    str += whole;
+  }
+  if (numerator != 0) {
+    str += " <sup>" + numerator + "</sup>/<sub>" + denominator + "</sub>";
+  }  
+  return str;
 }
 }

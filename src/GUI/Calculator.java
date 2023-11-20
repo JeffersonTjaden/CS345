@@ -48,27 +48,19 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private JPanel display = new JPanel(new BorderLayout());
-  private JTextPane displayExpression = new JTextPane();
-  private JLabel displayOperand = new JLabel();
+  private Display display;
   
   private ResourceBundle messages;
   
-  private String whole = "_";
-  private String numerator = "_";
-  private String denominator = "_";
-  private String signText = "";
-  private boolean signBool = true;
-  
   private boolean isReducedForm;
   private boolean isProperForm;
-  
-  private String inputOperand = signText + whole + " " + numerator + "/" + denominator;
+
+  private boolean slashDisplay;
+  private boolean solidusDisplay;
+  private boolean barDisplay;
   
   private ArrayList<Object> pieChartOps = new ArrayList<Object>();
   private boolean canCreatePieChart;
-
-  private ArrayList<String> sessionHistory = new ArrayList<String>();
   
   private IrreducedMixedFraction left;
   private IrreducedMixedFraction right;
@@ -76,7 +68,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private String currentOperation;
   private String partialCurrentExpression;
   private String evaluatedCurrentExpression;
-  private int currentTextArea = 0;
 
   //Number Buttons
   private JButton zero;
@@ -207,18 +198,16 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   private void display()
   {
-    displayExpression.setEditable(false);
-    displayOperand.setText(inputOperand);
-    display.setBackground(displayExpression.getBackground());
-    display.add(displayExpression, BorderLayout.NORTH);
-    display.add(displayOperand, BorderLayout.EAST);
+    display = new BarDisplay();
+    slashDisplay = true;
+    solidusDisplay = false;
+    barDisplay = false;
     c.gridx = 0;
     c.gridy = 1;
     c.gridheight = 2;
     c.gridwidth = 6;
     c.fill = GridBagConstraints.HORIZONTAL;
     content.add(display, c);
-    
   }
   
   
@@ -438,20 +427,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     content.add(zero, c);
   }
 
-  private void clearText() {
-    whole = "_";
-    numerator = "_";
-    denominator = "_";
-    signText = "";
-    signBool = true;
-    updateCurrentOperand();
-  }
-
   private void operatorButtonClicked(final String operation) 
   {
     if (left == null) 
     {          
-      setOperand();
+      left = display.getFraction();
     }
     if (isProperForm) {
       left.reduce();
@@ -460,64 +440,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       left.simplify();
     }
     partialCurrentExpression = left.toString() + operation;
-    displayExpression.setText(partialCurrentExpression);
-    clearText();
-    currentTextArea = 0;
+    display.setPartialExpression(left, operation);
   }
-
-  private void setOperand() {
-    int whole = parseWhole();
-    int numerator = parseNumerator();
-    int denominator = parseDenominator();
-    if (denominator == 0) {
-      displayExpression.setText("Hey everybody we got a dingus alert, somebody call the dingus police");
-    }
-    else if (left == null)
-    {
-      left = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
-    } else 
-    {
-      right = new IrreducedMixedFraction(whole, numerator, denominator, signBool);
-    }
-  }
-
-  private int parseWhole() {
-    int whole;
-    if (!this.whole.equals("_")) 
-    {
-      whole = Integer.parseInt(this.whole);
-    } else 
-    {
-      whole = 0;
-    }
-    return whole;
-  }
-
-  private int parseNumerator() {
-    int numerator;
-    if (!this.numerator.equals("_"))
-    {
-      numerator = Integer.parseInt(this.numerator);
-    } else 
-    {
-      numerator = 0;
-    }
-    return numerator;
-  }
-
-  private int parseDenominator() {
-    int denominator;
-    if (!this.denominator.equals("_"))
-    {
-      denominator = Integer.parseInt(this.denominator); 
-    } else 
-    {
-      denominator = 1;
-    }
-    return denominator;
-  }
-  
-  
   
   @Override
   public void actionPerformed(final ActionEvent e)
@@ -527,56 +451,46 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       currentOperation = "+";
       operatorButtonClicked("+");
-      updateCurrentOperand();
     }
     else if (minus.getActionCommand().equals(command))
     {
       currentOperation = "-";
       operatorButtonClicked("-");
-      updateCurrentOperand();
     }
     else if (multiply.getActionCommand().equals(command))
     {
       currentOperation = "*";
       operatorButtonClicked("*");
-      updateCurrentOperand();
     }
     else if (divide.getActionCommand().equals(command))
     {
       currentOperation = "/";
       operatorButtonClicked(Character.toString((char) 247));
-      updateCurrentOperand();
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
       operatorButtonClicked("⇹");
-      updateCurrentOperand();
     }
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
       operatorButtonClicked("^");
-      updateCurrentOperand();
     }
     else if (invert.getActionCommand().equals(command)) {
-      IrreducedMixedFraction temp = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
+      IrreducedMixedFraction temp = display.getFraction();
       temp.invert();
-      whole = String.valueOf(temp.getWhole());
-      numerator = String.valueOf(temp.getNumerator());
-      denominator = String.valueOf(temp.getDenominator());
-      updateCurrentOperand();
+      display.setOperand(temp);
     }
     else if (simplification.getActionCommand().equals(command)){
-      IrreducedMixedFraction temp = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
+      IrreducedMixedFraction temp = display.getFraction();
       temp.simplify();
       temp.reduce();
-      whole = String.valueOf(temp.getWhole());
-      numerator = String.valueOf(temp.getNumerator());
-      denominator = String.valueOf(temp.getDenominator());
-      updateCurrentOperand();
+      display.setOperand(temp);
     }
     else if (equals.getActionCommand().equals(command))
     {
-      setOperand();
+      if (left != null) {
+        right = display.getFraction();
+      }
       IrreducedMixedFraction leftTemp = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
       IrreducedMixedFraction rightTemp = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
       switch (currentOperation)
@@ -618,11 +532,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           pieChartOps.add("÷");
           canCreatePieChart = true;
         } else {
-          displayExpression.setText("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
+          display.setExpression("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
         }
           break;         
         case "power":
-          if (signBool) 
+          if (right.getSign()) 
           {
             result = Operations.exponent(left, right.getWhole());
           } else 
@@ -656,181 +570,82 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       }
       evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
           + result.toString();
-      displayExpression.setText(evaluatedCurrentExpression);
+      display.setEvaluatedExpression(left, currentOperation, right, result);
       calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
       System.out.println(calcHistory.getText());
-      clearText();
-      currentTextArea = 0;
       left = null;
       right = null;
       currentOperation = null;
-      whole = String.valueOf(result.getWhole());
-      numerator = String.valueOf(result.getNumerator());
-      denominator = String.valueOf(result.getDenominator());
-      signText = "";
-      signBool = true;
-      if (!result.getSign())
-      {
-        signText = "-";
-        signBool = false;
-      }
+      display.setOperand(result);
       result = null;
-      updateCurrentOperand();
     }
     else if (e.getActionCommand().equals("clear"))
     {
-      clearText();
+      display.clearButton();
     }
     else if (e.getActionCommand().equals("sign"))
     {
-        if (signText.length() == 0){
-          signText = "-";
-          signBool = false;
-        } else {
-          signText = "";
-          signBool = true;
-        }
-        updateCurrentOperand();        
+        display.signButton();
+                
     }
     else if(e.getActionCommand().equals("zero"))
     {
-      buttonActionListener(0);     
+      display.numberButtons(0);    
     } 
     else if(e.getActionCommand().equals("one"))
     {
-      buttonActionListener(1);
+      display.numberButtons(1);
     }
     else if(e.getActionCommand().equals("two"))
     {
-      buttonActionListener(2);
+      display.numberButtons(2);
     }
     else if(e.getActionCommand().equals("three"))
     {
-      buttonActionListener(3);
+      display.numberButtons(3);
     }
     else if(e.getActionCommand().equals("four"))
     {
-      buttonActionListener(4);
+      display.numberButtons(4);
     }
     else if(e.getActionCommand().equals("five"))
     {
-      buttonActionListener(5);
+      display.numberButtons(5);
     }
     else if(e.getActionCommand().equals("six"))
     {
-      buttonActionListener(6);
+      display.numberButtons(6);
     }
     else if(e.getActionCommand().equals("seven"))
     {
-      buttonActionListener(7);
+      display.numberButtons(7);
     }
     else if(e.getActionCommand().equals("eight"))
     {
-      buttonActionListener(8);
+      display.numberButtons(8);
     }
     else if(e.getActionCommand().equals("nine"))
     {
-      buttonActionListener(9);
+      display.numberButtons(9);
     }
     else if(e.getActionCommand().equals("bar"))
     {
       if (currentOperation == null || !currentOperation.equals("power")) {
-        currentTextArea = (currentTextArea + 1) % 3;
-        updateCurrentOperand();
+        display.positionButton();
       }
     }
     else if (command.equals(reset.getActionCommand())){
+      display.resetButton();
       left = null;
       right = null;
       result = null;
-      displayExpression.setText("");
-      clearText();
-      currentTextArea = 0;
       currentOperation = null;
       canCreatePieChart = false;
-      updateCurrentOperand();
     }
     else if (command.equals(back.getActionCommand())) {
-      if (currentTextArea % 3 == 0) { // Focus is on 'whole'
-          if (!whole.equals("_") && whole.length() > 1) {
-              whole = whole.substring(0, whole.length() - 1);
-          }
-          else if (!whole.equals("_") && whole.length() == 1) {
-            whole = "_";
-          }
-          else if (whole.equals("_")) {
-            currentTextArea = 2;
-          }
-      } else if (currentTextArea % 3 == 1) { // Focus is on 'numerator'
-          if (!numerator.equals("_") && numerator.length() > 1) {
-              numerator = numerator.substring(0, numerator.length() - 1);
-          }
-          else if (!numerator.equals("_") && numerator.length() == 1) {
-            numerator = "_";
-          }
-          else if (numerator.equals("_")) {
-            currentTextArea = 0;
-          }
-      } else { // Focus is on 'denominator'
-          if (!denominator.equals("_") && denominator.length() > 1) {
-              denominator = denominator.substring(0, denominator.length() - 1);
-          } 
-          else if (!denominator.equals("_") && denominator.length() == 1) {
-            denominator = "_";
-          }
-          else if (denominator.equals("_")) {
-            currentTextArea = 1;
-          }
-      }
-      updateCurrentOperand();
+      display.backspaceButton();
   }
   }
-  
-
-  private void buttonActionListener(int number){
-    if (currentTextArea % 3 == 0) {
-      if (whole.equals("_")){
-        whole = "" + number;
-      } else {
-      whole += number;
-    }
-    } else if (currentTextArea % 3 == 1) {
-      if (numerator.equals("_")){
-        numerator = "" + number;
-      } else{
-      numerator += number;}
-    } else {
-      if (denominator.equals("_")){
-        denominator = "" + number;
-      } else {
-      denominator += number;}
-    }
-    updateCurrentOperand();
-  }
-
-  private void updateCurrentOperand() {
-    String text = "";
-    String wholePart = whole + " ";
-    String numeratorPart = numerator + "/";
-    String denominatorPart = denominator;
-
-    String focusedStyle = "<span style='background-color:#D3D3D3; color:black;'>%s</span>"; // Changed color for visibility
-
-    switch (currentTextArea % 3) {
-        case 0:
-            text = String.format(focusedStyle, wholePart) + numeratorPart + denominatorPart;
-            break;
-        case 1:
-            text = wholePart + String.format(focusedStyle, numeratorPart) + denominatorPart;
-            break;
-        case 2:
-            text = wholePart + numeratorPart + String.format(focusedStyle, denominatorPart);
-            break;
-    }
-
-    text = "<html>" + signText + text + "</html>";
-    displayOperand.setText(text);
-}
   
   public boolean getCanCreatePieChart() {
     return canCreatePieChart;
