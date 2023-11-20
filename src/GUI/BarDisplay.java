@@ -136,7 +136,7 @@ public class BarDisplay extends Display {
 
     @Override
     protected void updateOperand() {
-        operandWhole.setText(whole + " ");
+        operandWhole.setText(signText + whole + " ");
         operandFraction.setText("<html>" + numerator + "<hr/>" + denominator + "</html>");
     }
 

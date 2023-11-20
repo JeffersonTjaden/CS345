@@ -198,7 +198,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   private void display()
   {
-    display = new SlashDisplay();
+    display = new BarDisplay();
     slashDisplay = true;
     solidusDisplay = false;
     barDisplay = false;
