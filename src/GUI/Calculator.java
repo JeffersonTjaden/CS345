@@ -54,6 +54,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   
   private boolean isReducedForm;
   private boolean isProperForm;
+
+  private boolean slashDisplay;
+  private boolean solidusDisplay;
+  private boolean barDisplay;
   
   private ArrayList<Object> pieChartOps = new ArrayList<Object>();
   private boolean canCreatePieChart;
@@ -194,7 +198,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   private void display()
   {
-    display = new SolidusDisplay();
+    display = new SlashDisplay();
+    slashDisplay = true;
+    solidusDisplay = false;
+    barDisplay = false;
     c.gridx = 0;
     c.gridy = 1;
     c.gridheight = 2;
