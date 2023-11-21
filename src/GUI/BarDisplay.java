@@ -88,25 +88,11 @@ public class BarDisplay extends Display {
     }
 
     @Override
-    public void setOperand(IrreducedMixedFraction operand) {
-        whole = String.valueOf(operand.getWhole());
-        numerator = String.valueOf(operand.getNumerator());
-        denominator = String.valueOf(operand.getDenominator());
-        signBool = operand.getSign();
-        if (signBool) {
-            signText = "";            
-        } else {
-            signText = "-";
-        }
-        updateOperand();
-    }
-
-    @Override
     protected void updateOperand() {
         String focusedStyle = "<span style='background-color:#D3D3D3; color:black;'>%s</span>";
         switch (currentPosition % 3) {
             case 0:
-                operandWhole.setText("<html>" + String.format(focusedStyle, signText + whole) + " </html>");
+                operandWhole.setText("<html>" + signText + String.format(focusedStyle, whole) + " </html>");
                 operandFraction.setText("<html><div style='text-align: center'>" + numerator + "<hr/>" + denominator + "</div></html>");
                 break;
             case 1:
@@ -118,17 +104,6 @@ public class BarDisplay extends Display {
                 operandFraction.setText("<html><div style='text-align: center'>" + numerator + "<hr/>" + String.format(focusedStyle, denominator) + "</div></html>");
                 break;
         }
-    }
-
-    @Override
-    protected void clearOperand() {
-        whole = "_";
-        numerator = "_";
-        denominator = "_";
-        signText = "";
-        signBool = true;
-        currentPosition = 0;
-        updateOperand();
     }
 
     @Override

@@ -51,20 +51,6 @@ public class SolidusDisplay extends Display {
     }
 
     @Override
-    public void setOperand(IrreducedMixedFraction operand) {
-        whole = String.valueOf(operand.getWhole());
-        numerator = String.valueOf(operand.getNumerator());
-        denominator = String.valueOf(operand.getDenominator());
-        signBool = operand.getSign();
-        if (signBool) {
-            signText = "";
-        } else {
-            signText = "-";
-        }
-        updateOperand();
-    }
-
-    @Override
     protected void updateOperand() {
         String text = "";
         String wholePart = whole + " ";
@@ -87,17 +73,6 @@ public class SolidusDisplay extends Display {
     
         text = "<html>" + signText + text + "</html>";
         displayOperand.setText(text);
-    }
-
-    @Override
-    protected void clearOperand() {
-        whole = "_";
-        numerator = "_";
-        denominator = "_";
-        signText = "";
-        signBool = true;
-        currentPosition = 0;
-        updateOperand();
     }
 
     @Override

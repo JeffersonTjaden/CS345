@@ -16,26 +16,45 @@ public abstract class Display extends JPanel {
 
     //Getter and Setter Methods
 
-    public IrreducedMixedFraction getFraction() {
-        IrreducedMixedFraction fraction = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
-        return fraction;
-    }
-
     public abstract void setExpression(String errorMessage);
 
     public abstract void setPartialExpression(IrreducedMixedFraction left, String operation);
 
     public abstract void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result);
 
-    public abstract void setOperand(IrreducedMixedFraction operand);
+    public IrreducedMixedFraction getFraction() {
+        IrreducedMixedFraction fraction = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
+        return fraction;
+    }
+
+    public void setOperand(IrreducedMixedFraction operand) {
+      whole = String.valueOf(operand.getWhole());
+      numerator = String.valueOf(operand.getNumerator());
+      denominator = String.valueOf(operand.getDenominator());
+      signBool = operand.getSign();
+      if (signBool) {
+          signText = "";
+      } else {
+          signText = "-";
+      }
+      updateOperand();
+  }
 
     //Helper Methods
     
     protected abstract void updateOperand();
 
-    protected abstract void clearOperand();
-
     protected abstract void clearExpression();
+
+    protected void clearOperand() {
+      whole = "_";
+      numerator = "_";
+      denominator = "_";
+      signText = "";
+      signBool = true;
+      currentPosition = 0;
+      updateOperand();
+  }    
 
     private int parseWhole() {
         int whole;
@@ -114,7 +133,6 @@ public abstract class Display extends JPanel {
     public void resetButton() {
         clearExpression();
         clearOperand();
-        currentPosition = 0;
       }
 
       public void positionButton() {

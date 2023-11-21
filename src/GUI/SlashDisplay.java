@@ -49,30 +49,7 @@ public class SlashDisplay extends Display {
         displayExpression.setText(displayExpression.getText() + right.toString() + "=" + result.toString());
     }
 
-    public void setOperand(IrreducedMixedFraction operand) {
-        whole = String.valueOf(operand.getWhole());
-        numerator = String.valueOf(operand.getNumerator());
-        denominator = String.valueOf(operand.getDenominator());
-        signBool = operand.getSign();
-        if (signBool) {
-            signText = "";
-        } else {
-            signText = "-";
-        }
-        updateOperand();
-    }
-
     //Helper Methods
-
-    protected void clearOperand() {
-        whole = "_";
-        numerator = "_";
-        denominator = "_";
-        signText = "";
-        signBool = true;
-        currentPosition = 0;
-        updateOperand();
-      }
 
       protected void updateOperand() {
         String text = "";
