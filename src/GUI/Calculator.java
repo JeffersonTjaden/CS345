@@ -488,95 +488,95 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     else if (equals.getActionCommand().equals(command))
     {
       if (left != null) {
-        right = display.getFraction();
-      }
-      IrreducedMixedFraction leftTemp = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
-      IrreducedMixedFraction rightTemp = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
-      switch (currentOperation)
-      {        
-        case "+":
-          result = Operations.add(leftTemp, rightTemp);
-          pieChartOps.clear();
-          pieChartOps.add(left);
-          pieChartOps.add(right);
-          pieChartOps.add(result);
-          pieChartOps.add("+");
-          canCreatePieChart = true;
-          break;         
-        case "-":
-          result = Operations.subtract(leftTemp, rightTemp);
-          pieChartOps.clear();
-          pieChartOps.add(left);
-          pieChartOps.add(right);
-          pieChartOps.add(result);
-          pieChartOps.add("-");
-          canCreatePieChart = true;
-          break;
-        case "*":
-          result = Operations.multiply(leftTemp, rightTemp);
-          pieChartOps.clear();
-          pieChartOps.add(left);
-          pieChartOps.add(right);
-          pieChartOps.add(result);
-          pieChartOps.add("*");
-          canCreatePieChart = true;
-          break;          
-        case "/":
-        if (right.getWhole() != 0 || right.getNumerator() != 0) {
-          result = Operations.divide(leftTemp, rightTemp);
-          pieChartOps.clear();
-          pieChartOps.add(left);
-          pieChartOps.add(right);
-          pieChartOps.add(result);
-          pieChartOps.add("÷");
-          canCreatePieChart = true;
-        } else {
-          display.setExpression("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
-        }
-          break;         
-        case "power":
-          if (right.getSign()) 
-          {
-            result = Operations.exponent(left, right.getWhole());
-          } else 
-          {
-            result = Operations.exponent(left, -right.getWhole());
+        right = display.getFraction();      
+        IrreducedMixedFraction leftTemp = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
+        IrreducedMixedFraction rightTemp = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
+        switch (currentOperation)
+        {        
+          case "+":
+            result = Operations.add(leftTemp, rightTemp);
+            pieChartOps.clear();
+            pieChartOps.add(left);
+            pieChartOps.add(right);
+            pieChartOps.add(result);
+            pieChartOps.add("+");
+            canCreatePieChart = true;
+            break;         
+          case "-":
+            result = Operations.subtract(leftTemp, rightTemp);
+            pieChartOps.clear();
+            pieChartOps.add(left);
+            pieChartOps.add(right);
+            pieChartOps.add(result);
+            pieChartOps.add("-");
+            canCreatePieChart = true;
+            break;
+          case "*":
+            result = Operations.multiply(leftTemp, rightTemp);
+            pieChartOps.clear();
+            pieChartOps.add(left);
+            pieChartOps.add(right);
+            pieChartOps.add(result);
+            pieChartOps.add("*");
+            canCreatePieChart = true;
+            break;          
+          case "/":
+          if (right.getWhole() != 0 || right.getNumerator() != 0) {
+            result = Operations.divide(leftTemp, rightTemp);
+            pieChartOps.clear();
+            pieChartOps.add(left);
+            pieChartOps.add(right);
+            pieChartOps.add(result);
+            pieChartOps.add("÷");
+            canCreatePieChart = true;
+          } else {
+            display.setExpression("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
           }
-          pieChartOps.clear();
-          pieChartOps.add(left);
-          pieChartOps.add(right);
-          pieChartOps.add(result);
-          pieChartOps.add("^");
-          break;   
-        case "mediant":
-          result = Operations.mediant(left, right);
-          pieChartOps.clear();
-          pieChartOps.add(left);
-          pieChartOps.add(right);
-          pieChartOps.add(result);
-          pieChartOps.add("⇹");
-          break;
-        default:
-          break;
+            break;         
+          case "power":
+            if (right.getSign()) 
+            {
+              result = Operations.exponent(left, right.getWhole());
+            } else 
+            {
+              result = Operations.exponent(left, -right.getWhole());
+            }
+            pieChartOps.clear();
+            pieChartOps.add(left);
+            pieChartOps.add(right);
+            pieChartOps.add(result);
+            pieChartOps.add("^");
+            break;   
+          case "mediant":
+            result = Operations.mediant(left, right);
+            pieChartOps.clear();
+            pieChartOps.add(left);
+            pieChartOps.add(right);
+            pieChartOps.add(result);
+            pieChartOps.add("⇹");
+            break;
+          default:
+            break;
+        }
+        if (isProperForm) {
+          right.reduce();
+          result.reduce();
+        }
+        if (isReducedForm) {
+          right.simplify();
+          result.simplify();
+        }
+        evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
+            + result.toString();
+        display.setEvaluatedExpression(right, result);
+        calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
+        System.out.println(calcHistory.getText());
+        left = null;
+        right = null;
+        currentOperation = null;
+        display.setOperand(result);
+        result = null;
       }
-      if (isProperForm) {
-        right.reduce();
-        result.reduce();
-      }
-      if (isReducedForm) {
-        right.simplify();
-        result.simplify();
-      }
-      evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
-          + result.toString();
-      display.setEvaluatedExpression(right, result);
-      calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
-      System.out.println(calcHistory.getText());
-      left = null;
-      right = null;
-      currentOperation = null;
-      display.setOperand(result);
-      result = null;
     }
     else if (e.getActionCommand().equals("clear"))
     {

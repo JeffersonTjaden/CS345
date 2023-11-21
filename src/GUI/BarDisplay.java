@@ -41,15 +41,15 @@ public class BarDisplay extends Display {
         add(displayExpression, BorderLayout.NORTH);
         add(displayOperand, BorderLayout.EAST);
 
-        displayExpression.add(leftWhole, BorderLayout.WEST);
-        displayExpression.add(leftFraction, BorderLayout.CENTER);
-        displayExpression.add(rightWhole, BorderLayout.WEST);
-        displayExpression.add(rightFraction, BorderLayout.CENTER);
-        displayExpression.add(resultWhole, BorderLayout.WEST);
-        displayExpression.add(resultFraction, BorderLayout.CENTER);
+        displayExpression.add(leftWhole);
+        displayExpression.add(leftFraction);
+        displayExpression.add(rightWhole);
+        displayExpression.add(rightFraction);
+        displayExpression.add(resultWhole);
+        displayExpression.add(resultFraction);
 
-        displayOperand.add(operandWhole, BorderLayout.WEST);
-        displayOperand.add(operandFraction, BorderLayout.CENTER);
+        displayOperand.add(operandWhole);
+        displayOperand.add(operandFraction);
 
         setBackground(Color.white);
         displayExpression.setBackground(getBackground());
