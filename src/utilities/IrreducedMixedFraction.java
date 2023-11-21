@@ -190,4 +190,27 @@ public String toSolidusString() {
   }  
   return str;
 }
+
+public String toWholeBarString() {
+  String str = "";
+  if (whole == 0 && numerator == 0) {
+    return "0";
+  }
+  if (!sign) {
+    str += "-";
+  }
+  if (whole != 0) {
+    str += whole;
+  }
+  return str;
+
+}
+
+public String toFractionBarString() {
+  if (numerator != 0) {
+   return "<html><div style='text-align: center'>" + numerator + "<hr/>" + denominator + "</div></html>";
+  } else {
+    return "";
+  }
+}
 }

@@ -70,12 +70,8 @@ public class BarDisplay extends Display {
 
     @Override
     public void setPartialExpression(IrreducedMixedFraction left, String operation) {
-        String sign = "";
-        if (!left.getSign()) {
-            sign = "-";
-        }
-        leftWhole.setText(sign + left.getWhole() + " ");
-        leftFraction.setText("<html><div style='text-align: center'>" + left.getNumerator() + "<hr/>" + left.getDenominator() + "</div></html>");
+        leftWhole.setText(left.toWholeBarString() + " ");
+        leftFraction.setText(left.toFractionBarString());
         rightWhole.setText(" " + operation);
         clearOperand();
     }
@@ -83,19 +79,12 @@ public class BarDisplay extends Display {
     @Override
     public void setEvaluatedExpression(IrreducedMixedFraction right,
             IrreducedMixedFraction result) {
-        String sign = "";
-        if (!right.getSign()){
-            sign = "-";
-        }
-        rightWhole.setText(" " + sign + right.getWhole() + " ");
-        rightFraction.setText("<html><div style='text-align: center'>" + right.getNumerator() + "<hr/>" + right.getDenominator() + "</div></html>");
+        
+        rightWhole.setText(rightWhole.getText() + " " + right.toWholeBarString() + " ");
+        rightFraction.setText(right.toFractionBarString());
 
-        sign = "";
-        if (!result.getSign()) {
-            sign = "-";
-        }
-        resultWhole.setText(" = " + sign + result.getWhole() + " ");
-        resultFraction.setText("<html><div style='text-align: center'>" + result.getNumerator() + "<hr/>" + result.getDenominator() + "</div></html>");
+        resultWhole.setText(" = " + result.toWholeBarString() + " ");
+        resultFraction.setText(result.toFractionBarString());
     }
 
     @Override
@@ -114,8 +103,21 @@ public class BarDisplay extends Display {
 
     @Override
     protected void updateOperand() {
-        operandWhole.setText(signText + whole + " ");
-        operandFraction.setText("<html><div style='text-align: center'>" + numerator + "<hr/>" + denominator + "</div></html>");
+        String focusedStyle = "<span style='background-color:#D3D3D3; color:black;'>%s</span>";
+        switch (currentPosition % 3) {
+            case 0:
+                operandWhole.setText("<html>" + String.format(focusedStyle, signText + whole) + " </html>");
+                operandFraction.setText("<html><div style='text-align: center'>" + numerator + "<hr/>" + denominator + "</div></html>");
+                break;
+            case 1:
+                operandWhole.setText("<html>" + signText + whole + " </html>");
+                operandFraction.setText("<html><div style='text-align: center'>" + String.format(focusedStyle, numerator) + "<hr/>" + denominator + "</div></html>");
+                break;
+            case 2:
+                operandWhole.setText("<html>" + signText + whole + " </html>");
+                operandFraction.setText("<html><div style='text-align: center'>" + numerator + "<hr/>" + String.format(focusedStyle, denominator) + "</div></html>");
+                break;
+        }
     }
 
     @Override
