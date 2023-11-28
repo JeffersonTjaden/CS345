@@ -45,6 +45,27 @@ public class MenuSetup
 
     // Create File menu with Exit item
     JMenu fileMenu = new JMenu(messages.getString("file.menu"));
+    
+    JMenuItem openRecordingItem = new JMenuItem(messages.getString("openRecording.item"));
+    openRecordingItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Logic to open recording
+        }
+    });
+    fileMenu.add(openRecordingItem);
+    
+    JMenuItem saveRecordingItem = new JMenuItem(messages.getString("saveRecording.item"));
+    saveRecordingItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Logic to save recording
+        }
+    });
+    fileMenu.add(saveRecordingItem);
+    
+    fileMenu.addSeparator();
+    
     JMenuItem printSessionItem = new JMenuItem(messages.getString("printSession.item"));
     printSessionItem.addActionListener(new ActionListener() {
       @Override
@@ -53,6 +74,19 @@ public class MenuSetup
       }
     });
     fileMenu.add(printSessionItem);
+    
+    fileMenu.addSeparator();
+    
+    JMenuItem newCalculatorItem = new JMenuItem(messages.getString("newCalculator.item"));
+    newCalculatorItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Logic to create a new calculator window
+        }
+    });
+    fileMenu.add(newCalculatorItem);
+    
+    fileMenu.addSeparator();
     
     JMenuItem exitItem = new JMenuItem(messages.getString("exit.item"));
     exitItem.addActionListener(e -> System.exit(0)); // Close the application on selecting Exit
