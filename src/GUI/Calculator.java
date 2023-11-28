@@ -149,7 +149,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
     
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
     setTitle(messages.getString("calculator.title"));
 
