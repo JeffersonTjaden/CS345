@@ -70,6 +70,7 @@ public class BarDisplay extends Display {
 
     @Override
     public void setPartialExpression(IrreducedMixedFraction left, String operation) {
+        clearExpression();
         leftWhole.setText(left.toWholeBarString() + " ");
         leftFraction.setText(left.toFractionBarString());
         rightWhole.setText(" " + operation);
@@ -108,12 +109,12 @@ public class BarDisplay extends Display {
 
     @Override
     protected void clearExpression() {
-        leftWhole.setText(" ");
-        leftFraction.setText(" ");
-        rightWhole.setText(" ");
-        rightFraction.setText(" ");
-        resultWhole.setText(" ");
-        resultFraction.setText(" ");
+        leftWhole.setText("");
+        leftFraction.setText("");
+        rightWhole.setText("");
+        rightFraction.setText("");
+        resultWhole.setText("");
+        resultFraction.setText("");
     }
     
 }

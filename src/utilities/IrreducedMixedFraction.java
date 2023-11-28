@@ -7,24 +7,13 @@ public class IrreducedMixedFraction
   private int denominator;
   private boolean sign;
 
-  public IrreducedMixedFraction(int whole, boolean sign) {
-    this.whole = whole;
-    numerator = 0;
-    denominator = 1;
-    this.sign = sign;
-  }
-
-  public IrreducedMixedFraction(int numerator, int denominator)
-  {
-    if (denominator == 0) {
-      throw new IllegalArgumentException();
-    }
-    this.whole = 0;
-    this.numerator = numerator;
-    this.denominator = denominator;
-    this.sign = true;
-  }
-
+  /**
+   * Constructs an IrreducedMixedFraction with a whole number of zero, specified numerator, specified denominator, and specified sign.
+   * 
+   * @param numerator The specified numerator
+   * @param denominator The specified denominator
+   * @param sign The specified sign
+   */
   public IrreducedMixedFraction(int numerator, int denominator, boolean sign)
   {
     if (denominator == 0) {
@@ -36,6 +25,14 @@ public class IrreducedMixedFraction
     this.sign = sign;
   }
   
+  /**
+   * Constructs an IrreducedMixedFraction with a specified whole number, specified numerator, specified denominator, and specified sign.
+   * 
+   * @param whole The specified whole number
+   * @param numerator The specified numerator
+   * @param denominator The specified denominator
+   * @param sign The specified sign
+   */
   public IrreducedMixedFraction(int whole, int numerator, int denominator, boolean sign) {
     if (denominator == 0)
     {
@@ -93,33 +90,28 @@ public class IrreducedMixedFraction
   {
     this.sign = sign;
   }
-    
+  
+  /**
+   * Increments the whole number by 1 and subtracts the numerator by the denominator until the numerator is less than the denominator.
+   */
   public void reduce() {
-    while (Math.abs(numerator) >= denominator) {
-        if (numerator < 0) {
-            numerator += denominator;
-            whole--;
-        } else {
-            numerator -= denominator;
-            whole++;
-        }
-    }
-    if ((whole < 0 && numerator > 0) || (whole > 0 && numerator < 0)) {
-        numerator = -numerator;
+    while (numerator >= denominator) {
+      numerator -= denominator;
+      whole++;        
     }
 }
   
+  /**
+   * Adds the product of the whole number and denominator to the numerator and sets the whole number equal to zero.
+   */
   public void unreduce() {
-    if (whole != 0) {
-        if (whole > 0) {
-            numerator += whole * denominator;
-        } else {
-            numerator -= Math.abs(whole) * denominator;
-        }
-        whole = 0;
-    }
+    numerator += whole * denominator;
+    whole = 0;
 }
 
+/**
+ * Unreduces the IrreducedMixedFraction and then switches the numerator with the denominator.
+ */
 public void invert() {
   unreduce();
   if (numerator != 0) {
@@ -129,34 +121,56 @@ public void invert() {
   }
 }
 
+/**
+ * Divides the numerator and the denominator by their greatest common divisor.
+ */
 public void simplify() {
-  int divisor = simplifyHelper(numerator, denominator);
+  int divisor = gcd(numerator, denominator);
   numerator /= divisor;
   denominator /= divisor;
 }
 
-private int simplifyHelper(int numerator, int denominator) {
-  if (denominator == 0) {
-    return numerator;
+/**
+ * Find the greatest common divisor between two integers.
+ * 
+ * Helper method for the simplify and lcd methods.
+ * 
+ * @param a The first integer
+ * @param b The second integer
+ * @return The greatest common divisor of a and b
+ */
+private static int gcd(int a, int b) {
+  if (b == 0) {
+    return a;
   }
-  return simplifyHelper(denominator, numerator % denominator);
+  return gcd(b, a % b);
 }
 
-  public static void gcd(IrreducedMixedFraction left, IrreducedMixedFraction right)
+  /**
+   * Finds the least common denominator of two IrreducedMixedFractions and manipulates each of them to have that denominator.
+   * 
+   * @param left The first IrreducedMixedFraction
+   * @param right The second IrreducedMixedFraction
+   */
+  public static void lcd(IrreducedMixedFraction left, IrreducedMixedFraction right)
   {
     if (left.getDenominator() != right.getDenominator())
     {
-      int rightConstant = right.getDenominator();
-      int leftConstant = left.getDenominator();
+      int lcm = left.getDenominator() * right.getDenominator() / gcd(left.getDenominator(), right.getDenominator());
       
-      left.setNumerator(left.getNumerator() * rightConstant);
-      left.setDenominator(left.getDenominator() * rightConstant);
+      left.setNumerator(left.getNumerator() * lcm / left.getDenominator());
+      left.setDenominator(lcm);
 
-      right.setNumerator(right.getNumerator() * leftConstant);
-      right.setDenominator(right.getDenominator() * leftConstant);
+      right.setNumerator(right.getNumerator() * lcm / right.getDenominator());
+      right.setDenominator(lcm);
     }
   }
 
+  /**
+   * Default toString method. This is used for slash style.
+   * 
+   * @return The IrreducedMixedFraction in slash style
+   */
   public String toString() {
     if (whole == 0 && numerator == 0) {
       return "0";
@@ -174,6 +188,11 @@ private int simplifyHelper(int numerator, int denominator) {
     return str;
 }
 
+/**
+ * toString method for the solidus style.
+ * 
+ * @return The IrreducedMixedFraction in solidus style
+ */
 public String toSolidusString() {
   if (whole == 0 && numerator == 0) {
     return "0";
@@ -191,6 +210,11 @@ public String toSolidusString() {
   return str;
 }
 
+/**
+ * toString method for the whole number of the IrreducedMixedFraction for bar style.
+ * 
+ * @return The whole number of the IrreducedMixedFraciton in bar style
+ */
 public String toWholeBarString() {
   String str = "";
   if (whole == 0 && numerator == 0) {
@@ -206,11 +230,35 @@ public String toWholeBarString() {
 
 }
 
+/**
+ * toString method for the fraction part of the IrreducedMixedFraction for bar style.
+ * 
+ * @return The fraction part of the IrreducedMixedFraction in bar style
+ */
 public String toFractionBarString() {
   if (numerator != 0) {
    return "<html><div style='text-align: center'>" + numerator + "<hr/>" + denominator + "</div></html>";
   } else {
     return "";
+  }
+}
+
+/**
+ * Allows an IrreducedMixedFraction to be compared to another IrreducedMixedFraction.
+ * 
+ * @param other The other IrreducedMixedFraction
+ * @return -1 if this is less than other, 0 if this is equal to other, or 1 if this is greater than other
+ */
+public int compareTo(IrreducedMixedFraction other) {
+  this.unreduce();
+  other.unreduce();
+  lcd(this, other);
+  if (this.numerator < other.numerator) {
+    return -1;
+  } else if (this.numerator == other.numerator) {
+    return 0;
+  } else {
+    return 1;
   }
 }
 }

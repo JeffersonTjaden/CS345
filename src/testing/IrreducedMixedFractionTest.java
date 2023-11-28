@@ -19,36 +19,6 @@ class IrreducedMixedFractionTest
   boolean sign = false;
   
   @Test
-  void goodConstructor1()
-  {
-    IrreducedMixedFraction fraction = new IrreducedMixedFraction(numerator, sign);
-    assertEquals(1, numerator);
-    assertEquals(sign, false);
-  }
-  
-  @Test
-  void goodConstructor2()
-  {
-    IrreducedMixedFraction fraction = new IrreducedMixedFraction(numerator, denominator);
-    assertEquals(1, numerator);
-    assertEquals(2, denominator);
-  }
-  
-  @Test
-  void badConstructor2()
-  {
-    denominator = 0;
-    try
-    {
-      IrreducedMixedFraction fraction = new IrreducedMixedFraction(numerator, denominator);
-    }
-    catch (IllegalArgumentException e)
-    {
-      // Expected.
-    }
-  }
-  
-  @Test
   void goodConstructor3()
   {
     IrreducedMixedFraction fraction = new IrreducedMixedFraction(numerator, denominator, sign);
@@ -171,10 +141,10 @@ class IrreducedMixedFractionTest
   {
     IrreducedMixedFraction f1 = new IrreducedMixedFraction(0, 1, 4, false);
     IrreducedMixedFraction f2 = new IrreducedMixedFraction(0, 1, 3, false);
-    IrreducedMixedFraction.gcd(f1, f2);
+    IrreducedMixedFraction.lcd(f1, f2);
     IrreducedMixedFraction f3 = new IrreducedMixedFraction(0, 4, 2, false);
     IrreducedMixedFraction f4 = new IrreducedMixedFraction(0, 4, 2, false);
-    IrreducedMixedFraction.gcd(f3, f4);
+    IrreducedMixedFraction.lcd(f3, f4);
   }
   
   @Test

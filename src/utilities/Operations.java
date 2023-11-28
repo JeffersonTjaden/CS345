@@ -1,6 +1,13 @@
 package utilities;
 public class Operations
 {
+  /**
+   * Adds two IrreducedMixedFractions.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return A new IrreducedMixedFraction that is the sum of left and right
+   */
   public static IrreducedMixedFraction add(IrreducedMixedFraction left,
       IrreducedMixedFraction right)
   {
@@ -14,7 +21,7 @@ public class Operations
     right.unreduce();
     right.simplify();
 
-    IrreducedMixedFraction.gcd(left, right);
+    IrreducedMixedFraction.lcd(left, right);
 
     if (left.getSign() && right.getSign()) {
       numerator = left.getNumerator() + right.getNumerator();
@@ -38,6 +45,13 @@ public class Operations
     return result;
   }
   
+  /**
+   * Subtracts two IrreducedMixedFractions.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return A new IrreducedMixedFraction that is the difference of left and right
+   */
   public static IrreducedMixedFraction subtract(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
@@ -49,7 +63,7 @@ public class Operations
     right.unreduce();
     right.simplify();
 
-    IrreducedMixedFraction.gcd(left, right);
+    IrreducedMixedFraction.lcd(left, right);
 
     if (left.getSign() && right.getSign()) {
       numerator = left.getNumerator() - right.getNumerator();
@@ -73,6 +87,13 @@ public class Operations
     return result;
   }
   
+  /**
+   * Multiplies two IrreducedMixedFractions.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return A new IrreducedMixedFraction that is the product of left and right
+   */
   public static IrreducedMixedFraction multiply(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
@@ -98,6 +119,13 @@ public class Operations
     return result;
   }
   
+  /**
+   * Divides two IrreducedMixedFractions.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return A new IrreducedMixedFraction that is the quotient of left and right
+   */
   public static IrreducedMixedFraction divide(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
@@ -123,6 +151,13 @@ public class Operations
     return result;
   }
 
+  /**
+   * Raises an IrreducedMixedFraction to an integer power.
+   * 
+   * @param operand The IrreducedMixedFraction
+   * @param power The integer power
+   * @return A new IrreducedMixedFraction that is the result of raising operand by power
+   */
   public static IrreducedMixedFraction exponent(IrreducedMixedFraction operand, int power) {
     int numerator;
     int denominator;
@@ -149,6 +184,13 @@ public class Operations
     return result;
   }
   
+  /**
+   * Finds the mediant of two IrreducedMixedFractions.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return A new IrreducedMixedFraction that is the mediant of left and right
+   */
   public static IrreducedMixedFraction mediant(IrreducedMixedFraction left, IrreducedMixedFraction right) {
     int numerator;
     int denominator;
@@ -178,5 +220,47 @@ public class Operations
 
     result = new IrreducedMixedFraction(numerator, denominator, sign);
     return result;
+  }
+  
+  /**
+   * Determines whether or not one IrreducedMixedFraction is less than another.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return true if left is less than right, false otherwise
+   */
+  public static boolean lessThan(IrreducedMixedFraction left, IrreducedMixedFraction right) {
+    if (left.compareTo(right) < 0) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Determines whether or not one IrreducedMixedFraction is equal to another.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return true if left equals right, false otherwise
+   */
+  public static boolean equalTo(IrreducedMixedFraction left, IrreducedMixedFraction right) {
+    if (left.compareTo(right) == 0) {
+      return true;
+    }
+    return false;
+  }
+
+  /**
+   * Determines whether or not one IrreducedMixedFraction is greater than another.
+   * 
+   * @param left The left operand
+   * @param right The right operand
+   * @return true if left is greater than right, false otherwise
+   */
+  public static boolean greaterThan(IrreducedMixedFraction left, IrreducedMixedFraction right) {
+    if (left.compareTo(right) > 0) {
+      return true;
+    }
+    return false;
   }
 }
