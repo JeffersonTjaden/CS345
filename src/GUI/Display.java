@@ -4,6 +4,14 @@ import javax.swing.*;
 
 import utilities.IrreducedMixedFraction;
 
+
+/**
+ * The Display class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression.
+ * The abstract methods are all for styling purposes.
+ * 
+ * @author Sean Halloran
+ * @version 11/28/2023
+ */
 public abstract class Display extends JPanel {
 
     protected String whole;
@@ -16,17 +24,48 @@ public abstract class Display extends JPanel {
 
     //Getter and Setter Methods
 
-    public abstract void setExpression(String errorMessage);
+    /**
+     * Displays an error message.
+     * 
+     * @param errorMessage The error message to display
+     */
+    public abstract void setErrorMessage(String errorMessage);
 
+    /**
+     * Displays the partial current expression.
+     * 
+     * In slash style, the expression should look something like '1 1/2 +'     
+     *  
+     * @param left The left operand of the current expression
+     * @param operation The operation of the current expression
+     */
     public abstract void setPartialExpression(IrreducedMixedFraction left, String operation);
 
+    /**
+     * Displays the evaluated current expression.
+     * 
+     * In slash style, the expression should look something like '1 1/2 + 3 1/5 = 4 7/10'
+     * 
+     * @param right The right operand of the current expression
+     * @param result The result of the current expression
+     */
     public abstract void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result);
 
+    /**
+     * A getter method for the IrreducedMixedFraction inputted as the current operand.
+     * 
+     * @return The IrreducedMixedFraction inputted as the current operand
+     */
     public IrreducedMixedFraction getFraction() {
         IrreducedMixedFraction fraction = new IrreducedMixedFraction(parseWhole(), parseNumerator(), parseDenominator(), signBool);
         return fraction;
     }
 
+    /**
+     * Takes an IrreducedMixedFraction as a parameter and sets the current operand equal to it
+     * 
+     * @param operand The IrreducedMixedFraction to set the current operand equal to
+     */
     public void setOperand(IrreducedMixedFraction operand) {
       whole = String.valueOf(operand.getWhole());
       numerator = String.valueOf(operand.getNumerator());
@@ -42,10 +81,20 @@ public abstract class Display extends JPanel {
 
     //Helper Methods
     
+    /**
+     * Sets the focus indicator to the correct position (whole, numerator, or denominator) 
+     * and updates the current operand with any input provided by the user.
+     */
     protected abstract void updateOperand();
 
+    /**
+     * Clears the current expression.
+     */
     protected abstract void clearExpression();
 
+    /**
+     * Clears the current operand.
+     */
     protected void clearOperand() {
       whole = "_";
       numerator = "_";
@@ -56,6 +105,11 @@ public abstract class Display extends JPanel {
       updateOperand();
   }    
 
+    /**
+     * Converts the current whole number of the current operand to an integer.
+     * 
+     * @return The current whole number as an integer
+     */
     private int parseWhole() {
         int whole;
         if (!this.whole.equals("_")) 
@@ -67,7 +121,12 @@ public abstract class Display extends JPanel {
         }
         return whole;
       }
-    
+      
+      /**
+       * Converts the current numerator of the current operand to an integer.
+       * 
+       * @return The current numerator as an integer
+       */
       private int parseNumerator() {
         int numerator;
         if (!this.numerator.equals("_"))
@@ -80,6 +139,11 @@ public abstract class Display extends JPanel {
         return numerator;
       }
     
+      /**
+       * Converts the current denominator of the current operand to an integer.
+       * 
+       * @return The current denominator as an integer
+       */
       private int parseDenominator() {
         int denominator;
         if (!this.denominator.equals("_"))
@@ -93,7 +157,12 @@ public abstract class Display extends JPanel {
       }
 
     //Action Listeners
-
+    
+    /**
+     * Appends the specified digit to the correct position when a user clicks a number button (whole, numerator, or denominator).
+     * 
+     * @param number The digit to append
+     */
     public void numberButtons(int number){
         if (currentPosition % 3 == 0) {
           if (whole.equals("_")){
@@ -114,11 +183,17 @@ public abstract class Display extends JPanel {
         }
         updateOperand();
       }
-
+    
+    /**
+     * Clears the current operand when a user clicks the clear button.
+     */
     public void clearButton() {
         clearOperand();
       }
 
+      /**
+       * Changes the sign of the current operand when a user clicks the sign button.
+       */
       public void signButton() {
         if (signText.length() == 0){
             signText = "-";
@@ -129,17 +204,27 @@ public abstract class Display extends JPanel {
           }
           updateOperand();
       } 
-
+    
+    /**
+     * Clears the current expression and the current operand when a user clicks the reset button.
+     */
     public void resetButton() {
         clearExpression();
         clearOperand();
       }
 
+      /**
+       * Changes the current position when a user clicks the position button (whole to numerator to denominator and then back to whole).
+       */
       public void positionButton() {
         currentPosition++;
         updateOperand();
       }
-
+    
+    /**
+     * Deletes the last digit of the current position when a user clicks the backspace button (whole, numerator, denominator).
+     * Does nothing if there are no digits to delete.
+     */
     public void backspaceButton() {
         if (currentPosition % 3 == 0) { // Focus is on 'whole'
           if (!whole.equals("_") && whole.length() > 1) {

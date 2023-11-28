@@ -1,4 +1,13 @@
 package utilities;
+
+/**
+ * The Operations class is for performing calculations with IrreducedMixedFractions.
+ * 
+ * This work complies with the JMU Honor Code.
+ * 
+ * @author Sean Halloran
+ * @version 11/28/2023
+ */
 public class Operations
 {
   /**

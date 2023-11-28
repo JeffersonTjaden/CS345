@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import utilities.*;
 
+/**
+ * The BarDisplay class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression in bar style.
+ */
 public class BarDisplay extends Display {
 
     private JPanel displayExpression;
@@ -64,7 +67,7 @@ public class BarDisplay extends Display {
     }
 
     @Override
-    public void setExpression(String errorMessage) {
+    public void setErrorMessage(String errorMessage) {
         
     }
 

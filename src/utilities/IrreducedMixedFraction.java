@@ -1,4 +1,13 @@
 package utilities;
+
+/**
+ * The IrreducedMixedFraction class is for instantiating and manipulating irreduced mixed fractions.
+ * 
+ * This work complies with the JMU Honor Code.
+ * 
+ * @author Sean Halloran
+ * @version 11/28/2023
+ */
 public class IrreducedMixedFraction
 {
 

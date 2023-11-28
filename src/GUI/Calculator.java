@@ -530,7 +530,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             pieChartOps.add("÷");
             canCreatePieChart = true;
           } else {
-            display.setExpression("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
+            display.setErrorMessage("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
           }
             break;         
           case "power":

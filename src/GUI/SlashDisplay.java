@@ -36,7 +36,7 @@ public class SlashDisplay extends Display {
 
     //Getter and Setter Methods
 
-    public void setExpression(String errorMessage) {
+    public void setErrorMessage(String errorMessage) {
         displayExpression.setText(errorMessage);
     }
 

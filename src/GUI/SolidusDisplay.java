@@ -35,7 +35,7 @@ public class SolidusDisplay extends Display {
     }
 
     @Override
-    public void setExpression(String errorMessage) {
+    public void setErrorMessage(String errorMessage) {
         displayExpression.setText(errorMessage);
     }
 
