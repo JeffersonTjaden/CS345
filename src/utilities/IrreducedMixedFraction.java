@@ -262,9 +262,17 @@ public int compareTo(IrreducedMixedFraction other) {
   this.unreduce();
   other.unreduce();
   lcd(this, other);
-  if (this.numerator < other.numerator) {
+  int left = numerator;
+  if (!sign) {
+    left = -left;
+  }
+  int right = other.numerator;
+  if (!other.getSign()) {
+    right = -right;
+  }
+  if (left < right) {
     return -1;
-  } else if (this.numerator == other.numerator) {
+  } else if (left == right) {
     return 0;
   } else {
     return 1;

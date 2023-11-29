@@ -540,10 +540,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "power":
             if (right.getSign()) 
             {
-              result = Operations.exponent(left, right.getWhole());
+              result = Operations.intPower(left, right.getWhole());
             } else 
             {
-              result = Operations.exponent(left, -right.getWhole());
+              result = Operations.intPower(left, -right.getWhole());
             }
             pieChartOps.clear();
             pieChartOps.add(left);

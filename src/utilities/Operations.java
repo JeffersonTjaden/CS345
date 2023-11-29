@@ -26,9 +26,7 @@ public class Operations
     IrreducedMixedFraction result;
 
     left.unreduce();
-    left.simplify();
     right.unreduce();
-    right.simplify();
 
     IrreducedMixedFraction.lcd(left, right);
 
@@ -68,9 +66,7 @@ public class Operations
     IrreducedMixedFraction result;
 
     left.unreduce();
-    left.simplify();
     right.unreduce();
-    right.simplify();
 
     IrreducedMixedFraction.lcd(left, right);
 
@@ -167,7 +163,7 @@ public class Operations
    * @param power The integer power
    * @return A new IrreducedMixedFraction that is the result of raising operand by power
    */
-  public static IrreducedMixedFraction exponent(IrreducedMixedFraction operand, int power) {
+  public static IrreducedMixedFraction intPower(IrreducedMixedFraction operand, int power) {
     int numerator;
     int denominator;
     boolean sign;
@@ -185,7 +181,7 @@ public class Operations
     }
 
     sign = true;
-    if (!operand.getSign() && power % 2 == 1) {
+    if (!operand.getSign() && (power % 2 == 1 || power % 2 == -1)) {
       sign = false;
     }
 
