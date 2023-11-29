@@ -233,7 +233,7 @@ public String toWholeBarString() {
     str += "-";
   }
   if (whole != 0) {
-    str += String.format("%,d", whole);
+    str += whole;
   }
   return str;
 
@@ -246,7 +246,7 @@ public String toWholeBarString() {
  */
 public String toFractionBarString() {
   if (numerator != 0) {
-   return "<html><div style='text-align: center'>" + String.format("%,d", numerator) + "<hr/>" + String.format("%,d", denominator) + "</div></html>";
+   return "<html><div style='text-align: center'>" + numerator + "<hr/>" + denominator + "</div></html>";
   } else {
     return "";
   }
