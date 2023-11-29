@@ -1,6 +1,7 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -19,9 +20,13 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.ActionMap;
@@ -103,6 +108,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JWindow history;
   private boolean expand = true;
   private JScrollPane scrollable;
+  
+  //Customization
+  Color c1;
+  Color c2;
+  String imageName;
+  
 
   public Calculator()
   {
@@ -786,5 +797,38 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       locale = new Locale(args[0], args[1]);
     }
     new Calculator(locale);
+  }
+  
+  public void customize()
+  {
+    try
+    {
+      // Read in the file
+      BufferedReader in = new BufferedReader(new FileReader("Customization.txt"));
+      
+      // Create first color
+      String color1 = in.readLine();
+      String[] rgb1 = color1.split(",");
+      int r1 = Integer.parseInt(rgb1[0].strip());
+      int g1 = Integer.parseInt(rgb1[1].strip());
+      int b1 = Integer.parseInt(rgb1[2].strip());
+      c1 = new Color(r1, g1, b1);
+      
+      //Create second color
+      String color2 = in.readLine();
+      String[] rgb2 = color2.split(",");
+      int r2 = Integer.parseInt(rgb2[0].strip());
+      int g2 = Integer.parseInt(rgb2[1].strip());
+      int b2 = Integer.parseInt(rgb2[2].strip());
+      c2 = new Color(r2, g2, b2);
+      String logo = in.readLine();
+      
+      // Assign logo
+      imageName = logo;
+    }
+    catch (IOException e)
+    {
+      System.out.println("File Not Found.");
+    }
   }
 }
