@@ -2,6 +2,14 @@ package GUI;
 
 import utilities.*;
 
+/**
+ * The IntermediateSteps class is for writing out all the steps performed in a calculation.
+ * 
+ * This work complies with the JMU Honor Code.
+ * 
+ * @author Sean Halloran
+ * @version 11/29/2023
+ */
 public class IntermediateSteps {
 
     public static void main(String[] args) {
@@ -11,6 +19,13 @@ public class IntermediateSteps {
         System.out.println(str);
     }
     
+    /**
+     * Writes out the steps for adding two IrreducedMixedFractions.
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the addition operation
+     */
     public static String addSteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " + " + right.toString() + ")\n";
@@ -31,6 +46,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out the steps for subtracting two IrreducedMixedFractions.
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the subtraction operation
+     */
     public static String subtractSteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " - " + right.toString() + ")\n";
@@ -51,6 +73,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out the steps used to multiply two IrreducedMixedFractions.
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the multiplication operation
+     */
     public static String multiplySteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " * " + right.toString() + ")\n";
@@ -68,6 +97,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out the steps used to divide two IrreducedMixedFractions
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the division operation
+     */
     public static String divideSteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " / " + right.toString() + ")\n";
@@ -85,6 +121,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out all the steps used to raise an IrreducedMixedFraction to an integer power.
+     * 
+     * @param operand The IrreducedMixedFraction
+     * @param power The integer power
+     * @return A string explaining all the steps used in the integer power operation
+     */
     public static String intPowerSteps(IrreducedMixedFraction operand, int power) {
         String str = "";
         str += "These are the steps to calculate (" + operand.toString() + " / " + power + ")\n";
@@ -100,6 +143,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out all the steps used to calculate the mediant of two IrreducedMixedFractions.
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the mediant operation
+     */
     public static String mediantSteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " ⇹ " + right.toString() + ")\n";
@@ -113,6 +163,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out all the steps used to determine if one IrreducedMixedFraction is less than another.
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the less than operation
+     */
     public static String lessThanSteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " < " + right.toString() + ")\n";
@@ -129,6 +186,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out all the steps used to determine if one IrreducedMixedFraction is equal to another.
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the equal to operation
+     */
     public static String equalToSteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " = " + right.toString() + ")\n";
@@ -145,6 +209,13 @@ public class IntermediateSteps {
         return str;
     }
 
+    /**
+     * Writes out all the steps used to determine if one IrreducedMixedFraction is greater than another.
+     * 
+     * @param left The left operand
+     * @param right The right operand
+     * @return A string explaining all the steps used in the greater than operation
+     */
     public static String greaterThanSteps(IrreducedMixedFraction left, IrreducedMixedFraction right) {
         String str = "";
         str += "These are the steps to calculate (" + left.toString() + " > " + right.toString() + ")\n";
