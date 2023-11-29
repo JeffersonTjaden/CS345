@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javax.print.DocFlavor.URL;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
 import GUI.pieChart.PieChart;
+import Recording.CalculationRecorder;
 import utilities.IrreducedMixedFraction;
 
 public class MenuSetup
@@ -32,11 +34,13 @@ public class MenuSetup
   private PieChart pieChartWindow;
   private Calculator calculator;
   private ResourceBundle messages;
+  private CalculationRecorder recorder;
   
-  public MenuSetup(JFrame parentFrame, Calculator calculator, Locale locale) {
+  public MenuSetup(JFrame parentFrame, Calculator calculator, Locale locale, CalculationRecorder recorder) {
     this.parentFrame = parentFrame;
     this.calculator = calculator;
     this.messages = ResourceBundle.getBundle("resources.MessagesBundle", locale);
+    this.recorder = recorder;
   }
   
   public JMenuBar createMenuBar() {
@@ -45,6 +49,35 @@ public class MenuSetup
 
     // Create File menu with Exit item
     JMenu fileMenu = new JMenu(messages.getString("file.menu"));
+    
+    JMenuItem openRecordingItem = new JMenuItem(messages.getString("openRecording.item"));
+    openRecordingItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Logic to open recording
+        }
+    });
+    fileMenu.add(openRecordingItem);
+    
+    JMenuItem saveRecordingItem = new JMenuItem(messages.getString("saveRecording.item"));
+    saveRecordingItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setDialogTitle("Save Recording");
+          int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+          if (userSelection == JFileChooser.APPROVE_OPTION) {
+              File fileToSave = fileChooser.getSelectedFile();
+              // Your CalculationRecorder instance should be accessible here
+              recorder.showRecordingControlsDialog(fileToSave);
+          }
+        }
+    });
+    fileMenu.add(saveRecordingItem);
+    
+    fileMenu.addSeparator();
+    
     JMenuItem printSessionItem = new JMenuItem(messages.getString("printSession.item"));
     printSessionItem.addActionListener(new ActionListener() {
       @Override
@@ -53,6 +86,19 @@ public class MenuSetup
       }
     });
     fileMenu.add(printSessionItem);
+    
+    fileMenu.addSeparator();
+    
+    JMenuItem newCalculatorItem = new JMenuItem(messages.getString("newCalculator.item"));
+    newCalculatorItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Logic to create a new calculator window
+        }
+    });
+    fileMenu.add(newCalculatorItem);
+    
+    fileMenu.addSeparator();
     
     JMenuItem exitItem = new JMenuItem(messages.getString("exit.item"));
     exitItem.addActionListener(e -> System.exit(0)); // Close the application on selecting Exit

@@ -42,6 +42,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import Recording.CalculationRecorder;
 import utilities.*;
 
 public class Calculator extends JFrame implements ActionListener, ComponentListener, WindowStateListener
@@ -52,6 +53,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   
   private ResourceBundle messages;
   
+  private CalculationRecorder recorder;
+    
   private boolean isReducedForm;
   private boolean isProperForm;
   
@@ -145,7 +148,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     pack();
 
     // Menu bar
-    MenuSetup menuSetup = new MenuSetup(this, this, locale);
+    recorder = new CalculationRecorder(this);
+    MenuSetup menuSetup = new MenuSetup(this, this, locale, recorder);
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
     
@@ -570,6 +574,9 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             + result.toString();
         display.setEvaluatedExpression(right, result);
         display.setOperand(result);
+        if (recorder.isRecording()) {
+          recorder.recordCalculation(evaluatedCurrentExpression);
+        }
         calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
         System.out.println(calcHistory.getText());
         left = null;
