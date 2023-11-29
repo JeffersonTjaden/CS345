@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 import javax.print.DocFlavor.URL;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -23,6 +24,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
 import GUI.pieChart.PieChart;
+import Recording.CalculationRecorder;
 import utilities.IrreducedMixedFraction;
 
 public class MenuSetup
@@ -32,11 +34,13 @@ public class MenuSetup
   private PieChart pieChartWindow;
   private Calculator calculator;
   private ResourceBundle messages;
+  private CalculationRecorder recorder;
   
-  public MenuSetup(JFrame parentFrame, Calculator calculator, Locale locale) {
+  public MenuSetup(JFrame parentFrame, Calculator calculator, Locale locale, CalculationRecorder recorder) {
     this.parentFrame = parentFrame;
     this.calculator = calculator;
     this.messages = ResourceBundle.getBundle("resources.MessagesBundle", locale);
+    this.recorder = recorder;
   }
   
   public JMenuBar createMenuBar() {
@@ -59,7 +63,15 @@ public class MenuSetup
     saveRecordingItem.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Logic to save recording
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setDialogTitle("Save Recording");
+          int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+          if (userSelection == JFileChooser.APPROVE_OPTION) {
+              File fileToSave = fileChooser.getSelectedFile();
+              // Your CalculationRecorder instance should be accessible here
+              recorder.showRecordingControlsDialog(fileToSave);
+          }
         }
     });
     fileMenu.add(saveRecordingItem);
