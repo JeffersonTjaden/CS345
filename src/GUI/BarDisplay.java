@@ -6,6 +6,11 @@ import utilities.*;
 
 /**
  * The BarDisplay class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression in bar style.
+ * 
+ * This work complies with the JMU Honor Code.
+ * 
+ * @author Sean Halloran
+ * @version 11/28/2023
  */
 public class BarDisplay extends Display {
 
@@ -24,6 +29,9 @@ public class BarDisplay extends Display {
     private JLabel operandWhole;
     private JLabel operandFraction;
 
+    /**
+     * Constructs a new BarDisplay with an empty current operand and an empty current expression.
+     */
     public BarDisplay() {
         displayExpression = new JPanel();
         displayOperand = new JPanel();

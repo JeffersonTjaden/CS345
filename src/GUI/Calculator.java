@@ -569,12 +569,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
         evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
             + result.toString();
         display.setEvaluatedExpression(right, result);
+        display.setOperand(result);
         calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
         System.out.println(calcHistory.getText());
         left = null;
         right = null;
-        currentOperation = null;
-        display.setOperand(result);
+        currentOperation = null;        
         result = null;
       }
     }

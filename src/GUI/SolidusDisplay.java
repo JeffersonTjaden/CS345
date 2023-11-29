@@ -6,11 +6,22 @@ import utilities.*;
 
 import java.awt.*;
 
+/**
+ * The SolidusDisplay class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression in solidus style.
+ * 
+ * This work complies with the JMU Honor Code.
+ * 
+ * @author Sean Halloran
+ * @version 11/28/2023
+ */
 public class SolidusDisplay extends Display {
 
     private JLabel displayExpression;
     private JLabel displayOperand;
 
+    /**
+     * Constructs a new SolidusDisplay with an empty current operand and an empty current expression.
+     */
     public SolidusDisplay() {
         setLayout(new BorderLayout());
 

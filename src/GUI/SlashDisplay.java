@@ -4,11 +4,22 @@ import javax.swing.*;
 import java.awt.*;
 import utilities.*;
 
+/**
+ * The SlashDisplay class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression in slash style.
+ * 
+ * This work complies with the JMU Honor Code.
+ * 
+ * @author Sean Halloran
+ * @version 11/28/2023
+ */
 public class SlashDisplay extends Display {
 
     JLabel displayExpression;
     JLabel displayOperand;
     
+    /**
+     * Constructs a new SlashDisplay with an empty current operand and an empty current expression.
+     */
     public SlashDisplay() {
         setLayout(new BorderLayout());
 
@@ -36,22 +47,26 @@ public class SlashDisplay extends Display {
 
     //Getter and Setter Methods
 
+    @Override
     public void setErrorMessage(String errorMessage) {
         displayExpression.setText(errorMessage);
     }
 
+    @Override
     public void setPartialExpression(IrreducedMixedFraction left, String operation) {
         displayExpression.setText(left.toString() + operation);
         clearOperand();
     }
 
+    @Override
     public void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result) {
         displayExpression.setText(displayExpression.getText() + right.toString() + "=" + result.toString());
     }
 
     //Helper Methods
-
-      protected void updateOperand() {
+    
+    @Override
+    protected void updateOperand() {
         String text = "";
         String wholePart = whole + " ";
         String numeratorPart = numerator + "/";
@@ -75,6 +90,7 @@ public class SlashDisplay extends Display {
         displayOperand.setText(text);
     }
 
+    @Override
     protected void clearExpression() {
         displayExpression.setText(" ");
     }      
