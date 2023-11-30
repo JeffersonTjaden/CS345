@@ -75,7 +75,11 @@ public class CalculationRecorder {
     }
 
     public void showRecordingControlsDialog(File file) {
+        if (!file.getName().toLowerCase().endsWith(".txt")) {
+          file = new File(file.getParentFile(), file.getName() + ".txt");
+        }
         this.file = file;
+        fileNameField.setText(file.getName());
         recordingControlsDialog.setTitle("Record to: " + file.getName());
         recordingControlsDialog.setVisible(true);
     }
