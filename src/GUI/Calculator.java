@@ -49,7 +49,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private Display display = new BarDisplay();;
+  private Display display = new BarDisplay();
   
   private ResourceBundle messages;
   
@@ -525,17 +525,20 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             canCreatePieChart = true;
             break;          
           case "/":
-          if (right.getWhole() != 0 || right.getNumerator() != 0) {
-            result = Operations.divide(leftTemp, rightTemp);
-            pieChartOps.clear();
-            pieChartOps.add(left);
-            pieChartOps.add(right);
-            pieChartOps.add(result);
-            pieChartOps.add("÷");
-            canCreatePieChart = true;
-          } else {
-            display.setErrorMessage("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
-          }
+            if (right.getWhole() != 0 || right.getNumerator() != 0) 
+            {
+              result = Operations.divide(leftTemp, rightTemp);
+              pieChartOps.clear();
+              pieChartOps.add(left);
+              pieChartOps.add(right);
+              pieChartOps.add(result);
+              pieChartOps.add("÷");
+              canCreatePieChart = true;
+            } else 
+            {
+              display.setErrorMessage("Get a load of this silly goose dude,"
+                  + " somebody feed him some bread he goin crazy");
+            }
             break;         
           case "power":
             if (right.getSign()) 
