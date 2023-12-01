@@ -64,7 +64,7 @@ public class MenuSetup
         @Override
         public void actionPerformed(ActionEvent e) {
           JFileChooser fileChooser = new JFileChooser();
-          fileChooser.setDialogTitle("Save Recording");
+          fileChooser.setDialogTitle(messages.getString("saveRecording.title"));
           int userSelection = fileChooser.showSaveDialog(parentFrame);
 
           if (userSelection == JFileChooser.APPROVE_OPTION) {

@@ -347,17 +347,17 @@ public class OperationsTest
   void exponent()
   {
     IrreducedMixedFraction f = new IrreducedMixedFraction(2, 5, false);
-    IrreducedMixedFraction res = Operations.exponent(f, 2);
+    IrreducedMixedFraction res = Operations.intPower(f, 2);
     assertEquals(4, res.getNumerator());
     assertEquals(25, res.getDenominator());
-    res = Operations.exponent(f, -1);
+    res = Operations.intPower(f, -1);
     assertEquals(5, res.getNumerator());
     assertEquals(2, res.getDenominator());
-    res = Operations.exponent(f, 3);
+    res = Operations.intPower(f, 3);
     assertEquals(8, res.getNumerator());
     assertEquals(125, res.getDenominator());
     f.setSign(true);
-    res = Operations.exponent(f, 3);
+    res = Operations.intPower(f, 3);
     res.setNumerator(-8);
     assertEquals(-8, res.getNumerator());
     assertEquals(125, res.getDenominator());
