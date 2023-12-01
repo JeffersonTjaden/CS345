@@ -222,6 +222,9 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     content.add(display, c);
     content.revalidate();
     content.repaint();
+    customize();
+    // Set Backhround Color
+    content.setBackground(new Color(255, 0, 0));
   }
   
   
@@ -241,6 +244,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 0;
     c.gridy = 3;
     content.add(reset, c);
+    // set Button Color
+    reset.setBackground(new Color(0, 255, 0));
 
     clear = new JButton("C");
     clear.setActionCommand("clear");
