@@ -9,12 +9,14 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -50,7 +52,7 @@ import javax.swing.text.StyledDocument;
 import Recording.CalculationRecorder;
 import utilities.*;
 
-public class Calculator extends JFrame implements ActionListener, ComponentListener, WindowStateListener
+public class Calculator extends JFrame implements ActionListener, ComponentListener, WindowStateListener, WindowListener
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
@@ -164,7 +166,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
     
-    setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
     setTitle(messages.getString("calculator.title"));
 
@@ -779,7 +781,9 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   public void componentShown(ComponentEvent e) {};
 
   @Override
-  public void componentHidden(ComponentEvent e) {};
+  public void componentHidden(ComponentEvent e) {
+    history.setVisible(false);
+  };
 
   @Override
   public void windowStateChanged(WindowEvent e) {
@@ -788,6 +792,33 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     } else{
       history.setVisible(true);
     }
+  }
+
+  @Override
+  public void windowActivated(WindowEvent e) {}
+
+  @Override
+  public void windowClosed(WindowEvent e) {
+    history.setVisible(false);
+  }
+
+  @Override
+  public void windowClosing(WindowEvent e){
+    history.setVisible(false);
+  }
+
+  @Override
+  public void windowOpened(WindowEvent e) {}
+
+  @Override
+  public void windowIconified(WindowEvent e) {}
+
+  @Override
+  public void windowDeiconified(WindowEvent e) {}
+
+  @Override
+  public void windowDeactivated(WindowEvent e) {
+    history.setVisible(false);
   }
   
   public void changeDisplay(Display newDisplay) {

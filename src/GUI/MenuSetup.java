@@ -93,7 +93,7 @@ public class MenuSetup
     newCalculatorItem.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Logic to create a new calculator window
+            new Calculator();
         }
     });
     fileMenu.add(newCalculatorItem);
