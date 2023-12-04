@@ -121,6 +121,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   public Calculator()
   {
     this(Locale.getDefault());
+    customize();
   }
   
   //Overloaded constructor accepting a Locale.
@@ -198,23 +199,32 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   
   private void displayLogo() 
   {
-    ImageIcon picture = new ImageIcon(getClass().getResource("/resources/Fragile_Logo.png"));
-    
-    Image img = picture.getImage();
-    Image scaledImage = img.getScaledInstance(180, 50, Image.SCALE_SMOOTH);
-    picture = new ImageIcon(scaledImage);
+    //ImageIcon picture = new ImageIcon(getClass().getResource("/resources/Fragile_Logo.png"));
+    try
+    {
+      ImageIcon picture = new ImageIcon(getClass().getResource(imageName));
+      
+      Image img = picture.getImage();
+      Image scaledImage = img.getScaledInstance(180, 50, Image.SCALE_SMOOTH);
+      picture = new ImageIcon(scaledImage);
+      JLabel icon = new JLabel(picture);
+      icon.setHorizontalAlignment(SwingConstants.LEFT);
+      
+      c.gridx = 0;
+      c.gridy = 0;
+      c.gridwidth = 5;
+      c.gridheight = 1;
+      c.weightx = 0.5;
+      c.weighty = 0.5;
+      c.fill = GridBagConstraints.BOTH;
+      content.add(icon, c);
 
-    JLabel icon = new JLabel(picture);
-    icon.setHorizontalAlignment(SwingConstants.LEFT);
-
-    c.gridx = 0;
-    c.gridy = 0;
-    c.gridwidth = 5;
-    c.gridheight = 1;
-    c.weightx = 0.5;
-    c.weighty = 0.5;
-    c.fill = GridBagConstraints.BOTH;
-    content.add(icon, c);
+    }
+    catch (NullPointerException e)
+    {
+      System.out.println("Error: Cannot find logo file. Please ensure that the logo text in the");
+      System.out.print("Customization file matches the logo file name exactly.");
+    }
   }
 
   private void display(Display newDisplay)
@@ -234,7 +244,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     content.repaint();
     customize();
     // Set Backhround Color
-    content.setBackground(new Color(255, 0, 0));
+    content.setBackground(c1);
   }
   
   
@@ -255,7 +265,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridy = 3;
     content.add(reset, c);
     // set Button Color
-    reset.setBackground(new Color(0, 255, 0));
+    reset.setBackground(c2);
 
     clear = new JButton("C");
     clear.setActionCommand("clear");
@@ -263,6 +273,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 1;
     c.gridy = 3;
     content.add(clear, c);
+ // set Button Color
+    clear.setBackground(c2);
 
     back = new JButton(Character.toString((char) 171));
     back.setActionCommand("back");
@@ -272,6 +284,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 2;
     c.gridy = 3;
     content.add(back, c);
+ // set Button Color
+    back.setBackground(c2);
 
     add = new JButton("+");
     add.setActionCommand("add");
@@ -281,14 +295,18 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = (3);
     c.gridy = (3);
     content.add(add, c);
+ // set Button Color
+    add.setBackground(c2);
 
-    mediant = new JButton("↔");
+    mediant = new JButton("â†”");
     mediant.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     mediant.setActionCommand("mediant");
     mediant.addActionListener(this);
     c.gridx = 4;
     c.gridy = 3;
     content.add(mediant, c);
+ // set Button Color
+    mediant.setBackground(c2);
 
     changeSign = new JButton(Character.toString((char) 177));
     changeSign.setActionCommand("sign");
@@ -296,6 +314,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = (5);
     c.gridy = (3);
     content.add(changeSign, c);
+ // set Button Color
+    changeSign.setBackground(c2);
 
     seven = new JButton("7");
     seven.setActionCommand("seven");
@@ -305,6 +325,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 0;
     c.gridy = 4;
     content.add(seven, c);
+ // set Button Color
+    seven.setBackground(c2);
 
     eight = new JButton("8");
     eight.setActionCommand("eight");
@@ -314,6 +336,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 1;
     c.gridy = 4;
     content.add(eight, c);
+ // set Button Color
+    eight.setBackground(c2);
 
     nine = new JButton("9");
     nine.setActionCommand("nine");
@@ -323,6 +347,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 2;
     c.gridy = 4;
     content.add(nine, c);
+ // set Button Color
+    nine.setBackground(c2);
 
     minus = new JButton("-");
     minus.setActionCommand("minus");
@@ -332,13 +358,17 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 3;
     c.gridy = 4;
     content.add(minus, c);
+ // set Button Color
+    minus.setBackground(c2);
 
-    intPower = new JButton("xⁿ");
+    intPower = new JButton("xâ�¿");
     intPower.setActionCommand("intPower");
     intPower.addActionListener(this);
     c.gridx = 4;
     c.gridy = 4;
     content.add(intPower, c);
+ // set Button Color
+    intPower.setBackground(c2);
 
     invert = new JButton("Inv");
     invert.setActionCommand("invert");
@@ -346,6 +376,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 5;
     c.gridy = 4;
     content.add(invert, c);
+ // set Button Color
+    invert.setBackground(c2);
 
     four = new JButton("4");
     four.setActionCommand("four");
@@ -355,6 +387,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 0;
     c.gridy = 5;
     content.add(four, c);
+ // set Button Color
+    four.setBackground(c2);
 
     five = new JButton("5");
     five.setActionCommand("five");
@@ -364,6 +398,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 1;
     c.gridy = 5;
     content.add(five, c);
+ // set Button Color
+    five.setBackground(c2);
 
     six = new JButton("6");
     six.setActionCommand("six");
@@ -373,6 +409,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 2;
     c.gridy = 5;
     content.add(six, c);
+ // set Button Color
+    six.setBackground(c2);
 
     multiply = new JButton("X");
     multiply.setActionCommand("multiply");
@@ -382,14 +420,18 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 3;
     c.gridy = 5;
     content.add(multiply, c);
+ // set Button Color
+    multiply.setBackground(c2);
 
-    simplification = new JButton("↓");
+    simplification = new JButton("â†“");
     simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     simplification.setActionCommand("simplification");
     simplification.addActionListener(this);
     c.gridx = 5;
     c.gridy = 5;
     content.add(simplification, c);
+ // set Button Color
+    simplification.setBackground(c2);
 
     one = new JButton("1");
     one.setActionCommand("one");
@@ -399,6 +441,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 0;
     c.gridy = 6;
     content.add(one, c);
+ // set Button Color
+    one.setBackground(c2);
 
     two = new JButton("2");
     two.setActionCommand("two");
@@ -408,6 +452,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 1;
     c.gridy = 6;
     content.add(two, c);
+ // set Button Color
+    two.setBackground(c2);
 
     three = new JButton("3");
     three.setActionCommand("three");
@@ -417,6 +463,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 2;
     c.gridy = 6;
     content.add(three, c);
+ // set Button Color
+    three.setBackground(c2);
 
     divide = new JButton(Character.toString((char) 247));
     divide.setActionCommand("divide");
@@ -426,6 +474,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 3;
     c.gridy = 6;
     content.add(divide, c);
+ // set Button Color
+    divide.setBackground(c2);
 
     bar = new JButton("/");
     bar.setActionCommand("bar");
@@ -435,6 +485,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 2;
     c.gridy = 7;
     content.add(bar, c);
+ // set Button Color
+    bar.setBackground(c2);
 
     equals = new JButton("=");
     equals.setActionCommand("equals");
@@ -444,6 +496,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 3;
     c.gridy = 7;
     content.add(equals, c);
+ // set Button Color
+    equals.setBackground(c2);
 
     zero = new JButton("0");
     zero.setActionCommand("zero");
@@ -454,6 +508,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     c.gridx = 0;
     c.gridy = 7;
     content.add(zero, c);
+ // set Button Color
+    zero.setBackground(c2);
   }
 
   private void operatorButtonClicked(final String operation) 
@@ -498,7 +554,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
-      operatorButtonClicked("⇹");
+      operatorButtonClicked("â‡¹");
     }
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
@@ -557,7 +613,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
-            pieChartOps.add("÷");
+            pieChartOps.add("Ã·");
             canCreatePieChart = true;
           } else {
             display.setErrorMessage("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
@@ -583,7 +639,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
-            pieChartOps.add("⇹");
+            pieChartOps.add("â‡¹");
             break;
           default:
             break;
@@ -855,7 +911,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     try
     {
       // Read in the file
-      BufferedReader in = new BufferedReader(new FileReader("Customization.txt"));
+      BufferedReader in = new BufferedReader(new FileReader("src/resources/Customization"));
       
       // Create first color
       String color1 = in.readLine();
@@ -875,11 +931,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       String logo = in.readLine();
       
       // Assign logo
-      imageName = logo;
+      imageName = "/resources/" + logo;
     }
     catch (IOException e)
     {
-      System.out.println("File Not Found.");
+      System.out.println("File Not Found. Please ensure the file name is typed exactly");
+      System.out.print("as it is displayed in the Resources Package.");
     }
   }
 
