@@ -306,7 +306,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     add.setBackground(c2);
 
-    mediant = new JButton("â†”");
+    mediant = new JButton("⇹");
     mediant.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     mediant.setActionCommand("mediant");
     mediant.addActionListener(this);
@@ -369,7 +369,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     minus.setBackground(c2);
 
-    intPower = new JButton("xâ�¿");
+    intPower = new JButton("xⁿ");
     intPower.setActionCommand("intPower");
     intPower.addActionListener(this);
     c.gridx = 4;
@@ -431,7 +431,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     multiply.setBackground(c2);
 
-    simplification = new JButton("â†“");
+    simplification = new JButton("↡");
     simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     simplification.setActionCommand("simplification");
     simplification.addActionListener(this);
