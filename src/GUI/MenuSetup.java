@@ -26,6 +26,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
+import GUI.Display.BarDisplay;
+import GUI.Display.SlashDisplay;
+import GUI.Display.SolidusDisplay;
 import GUI.pieChart.PieChart;
 import Recording.CalculationRecorder;
 import utilities.IrreducedMixedFraction;

@@ -1,6 +1,8 @@
-package GUI;
+package GUI.Display;
 
 import javax.swing.*;
+
+
 import java.awt.*;
 import utilities.*;
 

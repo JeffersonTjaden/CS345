@@ -50,6 +50,10 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import GUI.Display.BarDisplay;
+import GUI.Display.Display;
+import GUI.Display.SlashDisplay;
+import GUI.Display.SolidusDisplay;
 import Recording.CalculationRecorder;
 import utilities.*;
 

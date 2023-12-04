@@ -1,7 +1,8 @@
-package GUI;
+package GUI.IntermediateSteps;
 
 import utilities.*;
 import javax.swing.*;
+
 import java.awt.*;
 
 /**
@@ -12,11 +13,11 @@ import java.awt.*;
  * @author Sean Halloran
  * @version 11/29/2023
  */
-public class IntermediateSteps extends JPanel {
+public abstract class IntermediateSteps extends JPanel {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
-        IntermediateSteps steps = new IntermediateSteps();
+        IntermediateSteps steps = new BarSteps();
         frame.add(steps);
         frame.setVisible(true);
         IrreducedMixedFraction left = new IrreducedMixedFraction(1, 2, 6, true);
@@ -28,29 +29,11 @@ public class IntermediateSteps extends JPanel {
         setLayout(new GridLayout(0, 1));
     }
 
-    private JPanel createExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right) {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel();
-        label.setText(left.toString() + operation + right.toString());
-        panel.add(label);
-        return panel;
-    }
+    protected abstract JPanel createExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right);
 
-    private JPanel createExpression(IrreducedMixedFraction operand, String operation, int power) {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel();
-        label.setText(operand.toString() + operation + power);
-        panel.add(label);
-        return panel;
-    }
+    protected abstract JPanel createExpression(IrreducedMixedFraction operand, String operation, int power);
 
-    private JPanel createResult(IrreducedMixedFraction result) {
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel();
-        label.setText(result.toString());
-        panel.add(label);
-        return panel;
-    }
+    protected abstract JPanel createResult(IrreducedMixedFraction result);
 
     private JPanel createResult(boolean result) {
         JPanel panel = new JPanel();
