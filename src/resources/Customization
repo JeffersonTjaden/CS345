@@ -6,7 +6,8 @@ How to Customize:
 Step 1: Enter the fill color in RGB format on line 1, with each value separated by a single comma.
 	> This changes the main background color.
 Step 2: Enter the highlight color in RGB format on line 2, again with each value separated by a comma.
-	> This changes all of the buttons, as well as the menu bar.
+	> This changes all of the buttons, as well as the menu bar and menu bar options.
 Step 3: enter the name of the file you would like to use as the icon.
 
 Common Color presets:
+To-DO (Wednesday)

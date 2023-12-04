@@ -310,7 +310,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     add.setBackground(c2);
 
-    mediant = new JButton("⇹");
+    mediant = new JButton("â‡¹");
     mediant.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     mediant.setActionCommand("mediant");
     mediant.addActionListener(this);
@@ -373,7 +373,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     minus.setBackground(c2);
 
-    intPower = new JButton("xⁿ");
+    intPower = new JButton("xâ�¿");
     intPower.setActionCommand("intPower");
     intPower.addActionListener(this);
     c.gridx = 4;
@@ -435,7 +435,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     multiply.setBackground(c2);
 
-    simplification = new JButton("↡");
+    simplification = new JButton("â†¡");
     simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     simplification.setActionCommand("simplification");
     simplification.addActionListener(this);
@@ -566,7 +566,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
-      operatorButtonClicked("â‡¹");
+      operatorButtonClicked("Ã¢â€¡Â¹");
     }
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
@@ -625,7 +625,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
-            pieChartOps.add("Ã·");
+            pieChartOps.add("ÃƒÂ·");
             canCreatePieChart = true;
           } else {
             display.setErrorMessage("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
@@ -651,7 +651,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
-            pieChartOps.add("â‡¹");
+            pieChartOps.add("Ã¢â€¡Â¹");
             break;
           default:
             break;
@@ -942,6 +942,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       
       // Assign logo
       imageName = "/resources/" + logo;
+      in.close();
     }
     catch (IOException e)
     {
