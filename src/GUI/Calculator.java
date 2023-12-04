@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.event.WindowStateListener;
@@ -127,6 +128,13 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       setupInputMap();
       setupLayout(locale);
       displayHistory();
+      
+      addWindowListener(new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            handleWindowClosing();
+        }
+    });
   }
 
   private void setupInputMap() {
@@ -161,7 +169,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     pack();
 
     // Menu bar
-    recorder = new CalculationRecorder(this);
+    recorder = new CalculationRecorder(this, messages);
     MenuSetup menuSetup = new MenuSetup(this, this, locale, recorder);
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
@@ -802,9 +810,14 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     history.setVisible(false);
   }
 
-  @Override
-  public void windowClosing(WindowEvent e){
-    history.setVisible(false);
+  private void handleWindowClosing() {
+    // Check if there is an ongoing recording
+    if (recorder != null && recorder.isRecording()) {
+        // Save the recording
+        recorder.stopRecording();
+    }
+
+    // Perform any other shutdown procedures here
   }
 
   @Override
@@ -820,6 +833,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   public void windowDeactivated(WindowEvent e) {
     history.setVisible(false);
   }
+  
+  
   
   public void changeDisplay(Display newDisplay) {
     display(newDisplay);
@@ -866,5 +881,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     {
       System.out.println("File Not Found.");
     }
+  }
+
+  @Override
+  public void windowClosing(WindowEvent e)
+  {
+    // TODO Auto-generated method stub
+    
   }
 }

@@ -4,11 +4,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,8 +26,10 @@ public class CalculationRecorder {
     private JButton recordButton, pauseButton, stopButton;
     private JTextField fileNameField;
     private File file;
+    private ResourceBundle messages;
 
-    public CalculationRecorder(JFrame frame) {
+    public CalculationRecorder(JFrame frame, ResourceBundle messages) {
+        this.messages = messages;
         recordedCalculations = new ArrayList<>();
         createRecordingControlsDialog(frame);
     }
@@ -69,6 +74,15 @@ public class CalculationRecorder {
         recordingControlsDialog.add(pauseButton);
         recordingControlsDialog.add(stopButton);
 
+        recordingControlsDialog.addWindowListener(new WindowAdapter() {
+          @Override
+          public void windowClosing(WindowEvent e) {
+              if (isRecording) {
+                  stopRecording(); // This will save the recording
+              }
+          }
+        });
+        
         recordingControlsDialog.pack();
         recordingControlsDialog.setSize(300, recordingControlsDialog.getHeight());
         recordingControlsDialog.setLocationRelativeTo(frame);
@@ -80,7 +94,8 @@ public class CalculationRecorder {
         }
         this.file = file;
         fileNameField.setText(file.getName());
-        recordingControlsDialog.setTitle("Record to: " + file.getName());
+        String title = messages.getString("recording.title") + file.getName();
+        recordingControlsDialog.setTitle(title);
         recordingControlsDialog.setVisible(true);
     }
 
