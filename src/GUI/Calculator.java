@@ -57,7 +57,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private Display display = new BarDisplay();;
+  private Display display = new BarDisplay();
   
   private ResourceBundle messages;
   

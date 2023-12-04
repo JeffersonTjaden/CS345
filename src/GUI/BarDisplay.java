@@ -47,6 +47,7 @@ public class BarDisplay extends Display {
 
         setLayout(new BorderLayout());
         displayExpression.setLayout(new FlowLayout());
+        displayExpression.setAlignmentX(FlowLayout.LEFT);
         displayOperand.setLayout(new FlowLayout());
 
         add(displayExpression, BorderLayout.NORTH);
@@ -120,7 +121,7 @@ public class BarDisplay extends Display {
 
     @Override
     protected void clearExpression() {
-        leftWhole.setText("");
+        leftWhole.setText(" ");
         leftFraction.setText("");
         rightWhole.setText("");
         rightFraction.setText("");
