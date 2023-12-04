@@ -57,7 +57,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private Display display = new BarDisplay();
+  private Display display;
   
   private ResourceBundle messages;
   
@@ -174,6 +174,16 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     MenuSetup menuSetup = new MenuSetup(this, this, locale, recorder);
     JMenuBar menuBar = menuSetup.createMenuBar();
     setJMenuBar(menuBar);
+
+    if(menuSetup.getDisplay().equals("bar")){
+      display = new BarDisplay();
+    } else if(menuSetup.getDisplay().equals("slash")){
+      display = new SlashDisplay();
+    } else if(menuSetup.getDisplay().equals("solidus")){
+      display = new SolidusDisplay();
+    } else{
+      System.out.println("Improper Display!!!");
+    }
     
     setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
@@ -182,11 +192,9 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     content = (JPanel) getContentPane();
     content.setLayout(new GridBagLayout());
     
-    
     display(this.display);
     softButtons();
     displayLogo();
-    
 
     setVisible(true);
     setSize(400, 600);
@@ -298,7 +306,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     add.setBackground(c2);
 
-    mediant = new JButton("â†”");
+    mediant = new JButton("⇹");
     mediant.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     mediant.setActionCommand("mediant");
     mediant.addActionListener(this);
@@ -361,7 +369,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     minus.setBackground(c2);
 
-    intPower = new JButton("xâ�¿");
+    intPower = new JButton("xⁿ");
     intPower.setActionCommand("intPower");
     intPower.addActionListener(this);
     c.gridx = 4;
@@ -423,7 +431,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     multiply.setBackground(c2);
 
-    simplification = new JButton("â†“");
+    simplification = new JButton("↡");
     simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     simplification.setActionCommand("simplification");
     simplification.addActionListener(this);
@@ -889,8 +897,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   public void windowDeactivated(WindowEvent e) {
     history.setVisible(false);
   }
-  
-  
   
   public void changeDisplay(Display newDisplay) {
     display(newDisplay);
