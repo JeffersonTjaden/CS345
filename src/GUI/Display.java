@@ -6,7 +6,7 @@ import utilities.IrreducedMixedFraction;
 
 
 /**
- * The Display class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression.
+ * The Display class is for displaying the operand being inputed, the partial current expression, and the evaluated current expression.
  * The abstract methods are all for styling purposes.
  * 
  * This work complies with the JMU Honor Code.
