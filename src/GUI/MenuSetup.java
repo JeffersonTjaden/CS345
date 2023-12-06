@@ -294,6 +294,9 @@ public class MenuSetup
     String imagePath14 = extractImage("Picture14.png");
     String imagePath15 = extractImage("Picture15.png");
     String imagePath16 = extractImage("Picture16.png");
+    String imagePath17 = extractImage("Picture17.png");
+    String imagePath18 = extractImage("Picture18.png");
+    String imagePath19 = extractImage("Picture16.png");
 
     // Add the HTML header with the title
     htmlBuilder.append("<html><head><title>")
@@ -357,6 +360,36 @@ public class MenuSetup
                .append("<p>").append(messages.getString("keyboard.usage.instruction")).append("</p>")
                .append("<p>").append(messages.getString("keyboard.operations.instruction")).append("</p>")
                .append("<p>").append(messages.getString("decimal.key.instruction")).append("</p>");
+    
+    // Language Support section
+    htmlBuilder.append("<h2>").append(messages.getString("languageSupport.title")).append("</h2>")
+               .append("<p>").append(messages.getString("languageSupport.instruction")).append("</p>")
+               // Assuming imagePath17 is the path to the image showing the calculator in French
+               .append("<img src='file:/").append(imagePath17).append("' alt='Language Support'>");
+
+    // Recording section
+    htmlBuilder.append("<h2>").append(messages.getString("recordingHtml.title")).append("</h2>")
+               .append("<p>").append(messages.getString("recording.instruction")).append("</p>")
+               // Assuming imagePath18 is the path to the image showing the recording controls
+               .append("<img src='file:/").append(imagePath18).append("' alt='Recording Controls'>")
+               .append("<p>").append(messages.getString("playback.instruction")).append("</p>");
+
+    // Intermediate Steps section
+    htmlBuilder.append("<h2>").append(messages.getString("intermediateSteps.title")).append("</h2>")
+               .append("<p>").append(messages.getString("intermediateSteps.instruction")).append("</p>")
+               .append("<img src='file:/").append(imagePath19).append("' alt='Recording Controls'>");
+
+    // Customization section
+    htmlBuilder.append("<h2>").append(messages.getString("customization.title")).append("</h2>")
+               .append("<p>").append(messages.getString("customization.instruction")).append("</p>");
+
+    // Keyboard Shortcuts section
+    htmlBuilder.append("<h2>").append(messages.getString("keyboardShortcuts.title")).append("</h2>")
+               .append("<p>").append(messages.getString("keyboardShortcuts.instruction")).append("</p>");
+
+    // Comparing Fractions section
+    htmlBuilder.append("<h2>").append(messages.getString("comparingFractions.title")).append("</h2>")
+               .append("<p>").append(messages.getString("comparingFractions.instruction")).append("</p>");
 
     // Close the HTML content
     htmlBuilder.append("</body></html>");
