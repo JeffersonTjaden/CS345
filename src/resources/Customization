@@ -1,8 +1,10 @@
-12, 25, 251
-0, 2, 104
-test.png
+255, 0, 0
+0, 188, 0
+Fragile_Logo.png
 
 How to Customize: 
 Step 1: Enter the fill color in RGB format on line 1, with each value separated by a single comma.
 Step 2: Enter the highlight color in RGB format on line 2, again with each value separated by a comma.
 Step 3: enter the name of the file you would like to use as the icon.
+
+Common Color presets:

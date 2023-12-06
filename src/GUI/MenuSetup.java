@@ -3,9 +3,12 @@ package GUI;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,6 +38,10 @@ public class MenuSetup
   private Calculator calculator;
   private ResourceBundle messages;
   private CalculationRecorder recorder;
+
+  private Boolean proper;
+  private Boolean reduced;
+  private String display;
   
   public MenuSetup(JFrame parentFrame, Calculator calculator, Locale locale, CalculationRecorder recorder) {
     this.parentFrame = parentFrame;
@@ -46,6 +53,11 @@ public class MenuSetup
   public JMenuBar createMenuBar() {
     // Create a menu bar
     JMenuBar menuBar = new JMenuBar();
+    try {
+      fetchPreferences();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
 
     // Create File menu with Exit item
     JMenu fileMenu = new JMenu(messages.getString("file.menu"));
@@ -93,7 +105,7 @@ public class MenuSetup
     newCalculatorItem.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Logic to create a new calculator window
+            new Calculator();
         }
     });
     fileMenu.add(newCalculatorItem);
@@ -106,8 +118,8 @@ public class MenuSetup
     
     // Mode menu
     JMenu modeMenu = new JMenu(messages.getString("mode.menu"));
-    JCheckBoxMenuItem properItem = new JCheckBoxMenuItem(messages.getString("proper.item"));
-    JCheckBoxMenuItem reducedItem = new JCheckBoxMenuItem(messages.getString("reduced.item"));
+    JCheckBoxMenuItem properItem = new JCheckBoxMenuItem(messages.getString("proper.item"), proper);
+    JCheckBoxMenuItem reducedItem = new JCheckBoxMenuItem(messages.getString("reduced.item"), reduced);
     properItem.addActionListener(e -> calculator.setProperForm(properItem.isSelected()));
     reducedItem.addActionListener(e -> calculator.setReducedForm(reducedItem.isSelected()));
     modeMenu.add(properItem);
@@ -154,8 +166,17 @@ public class MenuSetup
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
     solidusItem.addActionListener(e -> {
       calculator.changeDisplay(new SolidusDisplay());
-  });
-    barItem.setSelected(true);
+    });
+
+    // This will set the display according to the preferences
+    if(display.equals("bar")){
+      barItem.setSelected(true);
+    } else if (display.equals("solidus")){
+      solidusItem.setSelected(true);
+    } else if (display.equals("slash")){
+      slashItem.setSelected(true);
+    }
+    
     // TODO: Add action listeners for style menu items
     styleGroup.add(barItem);
     styleGroup.add(slashItem);
@@ -335,6 +356,18 @@ public class MenuSetup
     }
 
     return tempImageFile.getAbsolutePath();
+  }
+
+  private void fetchPreferences() throws IOException{
+        
+    BufferedReader in = new BufferedReader(new FileReader("src/resources/Preferences"));
+    proper = Boolean.parseBoolean(in.readLine());
+    reduced = Boolean.parseBoolean(in.readLine());
+    display = in.readLine();
+  }
+
+  public String getDisplay(){
+    return display;
   }
 }
 
