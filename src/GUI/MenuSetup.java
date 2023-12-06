@@ -1,5 +1,6 @@
 package GUI;
 
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +27,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 
+import GUI.Displays.BarDisplay;
+import GUI.Displays.SlashDisplay;
+import GUI.Displays.SolidusDisplay;
 import GUI.pieChart.PieChart;
 import Recording.CalculationRecorder;
 import utilities.IrreducedMixedFraction;
@@ -43,6 +47,8 @@ public class MenuSetup
   private Boolean reduced;
   private String display;
   
+  Color menuColor;
+  
   public MenuSetup(JFrame parentFrame, Calculator calculator, Locale locale, CalculationRecorder recorder) {
     this.parentFrame = parentFrame;
     this.calculator = calculator;
@@ -58,7 +64,30 @@ public class MenuSetup
     } catch (IOException e) {
       e.printStackTrace();
     }
-
+    try
+    {
+      // Read in the file
+      BufferedReader in = new BufferedReader(new FileReader("src/resources/Customization"));
+      
+      // Create first color
+      String color1 = in.readLine();
+      
+      //Create second color
+      String color2 = in.readLine();
+      String[] rgb2 = color2.split(",");
+      int r2 = Integer.parseInt(rgb2[0].strip());
+      int g2 = Integer.parseInt(rgb2[1].strip());
+      int b2 = Integer.parseInt(rgb2[2].strip());
+      menuColor = new Color(r2, g2, b2);
+    }
+    catch (IOException e)
+    {
+      System.out.println("File Not Found. Please ensure the file name is typed exactly");
+      System.out.print("as it is displayed in the Resources Package.");
+    }
+    // set MenuBar Color
+    menuBar.setBackground(menuColor);
+    
     // Create File menu with Exit item
     JMenu fileMenu = new JMenu(messages.getString("file.menu"));
     
@@ -70,6 +99,7 @@ public class MenuSetup
         }
     });
     fileMenu.add(openRecordingItem);
+    openRecordingItem.setBackground(menuColor);
     
     JMenuItem saveRecordingItem = new JMenuItem(messages.getString("saveRecording.item"));
     saveRecordingItem.addActionListener(new ActionListener() {
@@ -89,6 +119,7 @@ public class MenuSetup
     fileMenu.add(saveRecordingItem);
     
     fileMenu.addSeparator();
+    saveRecordingItem.setBackground(menuColor);
     
     JMenuItem printSessionItem = new JMenuItem(messages.getString("printSession.item"));
     printSessionItem.addActionListener(new ActionListener() {
@@ -111,10 +142,13 @@ public class MenuSetup
     fileMenu.add(newCalculatorItem);
     
     fileMenu.addSeparator();
+    printSessionItem.setBackground(menuColor);
+    newCalculatorItem.setBackground(menuColor);
     
     JMenuItem exitItem = new JMenuItem(messages.getString("exit.item"));
     exitItem.addActionListener(e -> System.exit(0)); // Close the application on selecting Exit
     fileMenu.add(exitItem);
+    exitItem.setBackground(menuColor);
     
     // Mode menu
     JMenu modeMenu = new JMenu(messages.getString("mode.menu"));
@@ -124,6 +158,8 @@ public class MenuSetup
     reducedItem.addActionListener(e -> calculator.setReducedForm(reducedItem.isSelected()));
     modeMenu.add(properItem);
     modeMenu.add(reducedItem);
+    properItem.setBackground(menuColor);
+    reducedItem.setBackground(menuColor);
 
     // Create View menu with Pie Chart item
     JMenu viewMenu = new JMenu(messages.getString("view.menu"));
@@ -151,6 +187,7 @@ public class MenuSetup
       }
     });
     viewMenu.add(pieChartItem);
+    pieChartItem.setBackground(menuColor);
     
     // Style menu
     JMenu styleMenu = new JMenu(messages.getString("style.menu"));
@@ -167,7 +204,10 @@ public class MenuSetup
     solidusItem.addActionListener(e -> {
       calculator.changeDisplay(new SolidusDisplay());
     });
-
+    barItem.setBackground(menuColor);
+    slashItem.setBackground(menuColor);
+    solidusItem.setBackground(menuColor);
+    
     // This will set the display according to the preferences
     if(display.equals("bar")){
       barItem.setSelected(true);
@@ -207,6 +247,8 @@ public class MenuSetup
     });
     helpMenu.add(aboutItem);
     helpMenu.add(helpItem);
+    aboutItem.setBackground(menuColor);
+    helpItem.setBackground(menuColor);
 
     // Add menus to menu bar
     menuBar.add(fileMenu);

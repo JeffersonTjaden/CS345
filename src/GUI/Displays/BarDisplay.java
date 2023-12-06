@@ -1,6 +1,8 @@
-package GUI;
+package GUI.Displays;
 
 import javax.swing.*;
+
+
 import java.awt.*;
 import utilities.*;
 
@@ -47,6 +49,7 @@ public class BarDisplay extends Display {
 
         setLayout(new BorderLayout());
         displayExpression.setLayout(new FlowLayout());
+        displayExpression.setAlignmentX(FlowLayout.LEFT);
         displayOperand.setLayout(new FlowLayout());
 
         add(displayExpression, BorderLayout.NORTH);
@@ -120,7 +123,7 @@ public class BarDisplay extends Display {
 
     @Override
     protected void clearExpression() {
-        leftWhole.setText("");
+        leftWhole.setText(" ");
         leftFraction.setText("");
         rightWhole.setText("");
         rightFraction.setText("");

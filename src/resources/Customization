@@ -1,10 +1,33 @@
-255, 0, 0
-0, 188, 0
+51, 0, 102
+255, 153, 0
 Fragile_Logo.png
 
 How to Customize: 
 Step 1: Enter the fill color in RGB format on line 1, with each value separated by a single comma.
+	> This changes the main background color.
 Step 2: Enter the highlight color in RGB format on line 2, again with each value separated by a comma.
+	> This changes all of the buttons, as well as the menu bar and menu bar options.
 Step 3: enter the name of the file you would like to use as the icon.
 
 Common Color presets:
+Black: 0, 0, 0
+Blue: 0, 0, 255
+Cyan: 0, 255, 255
+Fuchsia: 255, 0, 255
+Gold: 255, 153, 0
+Gray: 128, 128, 128
+Green: 0, 128, 0
+Hot Pink: 255, 0, 102
+Lime: 0, 256, 0
+Maroon: 128, 0, 0
+Navy: 0, 0, 128
+Olive: 128, 128, 0
+Orange: 255, 165, 0
+Pink: 255, 102, 255
+Purple: 128, 0, 128
+Purple (Dark): 51, 0, 102
+Red: 255, 0, 0
+Silver: 192, 192, 192
+Teal: 0, 128, 128
+White: 255, 255, 255
+Yellow: 255, 255, 0

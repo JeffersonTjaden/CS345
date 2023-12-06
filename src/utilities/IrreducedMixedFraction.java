@@ -278,4 +278,72 @@ public int compareTo(IrreducedMixedFraction other) {
     return 1;
   }
 }
+  /**
+   * Parses an equation and returns the IrreducedMixedFractions and operator that make up the 
+   * equation.
+   * @author Dade Buschy
+   * @param str the equation to be parsed
+   * @return array of the 3 IrreducedMixedFractions and 1 operator that make up the equation,
+   * in that order
+   */
+  public static Object[] parseEquation(final String str)
+  {
+    int posOp = 0;
+    int posEq = 0;
+    IrreducedMixedFraction arg1;
+    IrreducedMixedFraction arg2;
+    IrreducedMixedFraction arg3;
+    Object[] ret = new Object[4];
+    String[] ops = {"+", "-", "*", "÷", "^", "↔"};
+    for (String op: ops)
+    {
+      if (str.contains(op))
+      {
+        posOp = str.indexOf(op);
+        ret[3] = op;
+      }
+    }
+    posEq = str.indexOf("=");
+    arg1 = IrreducedMixedFraction.parseFraction(str.substring(0,posOp));
+    arg2 = IrreducedMixedFraction.parseFraction(str.substring(posOp + 1, posEq));
+    arg3 = IrreducedMixedFraction.parseFraction(str.substring(posEq + 1));
+    ret[0] = arg1;
+    ret[1] = arg2;
+    ret[2] = arg3;
+    return ret;
+  }
+  /**
+   * Parses a String and returns an IrreducedMixedFraction representation.
+   * WARNING: this function will only work for Strings produced in the same format as the toString()
+   * and does not perform error checking.
+   * @author Dade Buschy
+   * @param str the string to be parsed
+   * @return the IrreducedMixedFraction representation
+   */
+  public static IrreducedMixedFraction parseFraction(final String str)
+  {
+    int pos = 0;
+    int whole = 0;
+    int num = 0;
+    int den = 1;
+    boolean sign = true;
+    if (str.substring(pos, pos + 1).equals("-"))
+    {
+      sign = false;
+      pos++;
+    }
+    if (!(str.substring(pos, pos + 1).equals(" ")))
+    {
+      whole = Integer.parseInt(str.substring(pos, pos + 1));
+      pos++;
+    }
+    pos++;
+    if ((str.length() > 1 && !sign) || (str.length() > 2 && sign))
+    {
+      num = Integer.parseInt(str.substring(pos, pos + 1));
+      pos += 2;
+      den = Integer.parseInt(str.substring(pos, pos + 1));
+    }
+    return new IrreducedMixedFraction(whole, num, den, sign);
+  }
 }
