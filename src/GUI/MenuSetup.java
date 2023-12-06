@@ -155,14 +155,12 @@ public class MenuSetup
     properItem.addActionListener(e -> {
       calculator.setProperForm(properItem.isSelected());
       proper = !proper;
-      try {writePreferences();} 
-      catch (IOException e1) {e1.printStackTrace();}
+      writePreferences();
     });
     reducedItem.addActionListener(e -> {
       calculator.setReducedForm(reducedItem.isSelected());
       reduced = !reduced;
-      try {writePreferences();} 
-      catch (IOException e1) {e1.printStackTrace();}
+      writePreferences();
     });
     reducedItem.addActionListener(e -> calculator.setReducedForm(reducedItem.isSelected()));
     modeMenu.add(properItem);
@@ -205,22 +203,19 @@ public class MenuSetup
     barItem.addActionListener(e -> {
       calculator.changeDisplay(new BarDisplay());
       display = "bar";
-      try {writePreferences();} 
-      catch (IOException e1) {e1.printStackTrace();}
+      writePreferences();
     });
     JRadioButtonMenuItem slashItem = new JRadioButtonMenuItem(messages.getString("slash.item"));
     slashItem.addActionListener(e -> {
       calculator.changeDisplay(new SlashDisplay());
       display = "slash";
-      try {writePreferences();} 
-      catch (IOException e1) {e1.printStackTrace();}
+      writePreferences();
     });
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
     solidusItem.addActionListener(e -> {
       calculator.changeDisplay(new SolidusDisplay());
       display = "solidus";
-      try {writePreferences();} 
-      catch (IOException e1) {e1.printStackTrace();}
+      writePreferences();
     });
     barItem.setBackground(menuColor);
     slashItem.setBackground(menuColor);
@@ -424,15 +419,20 @@ public class MenuSetup
     proper = Boolean.parseBoolean(in.readLine());
     reduced = Boolean.parseBoolean(in.readLine());
     display = in.readLine();
+    in.close();
   }
 
-  private void writePreferences() throws IOException{
-    FileWriter writer = new FileWriter("src/resources/Preferences");
+  private void writePreferences(){
+    FileWriter writer = null;
+    try {writer = new FileWriter("src/resources/Preferences");} 
+    catch (IOException e) {e.printStackTrace();}
     BufferedWriter out = new BufferedWriter(writer);
-    out.write(proper.toString() + "\n");
-    out.write(reduced.toString() + "\n");
-    out.write(display + "\n");
-    out.close();
+    try {
+      out.write(proper.toString() + "\n");
+      out.write(reduced.toString() + "\n");
+      out.write(display + "\n");
+      out.close();
+    } catch (IOException e) {e.printStackTrace();}
   }
 
   public String getDisplay(){
