@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,7 +15,6 @@ import java.io.InputStream;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.print.DocFlavor.URL;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFileChooser;
@@ -154,7 +152,18 @@ public class MenuSetup
     JMenu modeMenu = new JMenu(messages.getString("mode.menu"));
     JCheckBoxMenuItem properItem = new JCheckBoxMenuItem(messages.getString("proper.item"), proper);
     JCheckBoxMenuItem reducedItem = new JCheckBoxMenuItem(messages.getString("reduced.item"), reduced);
-    properItem.addActionListener(e -> calculator.setProperForm(properItem.isSelected()));
+    properItem.addActionListener(e -> {
+      calculator.setProperForm(properItem.isSelected());
+      proper = !proper;
+      try {writePreferences();} 
+      catch (IOException e1) {e1.printStackTrace();}
+    });
+    reducedItem.addActionListener(e -> {
+      calculator.setReducedForm(reducedItem.isSelected());
+      reduced = !reduced;
+      try {writePreferences();} 
+      catch (IOException e1) {e1.printStackTrace();}
+    });
     reducedItem.addActionListener(e -> calculator.setReducedForm(reducedItem.isSelected()));
     modeMenu.add(properItem);
     modeMenu.add(reducedItem);
@@ -195,14 +204,23 @@ public class MenuSetup
     JRadioButtonMenuItem barItem = new JRadioButtonMenuItem(messages.getString("bar.item"));
     barItem.addActionListener(e -> {
       calculator.changeDisplay(new BarDisplay());
+      display = "bar";
+      try {writePreferences();} 
+      catch (IOException e1) {e1.printStackTrace();}
     });
     JRadioButtonMenuItem slashItem = new JRadioButtonMenuItem(messages.getString("slash.item"));
     slashItem.addActionListener(e -> {
       calculator.changeDisplay(new SlashDisplay());
+      display = "slash";
+      try {writePreferences();} 
+      catch (IOException e1) {e1.printStackTrace();}
     });
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
     solidusItem.addActionListener(e -> {
       calculator.changeDisplay(new SolidusDisplay());
+      display = "solidus";
+      try {writePreferences();} 
+      catch (IOException e1) {e1.printStackTrace();}
     });
     barItem.setBackground(menuColor);
     slashItem.setBackground(menuColor);
@@ -406,6 +424,15 @@ public class MenuSetup
     proper = Boolean.parseBoolean(in.readLine());
     reduced = Boolean.parseBoolean(in.readLine());
     display = in.readLine();
+  }
+
+  private void writePreferences() throws IOException{
+    FileWriter writer = new FileWriter("src/resources/Preferences");
+    BufferedWriter out = new BufferedWriter(writer);
+    out.write(proper.toString() + "\n");
+    out.write(reduced.toString() + "\n");
+    out.write(display + "\n");
+    out.close();
   }
 
   public String getDisplay(){
