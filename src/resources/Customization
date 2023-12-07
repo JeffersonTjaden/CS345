@@ -3,11 +3,21 @@
 godukes.png
 
 How to Customize: 
+COLOR:
 Step 1: Enter the fill color in RGB format on line 1, with each value separated by a single comma.
 	> This changes the main background color.
+	
 Step 2: Enter the highlight color in RGB format on line 2, again with each value separated by a comma.
 	> This changes all of the buttons, as well as the menu bar and menu bar options.
-Step 3: enter the name of the file you would like to use as the icon.
+
+LOGO:
+Step 1: ensure the logo file you would like to use is in a .png format.
+
+Step 2: copy the logo file into the resources package.
+
+Step 3: edit the third line of this file to the EXACT filename AND file format as it now appears in the
+		resources foulder.
+		> For example, if your logo file is named "godukes.png" in resources, line 3 should read "godukes.png".
 
 Common Color presets:
 Black: 0, 0, 0
