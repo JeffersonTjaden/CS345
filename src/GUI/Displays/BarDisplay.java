@@ -1,4 +1,4 @@
-package GUI.Display;
+package GUI.Displays;
 
 import javax.swing.*;
 

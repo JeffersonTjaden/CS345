@@ -1,27 +1,28 @@
-package GUI.Display;
+package GUI.Displays;
 
 import javax.swing.*;
 
-import java.awt.*;
 import utilities.*;
 
+import java.awt.*;
+
 /**
- * The SlashDisplay class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression in slash style.
+ * The SolidusDisplay class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression in solidus style.
  * 
  * This work complies with the JMU Honor Code.
  * 
  * @author Sean Halloran
  * @version 11/28/2023
  */
-public class SlashDisplay extends Display {
+public class SolidusDisplay extends Display {
 
-    JLabel displayExpression;
-    JLabel displayOperand;
-    
+    private JLabel displayExpression;
+    private JLabel displayOperand;
+
     /**
-     * Constructs a new SlashDisplay with an empty current operand and an empty current expression.
+     * Constructs a new SolidusDisplay with an empty current operand and an empty current expression.
      */
-    public SlashDisplay() {
+    public SolidusDisplay() {
         setLayout(new BorderLayout());
 
         displayExpression = new JLabel();
@@ -42,11 +43,7 @@ public class SlashDisplay extends Display {
         signText = "";
         signBool = true;
         updateOperand();
-
-        setVisible(true);
     }
-
-    //Getter and Setter Methods
 
     @Override
     public void setErrorMessage(String errorMessage) {
@@ -55,28 +52,26 @@ public class SlashDisplay extends Display {
 
     @Override
     public void setPartialExpression(IrreducedMixedFraction left, String operation) {
-        displayExpression.setText(left.toString() + operation);
+        displayExpression.setText("<html>" + left.toSolidusString() + operation + "</html>");
         clearOperand();
     }
 
     @Override
     public void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result) {
-        displayExpression.setText(displayExpression.getText() + right.toString() + "=" + result.toString());
+        displayExpression.setText(displayExpression.getText().substring(0, displayExpression.getText().length() - 7) + right.toSolidusString() + "=" + result.toSolidusString() + "</html>");
     }
 
     @Override
     public void setEvaluatedExpression(IrreducedMixedFraction right, boolean result) {
-        displayExpression.setText(displayExpression.getText() + right.toString() + "=" + Boolean.toString(result));
+        displayExpression.setText(displayExpression.getText().substring(0, displayExpression.getText().length() - 7) + right.toSolidusString() + "=" + Boolean.toString(result));
     }
 
-    //Helper Methods
-    
     @Override
     protected void updateOperand() {
         String text = "";
         String wholePart = whole + " ";
-        String numeratorPart = numerator + "/";
-        String denominatorPart = denominator;
+        String numeratorPart = "<sup>" + numerator + "</sup>" + "/";
+        String denominatorPart = "<sub>" + denominator + "</sub>";
     
         String focusedStyle = "<span style='background-color:#D3D3D3; color:black;'>%s</span>"; // Changed color for visibility
     
@@ -99,5 +94,6 @@ public class SlashDisplay extends Display {
     @Override
     protected void clearExpression() {
         displayExpression.setText(" ");
-    }      
+    }
+
 }

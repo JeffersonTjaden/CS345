@@ -19,7 +19,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
-public class CalculationRecorder {
+public class CalculationRecorder 
+{
     private List<String> recordedCalculations;
     private boolean isRecording;
     private JDialog recordingControlsDialog;
@@ -28,7 +29,9 @@ public class CalculationRecorder {
     private File file;
     private ResourceBundle messages;
 
-    public CalculationRecorder(JFrame frame, ResourceBundle messages) {
+
+    public CalculationRecorder(JFrame frame, ResourceBundle messages) 
+    {
         this.messages = messages;
         recordedCalculations = new ArrayList<>();
         createRecordingControlsDialog(frame);

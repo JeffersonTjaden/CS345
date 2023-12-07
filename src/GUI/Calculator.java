@@ -51,10 +51,10 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import GUI.Display.BarDisplay;
-import GUI.Display.Display;
-import GUI.Display.SlashDisplay;
-import GUI.Display.SolidusDisplay;
+import GUI.Displays.BarDisplay;
+import GUI.Displays.Display;
+import GUI.Displays.SlashDisplay;
+import GUI.Displays.SolidusDisplay;
 import Recording.CalculationRecorder;
 import utilities.*;
 
@@ -62,7 +62,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private Display display;
+  private Display display = new BarDisplay();
   
   private ResourceBundle messages;
   
@@ -315,7 +315,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     add.setBackground(c2);
 
-    mediant = new JButton("â‡¹");
+    mediant = new JButton("↔");
     mediant.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     mediant.setActionCommand("mediant");
     mediant.addActionListener(this);
@@ -592,7 +592,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
-      operatorButtonClicked("Ã¢â€¡Â¹");
+      operatorButtonClicked("↔");
     }
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
@@ -653,6 +653,20 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             canCreatePieChart = true;
             break;          
           case "/":
+            if (right.getWhole() != 0 || right.getNumerator() != 0) 
+            {
+              result = Operations.divide(leftTemp, rightTemp);
+              pieChartOps.clear();
+              pieChartOps.add(left);
+              pieChartOps.add(right);
+              pieChartOps.add(result);
+              pieChartOps.add("÷");
+              canCreatePieChart = true;
+            } else 
+            {
+              display.setErrorMessage("Get a load of this silly goose dude,"
+                  + " somebody feed him some bread he goin crazy");
+            }
           if (right.getWhole() != 0 || right.getNumerator() != 0) {
             result = Operations.divide(leftTemp, rightTemp);
             pieChartOps.clear();
@@ -685,7 +699,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
-            pieChartOps.add("Ã¢â€¡Â¹");
+            pieChartOps.add("↔");
             break;
           case "<":
             resultBool = Operations.lessThan(leftTemp, rightTemp);
