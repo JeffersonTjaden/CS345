@@ -839,6 +839,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     history.setLayout(new BorderLayout());
 
     JButton toggle = new JButton(">");
+    // set Color
+    toggle.setBackground(c2);
     toggle.setPreferredSize(new Dimension(50, 50));
 
     toggle.addActionListener(new ActionListener() {
