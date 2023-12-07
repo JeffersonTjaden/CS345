@@ -62,6 +62,11 @@ public class SolidusDisplay extends Display {
     }
 
     @Override
+    public void setEvaluatedExpression(IrreducedMixedFraction right, boolean result) {
+        displayExpression.setText(displayExpression.getText().substring(0, displayExpression.getText().length() - 7) + right.toSolidusString() + "=" + Boolean.toString(result));
+    }
+
+    @Override
     protected void updateOperand() {
         String text = "";
         String wholePart = whole + " ";

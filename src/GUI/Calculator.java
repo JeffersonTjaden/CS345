@@ -40,6 +40,7 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -76,6 +77,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private IrreducedMixedFraction left;
   private IrreducedMixedFraction right;
   private IrreducedMixedFraction result;
+  private boolean resultBool;
   private String currentOperation;
   private String partialCurrentExpression;
   private String evaluatedCurrentExpression;
@@ -98,6 +100,9 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JButton multiply;
   private JButton divide;
   private JButton equals;
+  private JButton lessThan;
+  private JButton equalTo;
+  private JButton greaterThan;
 
   //Action Buttons
   private JButton reset;
@@ -435,6 +440,27 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
  // set Button Color
     multiply.setBackground(c2);
 
+    lessThan = new JButton("<");
+    lessThan.addActionListener(this);
+    c.gridx = 4;
+    c.gridy = 5;
+    content.add(lessThan, c);
+    lessThan.setBackground(c2);
+
+    greaterThan = new JButton(">");
+    greaterThan.addActionListener(this);
+    c.gridx = 4;
+    c.gridy = 6;
+    content.add(greaterThan, c);
+    greaterThan.setBackground(c2);
+
+    equalTo = new JButton("==");
+    equalTo.addActionListener(this);
+    c.gridx = 4;
+    c.gridy = 7;
+    content.add(equalTo, c);
+    equalTo.setBackground(c2);
+
     simplification = new JButton("â†¡");
     simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
     simplification.setActionCommand("simplification");
@@ -571,8 +597,16 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
       operatorButtonClicked("^");
-    }
-    else if (invert.getActionCommand().equals(command)) {
+    } else if (lessThan.getActionCommand().equals(command)) {
+      currentOperation = "<";
+      operatorButtonClicked("<");
+    } else if (greaterThan.getActionCommand().equals(command)) {
+      currentOperation = ">";
+      operatorButtonClicked(">");      
+    } else if (equalTo.getActionCommand().equals(command)) {
+      currentOperation = "==";
+      operatorButtonClicked("==");
+    } else if (invert.getActionCommand().equals(command)) {
       IrreducedMixedFraction temp = display.getFraction();
       temp.invert();
       display.setOperand(temp);
@@ -634,10 +668,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "power":
             if (right.getSign()) 
             {
-              result = Operations.intPower(left, right.getWhole());
+              result = Operations.intPower(leftTemp, right.getWhole());
             } else 
             {
-              result = Operations.intPower(left, -right.getWhole());
+              result = Operations.intPower(leftTemp, -right.getWhole());
             }
             pieChartOps.clear();
             pieChartOps.add(left);
@@ -646,33 +680,54 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             pieChartOps.add("^");
             break;   
           case "mediant":
-            result = Operations.mediant(left, right);
+            result = Operations.mediant(leftTemp, rightTemp);
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
             pieChartOps.add("Ã¢â€¡Â¹");
             break;
-          default:
+          case "<":
+            resultBool = Operations.lessThan(leftTemp, rightTemp);
+            JOptionPane.showMessageDialog(this, resultBool);
             break;
+          case "==":
+            resultBool = Operations.equalTo(leftTemp, rightTemp);
+            JOptionPane.showMessageDialog(this, resultBool);
+            break;
+          case ">":
+            resultBool = Operations.greaterThan(leftTemp, rightTemp);
+            JOptionPane.showMessageDialog(this, resultBool);
         }
-        if (isProperForm) {
-          right.reduce();
-          result.reduce();
+        if (result != null) {
+          if (isProperForm) {
+            right.reduce();
+            result.reduce();
+          }
+          if (isReducedForm) {
+            right.simplify();
+            result.simplify();
+          }
+          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
+              + result.toString();
+          display.setEvaluatedExpression(right, result);
+          display.setOperand(result);
+          if (recorder.isRecording()) {
+            recorder.recordCalculation(evaluatedCurrentExpression);
+          }
+          calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
+          System.out.println(calcHistory.getText());
+        } else {
+          if (isProperForm) {
+            right.reduce();
+          }
+          if (isReducedForm) {
+            right.simplify();
+          }
+          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + Boolean.toString(resultBool);
+          display.setEvaluatedExpression(right, resultBool);
+          display.clearButton();
         }
-        if (isReducedForm) {
-          right.simplify();
-          result.simplify();
-        }
-        evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "="
-            + result.toString();
-        display.setEvaluatedExpression(right, result);
-        display.setOperand(result);
-        if (recorder.isRecording()) {
-          recorder.recordCalculation(evaluatedCurrentExpression);
-        }
-        calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
-        System.out.println(calcHistory.getText());
         left = null;
         right = null;
         currentOperation = null;        

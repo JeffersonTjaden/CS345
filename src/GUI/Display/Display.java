@@ -53,6 +53,8 @@ public abstract class Display extends JPanel {
      */
     public abstract void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result);
 
+    public abstract void setEvaluatedExpression(IrreducedMixedFraction right, boolean result);
+
     /**
      * A getter method for the IrreducedMixedFraction inputted as the current operand.
      * 

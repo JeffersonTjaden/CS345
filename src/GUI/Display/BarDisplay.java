@@ -103,6 +103,14 @@ public class BarDisplay extends Display {
     }
 
     @Override
+    public void setEvaluatedExpression(IrreducedMixedFraction right, boolean result) {
+        rightWhole.setText(rightWhole.getText() + " " + right.toWholeBarString() + " ");
+        rightFraction.setText(right.toFractionBarString());
+
+        resultWhole.setText(" = " + Boolean.toString(result));
+    }
+
+    @Override
     protected void updateOperand() {
         String focusedStyle = "<span style='background-color:#D3D3D3; color:black;'>%s</span>";
         switch (currentPosition % 3) {
