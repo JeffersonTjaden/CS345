@@ -325,10 +325,10 @@ public int compareTo(IrreducedMixedFraction other) {
   public static IrreducedMixedFraction parseFraction(final String str)
   {
     Integer index = 0;
-    int pos = 0;
+    Integer pos = 0;
     Integer whole = 0;
-    int num = 0;
-    int den = 1;
+    Integer num = 0;
+    Integer den = 1;
     IrreducedMixedFraction ret = new IrreducedMixedFraction(whole, num, den, true);
     
     if (str.substring(pos, pos + 1).equals("-"))
@@ -345,19 +345,24 @@ public int compareTo(IrreducedMixedFraction other) {
         ret.setWhole(whole);
         pos += index - pos;
       }
-    }
-    else
-    {
-      String[] ops = {"+", "-", "*", "÷", "^", "↔", "="};
-      for (String op: ops)
+      else
       {
-        if (str.contains(op))
+        index = pos + 1;
+        boolean canParse = true;
+        while (canParse && index < str.length())
         {
-          index = str.indexOf(op);
-          whole = Integer.parseInt(str.substring(pos, index));
-          ret.setWhole(whole);
-          pos += index - pos;
+          try
+          {
+            Integer.parseInt(str.substring(pos, index));
+            index++;
+          }
+          catch (NumberFormatException e)
+          {
+            canParse = false;
+            pos = index - pos + 1;
+          }
         }
+        ret.setWhole(Integer.parseInt(str.substring(pos, index)));
       }
     }
     pos++;
