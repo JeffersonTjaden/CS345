@@ -284,7 +284,7 @@ public class MenuSetup
     return pieChartItem;
   }
 
-  private void fetchPreferences(){
+  private void fetchPreferences() throws IOException{
     try{in = new BufferedReader(new FileReader("src/resources/Preferences"));}
     catch (IOException e) {e.printStackTrace();}
     proper = Boolean.parseBoolean(in.readLine());
