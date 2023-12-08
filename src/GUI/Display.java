@@ -1,4 +1,4 @@
-package GUI.Displays;
+package GUI;
 
 import javax.swing.*;
 
@@ -6,8 +6,7 @@ import utilities.IrreducedMixedFraction;
 
 
 /**
- * The Display class is for displaying the operand being inputed, the partial current expression,
- * and the evaluated current expression.
+ * The Display class is for displaying the operand being inputed, the partial current expression, and the evaluated current expression.
  * The abstract methods are all for styling purposes.
  * 
  * This work complies with the JMU Honor Code.
@@ -54,7 +53,7 @@ public abstract class Display extends JPanel {
      */
     public abstract void setEvaluatedExpression(IrreducedMixedFraction right, IrreducedMixedFraction result);
 
-    public abstract JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, boolean result);
+    public abstract void setEvaluatedExpression(IrreducedMixedFraction right, boolean result);
 
     /**
      * A getter method for the IrreducedMixedFraction inputted as the current operand.
