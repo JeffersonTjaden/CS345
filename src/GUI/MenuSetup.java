@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -46,6 +47,7 @@ public class MenuSetup
   private Boolean reduced;
   private String display;
   private BufferedReader in;
+  private BufferedWriter out;
   private FileWriter writer;
   
   Color menuColor;
@@ -285,24 +287,30 @@ public class MenuSetup
   }
 
   private void fetchPreferences(){
-    try{in = new BufferedReader(new FileReader("src/resources/Preferences"));}
-    catch (IOException e) {e.printStackTrace();}
-    proper = Boolean.parseBoolean(in.readLine());
-    reduced = Boolean.parseBoolean(in.readLine());
-    display = in.readLine();
-    in.close();
+    try{
+      in = new BufferedReader(new FileReader("src/resources/Preferences"));
+      proper = Boolean.parseBoolean(in.readLine());
+      reduced = Boolean.parseBoolean(in.readLine());
+      display = in.readLine();
+      in.close();
+    }
+    catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   private void writePreferences(){
-    try {writer = new FileWriter("src/resources/Preferences");} 
-    catch (IOException e) {e.printStackTrace();}
-    BufferedWriter out = new BufferedWriter(writer);
     try {
+      writer = new FileWriter("src/resources/Preferences");
+      out = new BufferedWriter(writer);
       out.write(proper.toString() + "\n");
       out.write(reduced.toString() + "\n");
       out.write(display + "\n");
       out.close();
-    } catch (IOException e) {e.printStackTrace();}
+    } 
+    catch (FileNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 
   public String getDisplay(){
