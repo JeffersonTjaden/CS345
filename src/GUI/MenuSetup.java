@@ -45,6 +45,8 @@ public class MenuSetup
   private Boolean proper;
   private Boolean reduced;
   private String display;
+  private BufferedReader in;
+  private FileWriter writer;
   
   Color menuColor;
   
@@ -282,9 +284,9 @@ public class MenuSetup
     return pieChartItem;
   }
 
-  private void fetchPreferences() throws IOException{
-        
-    BufferedReader in = new BufferedReader(new FileReader("src/resources/Preferences"));
+  private void fetchPreferences(){
+    try{in = new BufferedReader(new FileReader("src/resources/Preferences"));}
+    catch (IOException e) {e.printStackTrace();}
     proper = Boolean.parseBoolean(in.readLine());
     reduced = Boolean.parseBoolean(in.readLine());
     display = in.readLine();
@@ -292,7 +294,6 @@ public class MenuSetup
   }
 
   private void writePreferences(){
-    FileWriter writer = null;
     try {writer = new FileWriter("src/resources/Preferences");} 
     catch (IOException e) {e.printStackTrace();}
     BufferedWriter out = new BufferedWriter(writer);
