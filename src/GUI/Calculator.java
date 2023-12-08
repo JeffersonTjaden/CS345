@@ -703,15 +703,19 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             break;
           case "<":
             resultBool = Operations.lessThan(leftTemp, rightTemp);
-            JOptionPane.showMessageDialog(this, resultBool);
+            display.resetButton();
+            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
           case "==":
             resultBool = Operations.equalTo(leftTemp, rightTemp);
-            JOptionPane.showMessageDialog(this, resultBool);
+            display.resetButton();
+            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
           case ">":
             resultBool = Operations.greaterThan(leftTemp, rightTemp);
-            JOptionPane.showMessageDialog(this, resultBool);
+            display.resetButton();
+            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
+            break;
         }
         if (result != null) {
           if (isProperForm) {
@@ -731,16 +735,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           }
           calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
           System.out.println(calcHistory.getText());
-        } else {
-          if (isProperForm) {
-            right.reduce();
-          }
-          if (isReducedForm) {
-            right.simplify();
-          }
-          evaluatedCurrentExpression = partialCurrentExpression + right.toString() + "=" + Boolean.toString(resultBool);
-          display.setEvaluatedExpression(right, resultBool);
-          display.clearButton();
         }
         left = null;
         right = null;

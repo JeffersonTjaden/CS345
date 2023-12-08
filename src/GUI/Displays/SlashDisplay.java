@@ -65,8 +65,12 @@ public class SlashDisplay extends Display {
     }
 
     @Override
-    public void setEvaluatedExpression(IrreducedMixedFraction right, boolean result) {
-        displayExpression.setText(displayExpression.getText() + right.toString() + "=" + Boolean.toString(result));
+    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, boolean result) {
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel();
+        panel.add(label);
+        label.setText(left.toString() + operation + right.toString() + "=" + result);
+        return panel;
     }
 
     //Helper Methods

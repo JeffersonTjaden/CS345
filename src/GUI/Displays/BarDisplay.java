@@ -103,11 +103,22 @@ public class BarDisplay extends Display {
     }
 
     @Override
-    public void setEvaluatedExpression(IrreducedMixedFraction right, boolean result) {
-        rightWhole.setText(rightWhole.getText() + " " + right.toWholeBarString() + " ");
-        rightFraction.setText(right.toFractionBarString());
+    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, boolean result) {
+        JPanel panel = new JPanel();
+        JLabel[] labels = new JLabel[5];
 
-        resultWhole.setText(" = " + Boolean.toString(result));
+        for (int i = 0; i < labels.length; i++) {
+            labels[i] = new JLabel();
+            panel.add(labels[i]);
+        }
+
+        labels[0].setText(left.toWholeBarString() + " ");
+        labels[1].setText(left.toFractionBarString());
+        labels[2].setText(" " + operation + " " + right.toWholeBarString() + " ");
+        labels[3].setText(right.toFractionBarString());
+        labels[4].setText(" = " + Boolean.toString(result));
+
+        return panel;
     }
 
     @Override
