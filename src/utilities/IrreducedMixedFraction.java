@@ -1,5 +1,7 @@
 package utilities;
 
+import javax.swing.JDialog;
+
 /**
  * The IrreducedMixedFraction class is for instantiating and manipulating irreduced mixed fractions.
  * 
@@ -304,7 +306,7 @@ public int compareTo(IrreducedMixedFraction other) {
       }
     }
     posEq = str.indexOf("=");
-    arg1 = IrreducedMixedFraction.parseFraction(str.substring(0,posOp));
+    arg1 = IrreducedMixedFraction.parseFraction(str.substring(0, posOp));
     arg2 = IrreducedMixedFraction.parseFraction(str.substring(posOp + 1, posEq));
     arg3 = IrreducedMixedFraction.parseFraction(str.substring(posEq + 1));
     ret[0] = arg1;
@@ -322,28 +324,52 @@ public int compareTo(IrreducedMixedFraction other) {
    */
   public static IrreducedMixedFraction parseFraction(final String str)
   {
+    Integer index = 0;
     int pos = 0;
-    int whole = 0;
+    Integer whole = 0;
     int num = 0;
     int den = 1;
-    boolean sign = true;
+    IrreducedMixedFraction ret = new IrreducedMixedFraction(whole, num, den, true);
+    
     if (str.substring(pos, pos + 1).equals("-"))
     {
-      sign = false;
+      ret.setSign(false);
       pos++;
     }
     if (!(str.substring(pos, pos + 1).equals(" ")))
     {
-      whole = Integer.parseInt(str.substring(pos, pos + 1));
-      pos++;
+      if (str.contains(" "))
+      {
+        index = str.indexOf(" ");
+        whole = Integer.parseInt(str.substring(pos, index));
+        ret.setWhole(whole);
+        pos += index - pos;
+      }
+    }
+    else
+    {
+      String[] ops = {"+", "-", "*", "÷", "^", "↔", "="};
+      for (String op: ops)
+      {
+        if (str.contains(op))
+        {
+          index = str.indexOf(op);
+          whole = Integer.parseInt(str.substring(pos, index));
+          ret.setWhole(whole);
+          pos += index - pos;
+        }
+      }
     }
     pos++;
-    if ((str.length() > 1 && !sign) || (str.length() > 2 && sign))
+    if (str.contains("/"))
     {
-      num = Integer.parseInt(str.substring(pos, pos + 1));
-      pos += 2;
-      den = Integer.parseInt(str.substring(pos, pos + 1));
+      index = str.indexOf("/");
+      num = Integer.parseInt(str.substring(pos, index));
+      ret.setNumerator(num);
+      pos += index - pos + 1;
+      den = Integer.parseInt(str.substring(pos));
+      ret.setDenominator(den);
     }
-    return new IrreducedMixedFraction(whole, num, den, sign);
+    return ret;
   }
 }

@@ -30,6 +30,7 @@ import GUI.Displays.SlashDisplay;
 import GUI.Displays.SolidusDisplay;
 import GUI.pieChart.PieChart;
 import Recording.CalculationRecorder;
+import Recording.PlaybackController;
 import utilities.IrreducedMixedFraction;
 
 public class MenuSetup
@@ -94,6 +95,7 @@ public class MenuSetup
         @Override
         public void actionPerformed(ActionEvent e) {
             // Logic to open recording
+          new PlaybackController(calculator, calculator.getDisplay());
         }
     });
     fileMenu.add(openRecordingItem);
@@ -247,6 +249,7 @@ public class MenuSetup
       aboutDialog.setVisible(true);
     });
     JMenuItem helpItem = new JMenuItem(messages.getString("help.item"));
+    /*
     helpItem.addActionListener(e -> {
       HelpFile helpFile = new HelpFile(messages);
       String htmlContent = helpFile.generateTranslatedHtmlContent();
@@ -259,6 +262,7 @@ public class MenuSetup
       } else {
       }
     });
+    */
     helpMenu.add(aboutItem);
     helpMenu.add(helpItem);
     aboutItem.setBackground(menuColor);

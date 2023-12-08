@@ -1019,6 +1019,14 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       System.out.print("as it is displayed in the Resources Package.");
     }
   }
+  /**
+   * Getter for this calculator's display.
+   * @return the display
+   */
+  public Display getDisplay()
+  {
+    return display;
+  }
 
   @Override
   public void windowClosing(WindowEvent e)
