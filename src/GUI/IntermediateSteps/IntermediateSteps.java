@@ -22,7 +22,7 @@ public abstract class IntermediateSteps extends JPanel {
         frame.setVisible(true);
         IrreducedMixedFraction left = new IrreducedMixedFraction(1, 2, 6, true);
         IrreducedMixedFraction right = new IrreducedMixedFraction(1, 4, 12, false);
-        steps.greaterThanSteps(left, right);
+        steps.divideSteps(left, right);
     }
 
     public IntermediateSteps() {

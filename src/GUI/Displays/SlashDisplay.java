@@ -64,6 +64,11 @@ public class SlashDisplay extends Display {
         displayExpression.setText(displayExpression.getText() + right.toString() + "=" + result.toString());
     }
 
+    @Override
+    public void setEvaluatedExpression(IrreducedMixedFraction right, boolean result) {
+        displayExpression.setText(displayExpression.getText() + right.toString() + "=" + Boolean.toString(result));
+    }
+
     //Helper Methods
     
     @Override
