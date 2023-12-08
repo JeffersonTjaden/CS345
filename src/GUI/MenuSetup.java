@@ -161,12 +161,22 @@ public class MenuSetup
     properItem.addActionListener(e -> {
       calculator.setProperForm(properItem.isSelected());
       proper = !proper;
-      writePreferences();
+      try {
+        writePreferences();
+      } catch (IOException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     });
     reducedItem.addActionListener(e -> {
       calculator.setReducedForm(reducedItem.isSelected());
       reduced = !reduced;
-      writePreferences();
+      try {
+        writePreferences();
+      } catch (IOException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     });
     reducedItem.addActionListener(e -> calculator.setReducedForm(reducedItem.isSelected()));
     modeMenu.add(properItem);
@@ -209,19 +219,34 @@ public class MenuSetup
     barItem.addActionListener(e -> {
       calculator.changeDisplay(new BarDisplay());
       display = "bar";
-      writePreferences();
+      try {
+        writePreferences();
+      } catch (IOException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     });
     JRadioButtonMenuItem slashItem = new JRadioButtonMenuItem(messages.getString("slash.item"));
     slashItem.addActionListener(e -> {
       calculator.changeDisplay(new SlashDisplay());
       display = "slash";
-      writePreferences();
+      try {
+        writePreferences();
+      } catch (IOException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     });
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
     solidusItem.addActionListener(e -> {
       calculator.changeDisplay(new SolidusDisplay());
       display = "solidus";
-      writePreferences();
+      try {
+        writePreferences();
+      } catch (IOException e1) {
+        // TODO Auto-generated catch block
+        e1.printStackTrace();
+      }
     });
     barItem.setBackground(menuColor);
     slashItem.setBackground(menuColor);
@@ -286,7 +311,7 @@ public class MenuSetup
     return pieChartItem;
   }
 
-  private void fetchPreferences(){
+  private void fetchPreferences() throws IOException{
     try{
       in = new BufferedReader(new FileReader("src/resources/Preferences"));
       proper = Boolean.parseBoolean(in.readLine());
@@ -299,7 +324,7 @@ public class MenuSetup
     }
   }
 
-  private void writePreferences(){
+  private void writePreferences() throws IOException{
     try {
       writer = new FileWriter("src/resources/Preferences");
       out = new BufferedWriter(writer);
