@@ -25,6 +25,8 @@ import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -985,40 +987,42 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     new Calculator(locale);
   }
   
-  public void customize()
-  {
-    try
-    {
-      // Read in the file
-      BufferedReader in = new BufferedReader(new FileReader("src/resources/Customization"));
-      
-      // Create first color
-      String color1 = in.readLine();
-      String[] rgb1 = color1.split(",");
-      int r1 = Integer.parseInt(rgb1[0].strip());
-      int g1 = Integer.parseInt(rgb1[1].strip());
-      int b1 = Integer.parseInt(rgb1[2].strip());
-      c1 = new Color(r1, g1, b1);
-      
-      //Create second color
-      String color2 = in.readLine();
-      String[] rgb2 = color2.split(",");
-      int r2 = Integer.parseInt(rgb2[0].strip());
-      int g2 = Integer.parseInt(rgb2[1].strip());
-      int b2 = Integer.parseInt(rgb2[2].strip());
-      c2 = new Color(r2, g2, b2);
-      String logo = in.readLine();
-      
-      // Assign logo
-      imageName = "/resources/" + logo;
-      in.close();
+  public void customize() {
+    try {
+        // Use getResourceAsStream to read from within a JAR
+        InputStream is = getClass().getClassLoader().getResourceAsStream("resources/Customization");
+        if (is != null) {
+            BufferedReader in = new BufferedReader(new InputStreamReader(is));
+
+            // Create first color
+            String color1 = in.readLine();
+            String[] rgb1 = color1.split(",");
+            int r1 = Integer.parseInt(rgb1[0].strip());
+            int g1 = Integer.parseInt(rgb1[1].strip());
+            int b1 = Integer.parseInt(rgb1[2].strip());
+            c1 = new Color(r1, g1, b1);
+
+            // Create second color
+            String color2 = in.readLine();
+            String[] rgb2 = color2.split(",");
+            int r2 = Integer.parseInt(rgb2[0].strip());
+            int g2 = Integer.parseInt(rgb2[1].strip());
+            int b2 = Integer.parseInt(rgb2[2].strip());
+            c2 = new Color(r2, g2, b2);
+
+            // Assign logo
+            String logo = in.readLine();
+            imageName = "/resources/" + logo;
+
+            in.close();
+        } else {
+            System.out.println("Customization file not found in resources.");
+        }
+    } catch (IOException e) {
+        System.out.println("Error reading the Customization file.");
+        e.printStackTrace();
     }
-    catch (IOException e)
-    {
-      System.out.println("File Not Found. Please ensure the file name is typed exactly");
-      System.out.print("as it is displayed in the Resources Package.");
-    }
-  }
+ }
   /**
    * Getter for this calculator's display.
    * @return the display
