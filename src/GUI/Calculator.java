@@ -1021,6 +1021,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
    * Getter for this calculator's display.
    * @return the display
    */
+  //please my clone is so fucked
   public Display getDisplay()
   {
     return display;
