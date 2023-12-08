@@ -312,30 +312,20 @@ public class MenuSetup
   }
 
   private void fetchPreferences() throws IOException{
-    try{
-      in = new BufferedReader(new FileReader("src/resources/Preferences"));
-      proper = Boolean.parseBoolean(in.readLine());
-      reduced = Boolean.parseBoolean(in.readLine());
-      display = in.readLine();
-      in.close();
-    }
-    catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    in = new BufferedReader(new FileReader("src/resources/Preferences"));
+    proper = Boolean.parseBoolean(in.readLine());
+    reduced = Boolean.parseBoolean(in.readLine());
+    display = in.readLine();
+    in.close();
   }
 
   private void writePreferences() throws IOException{
-    try {
-      writer = new FileWriter("src/resources/Preferences");
-      out = new BufferedWriter(writer);
-      out.write(proper.toString() + "\n");
-      out.write(reduced.toString() + "\n");
-      out.write(display + "\n");
-      out.close();
-    } 
-    catch (FileNotFoundException e) {
-      e.printStackTrace();
-    }
+    writer = new FileWriter("src/resources/Preferences");
+    out = new BufferedWriter(writer);
+    out.write(proper.toString() + "\n");
+    out.write(reduced.toString() + "\n");
+    out.write(display + "\n");
+    out.close();
   }
 
   public String getDisplay(){
