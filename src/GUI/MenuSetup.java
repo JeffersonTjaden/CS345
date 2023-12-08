@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -311,16 +312,18 @@ public class MenuSetup
     return pieChartItem;
   }
 
-  private void fetchPreferences() throws IOException{
-    try{
-      in = new BufferedReader(new FileReader("src/resources/Preferences"));
-      proper = Boolean.parseBoolean(in.readLine());
-      reduced = Boolean.parseBoolean(in.readLine());
-      display = in.readLine();
-      in.close();
-    }
-    catch (FileNotFoundException e) {
-      e.printStackTrace();
+  private void fetchPreferences() throws IOException {
+    InputStream is = getClass().getClassLoader().getResourceAsStream("resources/Preferences");
+    if (is != null) {
+        in = new BufferedReader(new InputStreamReader(is));
+        proper = Boolean.parseBoolean(in.readLine());
+        reduced = Boolean.parseBoolean(in.readLine());
+        display = in.readLine();
+        in.close();
+    } else {
+        // Handle the case where the resource is not found
+        // You can either log this or throw an exception
+        throw new FileNotFoundException("Preferences file not found in resources");
     }
   }
 
