@@ -55,6 +55,8 @@ import GUI.Displays.BarDisplay;
 import GUI.Displays.Display;
 import GUI.Displays.SlashDisplay;
 import GUI.Displays.SolidusDisplay;
+import GUI.IntermediateSteps.IntermediateSteps;
+import GUI.IntermediateSteps.SlashSteps;
 import Recording.CalculationRecorder;
 import utilities.*;
 
@@ -120,6 +122,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JWindow history;
   private boolean expand = true;
   private JScrollPane scrollable;
+
+  //Intermediate Steps Objects
+  private JWindow steps;
+  private boolean expandSteps = true;
+  private IntermediateSteps intSteps;
   
   //Customization
   Color c1;
@@ -138,6 +145,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       setupInputMap();
       setupLayout(locale);
       displayHistory();
+      displaySteps();
       customize();
       
       addWindowListener(new WindowAdapter() {
@@ -208,6 +216,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
     setVisible(true);
     setSize(400, 600);
+    setLocation(50, 50);
     setAlwaysOnTop(true);
     addComponentListener(this);
     addWindowStateListener(this);
@@ -877,6 +886,46 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     history.add(toggle, BorderLayout.EAST);
     history.setVisible(true);
   }
+
+  public void displaySteps(){
+    steps = new JWindow();
+    steps.setSize(400, getHeight()/2);
+    steps.setLocation((int)(getLocation().getX())-50, (int)(getLocation().getY()) + 150);
+    steps.setLayout(new BorderLayout());
+
+    JButton toggleSteps = new JButton("<");
+    // set Color
+    toggleSteps.setBackground(c2);
+    toggleSteps.setPreferredSize(new Dimension(50, 50));
+
+    toggleSteps.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e){
+        if(expandSteps){
+          for(int i = 0; i < 30; i++){
+            steps.setLocation(steps.getX() - 10, steps.getY());
+            try {
+              TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e1) {e1.printStackTrace();}
+          }
+          expandSteps = false;
+          toggleSteps.setLabel(">");
+        } else{
+          while(steps.getLocation().getX() < getLocation().getX() - 50){
+            steps.setLocation(steps.getX() + 10, steps.getY());
+            try {
+              TimeUnit.MILLISECONDS.sleep(5);
+            } catch (InterruptedException e1) {e1.printStackTrace();}
+          }
+          expandSteps = true;
+          toggleSteps.setLabel("<");
+        }
+      }
+    });
+
+    steps.add(new SlashSteps(), BorderLayout.CENTER);
+    steps.add(toggleSteps, BorderLayout.WEST);
+    steps.setVisible(true);
+  }
   
   public void printHistory() {
     PrinterJob printerJob = PrinterJob.getPrinterJob();
@@ -912,11 +961,14 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   public void componentResized(ComponentEvent e) {
     history.setSize(getWidth(), getHeight()/2);
     history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + getHeight()/4);
+    steps.setSize(getWidth(), getHeight()/2);
+    steps.setLocation((int)getLocation().getX() - 50, (int)getLocation().getY() + getHeight()/4);
   }
 
   @Override
   public void componentMoved(ComponentEvent e) {
     history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + getHeight()/4);
+    steps.setLocation((int)getLocation().getX() - 50, (int)getLocation().getY() + getHeight()/4);
   }
 
   @Override
