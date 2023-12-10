@@ -977,14 +977,17 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   @Override
   public void componentHidden(ComponentEvent e) {
     history.setVisible(false);
+    steps.setVisible(false);
   };
 
   @Override
   public void windowStateChanged(WindowEvent e) {
     if(history.isVisible()){
       history.setVisible(false);
+      steps.setVisible(false);
     } else{
       history.setVisible(true);
+      steps.setVisible(true);
     }
   }
 
@@ -994,6 +997,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   @Override
   public void windowClosed(WindowEvent e) {
     history.setVisible(false);
+    steps.setVisible(false);
   }
 
   private void handleWindowClosing() {
@@ -1018,6 +1022,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   @Override
   public void windowDeactivated(WindowEvent e) {
     history.setVisible(false);
+    steps.setVisible(false);
   }
   
   public void changeDisplay(Display newDisplay) {
