@@ -138,6 +138,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       setupInputMap();
       setupLayout(locale);
       displayHistory();
+      customize();
       
       addWindowListener(new WindowAdapter() {
         @Override
@@ -1027,7 +1028,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   }
 
   @Override
-  public void windowClosing(WindowEvent e)
+  public void windowClosing(WindowEvent e) 
   {
     // TODO Auto-generated method stub
     

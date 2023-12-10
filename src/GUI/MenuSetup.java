@@ -86,8 +86,7 @@ public class MenuSetup
     }
     catch (IOException e)
     {
-      System.out.println("File Not Found. Please ensure the file name is typed exactly");
-      System.out.print("as it is displayed in the Resources Package.");
+      // Handled in Calculator.
     }
     // set MenuBar Color
     menuBar.setBackground(menuColor);
