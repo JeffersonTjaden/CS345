@@ -1,6 +1,6 @@
 /**
  * @author Jefferson Tjaden.
- * @version October 30, 2023
+ * @version December 10, 2023
  */
 package testing;
 
@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 import Operations.Fraction;
 import Operations.Operator;
 
+/**
+ * The testing class for the unused Operator Class.
+ */
 class OperatorTest
 {
   String a = "addition";

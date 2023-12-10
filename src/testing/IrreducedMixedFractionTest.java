@@ -1,6 +1,6 @@
 /**
  * @author Jefferson Tjaden.
- * @version October 30, 2023
+ * @version December 10, 2023
  */
 package testing;
 
@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import utilities.IrreducedMixedFraction;
 
+/**
+ * The testing class for the IrreducedMixedFraction class.
+ */
 class IrreducedMixedFractionTest
 {
 
