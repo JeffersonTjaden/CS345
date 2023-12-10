@@ -55,8 +55,11 @@ import GUI.Displays.BarDisplay;
 import GUI.Displays.Display;
 import GUI.Displays.SlashDisplay;
 import GUI.Displays.SolidusDisplay;
+import GUI.IntermediateSteps.BarSteps;
 import GUI.IntermediateSteps.IntermediateSteps;
 import GUI.IntermediateSteps.SlashSteps;
+import GUI.IntermediateSteps.SolidusSteps;
+import GUI.HistoryWindowStuff.HistoryWindow;
 import Recording.CalculationRecorder;
 import utilities.*;
 
@@ -195,10 +198,13 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
     if(menuSetup.getDisplay().equals("bar")){
       display = new BarDisplay();
+      intSteps = new BarSteps();
     } else if(menuSetup.getDisplay().equals("slash")){
       display = new SlashDisplay();
+      intSteps = new SlashSteps();
     } else if(menuSetup.getDisplay().equals("solidus")){
       display = new SolidusDisplay();
+      intSteps = new SolidusSteps();
     } else{
       System.out.println("Improper Display!!!");
     }
@@ -633,10 +639,13 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
         right = display.getFraction();      
         IrreducedMixedFraction leftTemp = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
         IrreducedMixedFraction rightTemp = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
+        IrreducedMixedFraction leftSteps = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
+        IrreducedMixedFraction rightSteps = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
         switch (currentOperation)
         {        
           case "+":
             result = Operations.add(leftTemp, rightTemp);
+            intSteps.addSteps(leftSteps, rightSteps);
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -646,6 +655,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             break;         
           case "-":
             result = Operations.subtract(leftTemp, rightTemp);
+            intSteps.subtractSteps(leftSteps, rightSteps);
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -655,6 +665,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             break;
           case "*":
             result = Operations.multiply(leftTemp, rightTemp);
+            intSteps.multiplySteps(leftSteps, rightSteps);
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -666,6 +677,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             if (right.getWhole() != 0 || right.getNumerator() != 0) 
             {
               result = Operations.divide(leftTemp, rightTemp);
+              intSteps.divideSteps(leftSteps, rightSteps);
               pieChartOps.clear();
               pieChartOps.add(left);
               pieChartOps.add(right);
@@ -677,25 +689,16 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
               display.setErrorMessage("Get a load of this silly goose dude,"
                   + " somebody feed him some bread he goin crazy");
             }
-          if (right.getWhole() != 0 || right.getNumerator() != 0) {
-            result = Operations.divide(leftTemp, rightTemp);
-            pieChartOps.clear();
-            pieChartOps.add(left);
-            pieChartOps.add(right);
-            pieChartOps.add(result);
-            pieChartOps.add("ÃƒÂ·");
-            canCreatePieChart = true;
-          } else {
-            display.setErrorMessage("Get a load of this silly goose dude, somebody feed him some bread he goin crazy");
-          }
             break;         
           case "power":
             if (right.getSign()) 
             {
               result = Operations.intPower(leftTemp, right.getWhole());
+              intSteps.intPowerSteps(leftSteps, rightSteps.getWhole());
             } else 
             {
               result = Operations.intPower(leftTemp, -right.getWhole());
+              intSteps.intPowerSteps(leftSteps, -rightSteps.getWhole());
             }
             pieChartOps.clear();
             pieChartOps.add(left);
@@ -705,6 +708,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             break;   
           case "mediant":
             result = Operations.mediant(leftTemp, rightTemp);
+            intSteps.mediantSteps(leftSteps, rightSteps);
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -713,16 +717,19 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             break;
           case "<":
             resultBool = Operations.lessThan(leftTemp, rightTemp);
+            intSteps.lessThanSteps(leftSteps, rightSteps);
             display.resetButton();
             JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
           case "==":
             resultBool = Operations.equalTo(leftTemp, rightTemp);
+            intSteps.equalToSteps(leftSteps, rightSteps);
             display.resetButton();
             JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
           case ">":
             resultBool = Operations.greaterThan(leftTemp, rightTemp);
+            intSteps.greaterThanSteps(leftSteps, rightSteps);
             display.resetButton();
             JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
@@ -743,8 +750,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           if (recorder.isRecording()) {
             recorder.recordCalculation(evaluatedCurrentExpression);
           }
-          calcHistory.setText(calcHistory.getText() + evaluatedCurrentExpression + "\n"); // Add to display window
-          System.out.println(calcHistory.getText());
+          historyPanel.addCalculation(display.getEvaluatedExpression(left, currentOperation, right, result));
         }
         left = null;
         right = null;
@@ -835,12 +841,16 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   public void setReducedForm(boolean isReduced) {
     this.isReducedForm = isReduced;
   }
+
+  private HistoryWindow historyPanel;
   
   public void displayHistory(){
     history = new JWindow();
     history.setSize(400, getHeight()/2);
     history.setLocation((int)getLocation().getX() + 50, (int)getLocation().getY() + 150);
-    history.setLayout(new BorderLayout());
+    
+    historyPanel = new HistoryWindow();
+    history.add(historyPanel);
 
     JButton toggle = new JButton(">");
     // set Color
@@ -879,7 +889,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     StyleConstants.setAlignment(align, StyleConstants.ALIGN_RIGHT);
     style.setParagraphAttributes(0, style.getLength(), align, false);
 
-    scrollable = new JScrollPane(calcHistory);
+    scrollable = new JScrollPane(historyPanel);
     scrollable.setBorder(null);
 
     history.add(scrollable, BorderLayout.CENTER);
@@ -922,7 +932,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       }
     });
 
-    steps.add(new SlashSteps(), BorderLayout.CENTER);
+    steps.add(intSteps, BorderLayout.CENTER);
     steps.add(toggleSteps, BorderLayout.WEST);
     steps.setVisible(true);
   }
@@ -942,7 +952,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
 
             // Print the content of calcHistory
-            calcHistory.printAll(graphics);
+            historyPanel.printAll(graphics);
 
             return PAGE_EXISTS;
         }
