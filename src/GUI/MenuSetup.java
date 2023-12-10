@@ -8,7 +8,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -64,7 +63,7 @@ public class MenuSetup
     // Create a menu bar
     JMenuBar menuBar = new JMenuBar();
     try {
-      fetchPreferences();
+      fetchPreferences("resources/Preferences");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -162,7 +161,7 @@ public class MenuSetup
       calculator.setProperForm(properItem.isSelected());
       proper = !proper;
       try {
-        writePreferences();
+        writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
         // TODO Auto-generated catch block
         e1.printStackTrace();
@@ -172,7 +171,7 @@ public class MenuSetup
       calculator.setReducedForm(reducedItem.isSelected());
       reduced = !reduced;
       try {
-        writePreferences();
+        writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
         // TODO Auto-generated catch block
         e1.printStackTrace();
@@ -220,7 +219,7 @@ public class MenuSetup
       calculator.changeDisplay(new BarDisplay());
       display = "bar";
       try {
-        writePreferences();
+        writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
         // TODO Auto-generated catch block
         e1.printStackTrace();
@@ -231,7 +230,7 @@ public class MenuSetup
       calculator.changeDisplay(new SlashDisplay());
       display = "slash";
       try {
-        writePreferences();
+        writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
         // TODO Auto-generated catch block
         e1.printStackTrace();
@@ -242,7 +241,7 @@ public class MenuSetup
       calculator.changeDisplay(new SolidusDisplay());
       display = "solidus";
       try {
-        writePreferences();
+        writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
         // TODO Auto-generated catch block
         e1.printStackTrace();
@@ -295,12 +294,56 @@ public class MenuSetup
     aboutItem.setBackground(menuColor);
     helpItem.setBackground(menuColor);
 
+    JMenu prefMenu = new JMenu("Preferences");
+    JMenuItem editPref = new JMenuItem("Edit");
+    editPref.addActionListener(e -> 
+    {
+      System.out.println("A");
+    });
+
+    JMenuItem openPref = new JMenuItem("Open");
+    openPref.addActionListener(e -> 
+    {
+      JFileChooser fileChooser = new JFileChooser();
+      int response = fileChooser.showOpenDialog(null);
+
+      if(response == JFileChooser.APPROVE_OPTION){
+        File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+        try {
+          fetchPreferences(file.toString());
+        } catch (IOException e1) {
+          System.out.println("test1");
+          e1.printStackTrace();
+        }
+      }
+    });
+
+    JMenuItem savePref = new JMenuItem("Save");
+    savePref.addActionListener(e -> 
+    {
+      JFileChooser fileChooser = new JFileChooser();
+      int response = fileChooser.showSaveDialog(null);
+
+      if(response == JFileChooser.APPROVE_OPTION){
+        File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+        try {
+          System.out.println(file.toString());
+          writePreferences(file.toString());
+        } catch (IOException e1) {e1.printStackTrace();}
+      }
+    });
+
+    prefMenu.add(editPref);
+    prefMenu.add(openPref);
+    prefMenu.add(savePref);
+
     // Add menus to menu bar
     menuBar.add(fileMenu);
     menuBar.add(modeMenu);
     menuBar.add(viewMenu);
     menuBar.add(styleMenu);
     menuBar.add(helpMenu);
+    menuBar.add(prefMenu);
     
     return menuBar;
   }
@@ -309,8 +352,8 @@ public class MenuSetup
     return pieChartItem;
   }
 
-  private void fetchPreferences() throws IOException {
-    InputStream is = getClass().getClassLoader().getResourceAsStream("resources/Preferences");
+  private void fetchPreferences(String file) throws IOException {
+    InputStream is = getClass().getClassLoader().getResourceAsStream(file);
     if (is != null) {
         in = new BufferedReader(new InputStreamReader(is));
         proper = Boolean.parseBoolean(in.readLine());
@@ -324,9 +367,9 @@ public class MenuSetup
     }
   }
 
-  private void writePreferences() throws IOException{
+  private void writePreferences(String file) throws IOException{
     try {
-      writer = new FileWriter("src/resources/Preferences");
+      writer = new FileWriter(file);
       out = new BufferedWriter(writer);
       out.write(proper.toString() + "\n");
       out.write(reduced.toString() + "\n");

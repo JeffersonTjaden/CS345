@@ -124,7 +124,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   private JScrollPane scrollable;
 
   //Intermediate Steps Objects
-  private JWindow steps;
+  private JWindow steps = new JWindow();
   private boolean expandSteps = true;
   private IntermediateSteps intSteps;
   
