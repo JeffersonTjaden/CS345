@@ -477,7 +477,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     equalTo.setBackground(c2);
 
     simplification = new JButton("↡");
-    simplification.setFont(new Font("Times New Roman", Font.PLAIN, 20));
+    simplification.setFont(new Font("", Font.PLAIN, 20));
     simplification.setActionCommand("simplification");
     simplification.addActionListener(this);
     c.gridx = 5;
@@ -607,7 +607,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
-      operatorButtonClicked("↔");
+      operatorButtonClicked("â†”");
     }
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
@@ -681,12 +681,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             {
               result = Operations.divide(leftTemp, rightTemp);
               intSteps.divideSteps(leftSteps, rightSteps);
-              historyOperation = "÷";
+              historyOperation = "Ã·";
               pieChartOps.clear();
               pieChartOps.add(left);
               pieChartOps.add(right);
               pieChartOps.add(result);
-              pieChartOps.add("÷");
+              pieChartOps.add("Ã·");
               canCreatePieChart = true;
             } else 
             {
@@ -714,12 +714,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "mediant":
             result = Operations.mediant(leftTemp, rightTemp);
             intSteps.mediantSteps(leftSteps, rightSteps);
-            historyOperation = "↔";
+            historyOperation = "â†”";
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
-            pieChartOps.add("↔");
+            pieChartOps.add("â†”");
             break;
           case "<":
             resultBool = Operations.lessThan(leftTemp, rightTemp);
