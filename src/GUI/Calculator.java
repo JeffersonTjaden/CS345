@@ -1059,15 +1059,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   public void changeSteps(IntermediateSteps newSteps) {
     intSteps = newSteps;
   }
-
-  public static void main(String[] args)
-  {
-    Locale locale = Locale.getDefault();
-    
-    if (args.length == 2) {
-      CalculatorFactory.createCalculator(args[0], args[1]);
-    }
-  }
   
   public void customize() {
     try {

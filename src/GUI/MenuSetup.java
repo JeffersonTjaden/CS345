@@ -148,7 +148,7 @@ public class MenuSetup
     newCalculatorItem.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            CalculatorFactory.createCalculator();
+            Calculator c = CalculatorFactory.createCalculator();
         }
     });
     fileMenu.add(newCalculatorItem);
