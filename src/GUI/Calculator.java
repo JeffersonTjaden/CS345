@@ -910,7 +910,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     toggleSteps.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e){
         if(expandSteps){
-          for(int i = 0; i < 30; i++){
+          while(steps.getLocation().getX() > getLocation().getX() - steps.getSize().getWidth()){
             steps.setLocation(steps.getX() - 10, steps.getY());
             try {
               TimeUnit.MILLISECONDS.sleep(5);
@@ -931,7 +931,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
       }
     });
 
-    steps.add(intSteps, BorderLayout.CENTER);
+    JScrollPane scrollPane = new JScrollPane(intSteps);
+    steps.add(scrollPane, BorderLayout.CENTER);
     steps.add(toggleSteps, BorderLayout.WEST);
     steps.setVisible(true);
   }

@@ -390,4 +390,32 @@ public class OperationsTest
     assertEquals(2, res.getNumerator());
     assertEquals(10, res.getDenominator());
   }
+  
+  @Test
+  void lessThan()
+  {
+    IrreducedMixedFraction l = new IrreducedMixedFraction(1, 2, true);
+    IrreducedMixedFraction r = new IrreducedMixedFraction(1, 8, true);
+    boolean less = Operations.lessThan(l, r);
+    less = Operations.lessThan(r, l);
+  }
+  
+  @Test
+  void equalTo()
+  {
+    IrreducedMixedFraction l = new IrreducedMixedFraction(1, 2, true);
+    IrreducedMixedFraction r = new IrreducedMixedFraction(1, 8, true);
+    IrreducedMixedFraction r2 = new IrreducedMixedFraction(1, 8, true);
+    boolean equal = Operations.equalTo(l, r);
+    equal = Operations.equalTo(r, r2);
+  }
+  
+  @Test
+  void greaterThan()
+  {
+    IrreducedMixedFraction l = new IrreducedMixedFraction(1, 2, true);
+    IrreducedMixedFraction r = new IrreducedMixedFraction(1, 8, true);
+    boolean greater = Operations.greaterThan(l, r);
+    greater = Operations.greaterThan(r, l);
+  }
 }

@@ -70,9 +70,31 @@ class FractionTest
   }
   
   @Test
-  void negativeConstructor()
+  void secondConstructor()
   {
-    
+    Fraction f = new Fraction(1, 2, true);
+    try
+    {
+      f = new Fraction(1, 0, false);
+    }
+    catch (IllegalArgumentException e)
+    {
+      // Expected
+    }
+  }
+  
+  @Test
+  void fourthConstructor()
+  {
+    Fraction f = new Fraction(1, 2, 3, true);
+    try
+    {
+      f = new Fraction(1, 0, 2, false);
+    }
+    catch (IllegalArgumentException e)
+    {
+      // Expected
+    }
   }
   
   @Test
@@ -120,5 +142,34 @@ class FractionTest
     assertEquals("3 1/2", result1);
     String result2 = f2.toString();
     assertEquals("7/2", result2);
+    Fraction f3 = new Fraction(1, 2, true);
+    f3.toString();
+    Fraction f4 = new Fraction(2, 3, 4, true);
+    f4.toString();
+  }
+  
+  @Test
+  void fractionGetSign()
+  {
+    Fraction f = new Fraction(1, 2, true);
+    f.getSign();
+    Fraction f2 = new Fraction(1, 2, false);
+    f2.getSign();
+  }
+  
+  @Test
+  void simplifyFraction()
+  {
+    Fraction f = new Fraction(2, 4);
+    f.simplifyingFraction();
+  }
+  
+  @Test
+  void gcd()
+  {
+    int a = 2;
+    int b = 3;
+    Fraction f = new Fraction(a, b);
+    f.gcd(b, a);
   }
 }

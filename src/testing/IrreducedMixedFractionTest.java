@@ -170,4 +170,47 @@ class IrreducedMixedFractionTest
     f5.setNumerator(1);
     f5.toString();
   }
+  
+  @Test
+  void solidusString()
+  {
+    IrreducedMixedFraction f1 = new IrreducedMixedFraction(0, 4, 2, false);
+    f1.toSolidusString();
+    IrreducedMixedFraction f2 = new IrreducedMixedFraction(0, 0, 2, false);
+    f2.toSolidusString();
+    IrreducedMixedFraction f3 = new IrreducedMixedFraction(1, 4, 2, true);
+    f3.toSolidusString();
+  }
+  
+  @Test
+  void barString()
+  {
+    IrreducedMixedFraction f1 = new IrreducedMixedFraction(0, 4, 2, false);
+    f1.toWholeBarString();
+    IrreducedMixedFraction f2 = new IrreducedMixedFraction(0, 0, 2, false);
+    f2.toWholeBarString();
+    IrreducedMixedFraction f3 = new IrreducedMixedFraction(1, 4, 2, true);
+    f3.toWholeBarString();
+  }
+  
+  @Test
+  void fractionBarString()
+  {
+    IrreducedMixedFraction f1 = new IrreducedMixedFraction(0, 4, 2, false);
+    f1.toFractionBarString();
+    IrreducedMixedFraction f2 = new IrreducedMixedFraction(1, 0, 2, false);
+    f2.toFractionBarString();
+  }
+  
+  @Test
+  void compareTo()
+  {
+    IrreducedMixedFraction f1 = new IrreducedMixedFraction(0, 4, 2, false);
+    IrreducedMixedFraction f2 = new IrreducedMixedFraction(0, 4, 2, false);
+    f1.compareTo(f2);
+    IrreducedMixedFraction f3 = new IrreducedMixedFraction(0, 4, 2, true);
+    f1.compareTo(f3);
+    IrreducedMixedFraction f4 = new IrreducedMixedFraction(5, 5, 2, false);
+    f4.compareTo(f3);
+  }
 }
