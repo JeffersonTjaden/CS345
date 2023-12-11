@@ -123,7 +123,6 @@ public class MenuSetup
 
           if (userSelection == JFileChooser.APPROVE_OPTION) {
               File fileToSave = fileChooser.getSelectedFile();
-              // Your CalculationRecorder instance should be accessible here
               recorder.showRecordingControlsDialog(fileToSave);
           }
         }
@@ -172,7 +171,6 @@ public class MenuSetup
       try {
         writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     });
@@ -182,7 +180,6 @@ public class MenuSetup
       try {
         writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     });
@@ -231,7 +228,6 @@ public class MenuSetup
       try {
         writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     });
@@ -243,7 +239,6 @@ public class MenuSetup
       try {
         writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     });
@@ -255,7 +250,6 @@ public class MenuSetup
       try {
         writePreferences("src/resources/Preferences");
       } catch (IOException e1) {
-        // TODO Auto-generated catch block
         e1.printStackTrace();
       }
     });
@@ -272,7 +266,6 @@ public class MenuSetup
       slashItem.setSelected(true);
     }
     
-    // TODO: Add action listeners for style menu items
     styleGroup.add(barItem);
     styleGroup.add(slashItem);
     styleGroup.add(solidusItem);
@@ -306,8 +299,9 @@ public class MenuSetup
     aboutItem.setBackground(menuColor);
     helpItem.setBackground(menuColor);
 
-    JMenu prefMenu = new JMenu("Preferences");
-    JMenuItem editPref = new JMenuItem("Edit");
+    //Preferences menu
+    JMenu prefMenu = new JMenu(messages.getString("preferences.title"));
+    JMenuItem editPref = new JMenuItem(messages.getString("edit.item"));
     editPref.addActionListener(e -> 
     {
       JFileChooser fileChooser = new JFileChooser();
@@ -318,7 +312,7 @@ public class MenuSetup
       }
     });
 
-    JMenuItem openPref = new JMenuItem("Open");
+    JMenuItem openPref = new JMenuItem(messages.getString("open.item"));
     openPref.addActionListener(e -> 
     {
       JFileChooser fileChooser = new JFileChooser();
@@ -351,7 +345,7 @@ public class MenuSetup
       }
     });
 
-    JMenuItem savePref = new JMenuItem("Save");
+    JMenuItem savePref = new JMenuItem(messages.getString("save.item"));
     savePref.addActionListener(e -> 
     {
       JFileChooser fileChooser = new JFileChooser();
@@ -400,13 +394,14 @@ public class MenuSetup
       display = in.readLine();
       in.close();
     }else {
-        // Handle the case where the resource is not found
-        // You can either log this or throw an exception
         throw new FileNotFoundException("Preferences file not found in resources");
     }
   }
 
   private void writePreferences(String file) throws IOException{
+    if (!file.endsWith(".txt")) {
+      file += ".txt";
+    }
     try {
       writer = new FileWriter(file);
       out = new BufferedWriter(writer);
@@ -429,17 +424,17 @@ public class MenuSetup
     edit.setLocation(300, 300);
     JCheckBox properBox = new JCheckBox();
     JCheckBox reducedBox = new JCheckBox();
-    edit.add(new JLabel("   Proper: "));
+    edit.add(new JLabel(messages.getString("properPref.item")));
     edit.add(properBox);
-    edit.add(new JLabel("   Reduced: "));
+    edit.add(new JLabel(messages.getString("reducedPref.item")));
     edit.add(reducedBox);
-    edit.add(new JLabel("   Display Style: "));
+    edit.add(new JLabel(messages.getString("displayStylePref.item")));
 
-    String[] displays = {"Bar", "Solidus", "Slash"};
+    String[] displays = {messages.getString("bar.item"), messages.getString("solidus.item"), messages.getString("slash.item")};
     JComboBox editGroup = new JComboBox<>(displays);
     edit.add(editGroup);
 
-    JButton save = new JButton("Save to File");
+    JButton save = new JButton(messages.getString("saveToFile.item"));
     save.setSize(save.getMinimumSize());
     save.addActionListener(e -> {
       try {
@@ -450,9 +445,9 @@ public class MenuSetup
         out.write(proper + "\n");
         out.write(reduced + "\n");
 
-        if(editGroup.getSelectedItem().equals("Bar")){
+        if(editGroup.getSelectedItem().equals(messages.getString("bar.item"))){
           out.write("bar\n");
-        } else if (editGroup.getSelectedItem().equals("Solidus")){
+        } else if (editGroup.getSelectedItem().equals(messages.getString("solidus.item"))){
           out.write("solidus\n");
         } else{
           out.write("slash\n");
