@@ -310,10 +310,23 @@ public class MenuSetup
       if(response == JFileChooser.APPROVE_OPTION){
         File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
         try {
+          System.out.println(file);
           fetchPreferences(file.toString());
         } catch (IOException e1) {
-          System.out.println("test1");
           e1.printStackTrace();
+        }
+
+        reducedItem.setSelected(reduced);
+        properItem.setSelected(proper);
+        if(display.equals("bar")){
+          barItem.setSelected(true);
+          calculator.changeDisplay(new BarDisplay());
+        } else if (display.equals("solidus")){
+          solidusItem.setSelected(true);
+          calculator.changeDisplay(new SolidusDisplay());
+        } else if (display.equals("slash")){
+          slashItem.setSelected(true);
+          calculator.changeDisplay(new SlashDisplay());
         }
       }
     });
@@ -327,7 +340,7 @@ public class MenuSetup
       if(response == JFileChooser.APPROVE_OPTION){
         File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
         try {
-          System.out.println(file.toString());
+          System.out.println(file);
           writePreferences(file.toString());
         } catch (IOException e1) {e1.printStackTrace();}
       }
@@ -355,12 +368,19 @@ public class MenuSetup
   private void fetchPreferences(String file) throws IOException {
     InputStream is = getClass().getClassLoader().getResourceAsStream(file);
     if (is != null) {
-        in = new BufferedReader(new InputStreamReader(is));
-        proper = Boolean.parseBoolean(in.readLine());
-        reduced = Boolean.parseBoolean(in.readLine());
-        display = in.readLine();
-        in.close();
-    } else {
+      in = new BufferedReader(new InputStreamReader(is));
+      proper = Boolean.parseBoolean(in.readLine());
+      reduced = Boolean.parseBoolean(in.readLine());
+      display = in.readLine();
+      in.close();
+    } else if (!file.contains("resources")){
+      in = new BufferedReader(new FileReader(file));
+      proper = Boolean.parseBoolean(in.readLine());
+      
+      reduced = Boolean.parseBoolean(in.readLine());
+      display = in.readLine();
+      in.close();
+    }else {
         // Handle the case where the resource is not found
         // You can either log this or throw an exception
         throw new FileNotFoundException("Preferences file not found in resources");
