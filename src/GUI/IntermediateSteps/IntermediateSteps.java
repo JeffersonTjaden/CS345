@@ -84,6 +84,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[4]);
         IrreducedMixedFraction result = Operations.add(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -127,6 +129,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[4]);
         IrreducedMixedFraction result = Operations.subtract(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -165,6 +169,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[3]);
         IrreducedMixedFraction result = Operations.multiply(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -203,6 +209,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[3]);
         IrreducedMixedFraction result = Operations.divide(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -239,6 +247,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[3]);
         IrreducedMixedFraction result = Operations.intPower(operand, power);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -271,6 +281,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[2]);
         IrreducedMixedFraction result = Operations.mediant(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -310,6 +322,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[3]);
         boolean result = Operations.lessThan(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -349,6 +363,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[3]);
         boolean result = Operations.equalTo(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
     /**
@@ -388,6 +404,8 @@ public abstract class IntermediateSteps extends JPanel {
         add(labels[3]);
         boolean result = Operations.greaterThan(left, right);
         add(createResult(result));
+
+        updateUI();
     }
 
 }
