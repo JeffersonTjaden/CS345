@@ -62,6 +62,21 @@ class OperatorTest
   }
   
   @Test
+  void illegalOperation()
+  {
+    Fraction f1 = new Fraction(1, 2, 3);
+    Fraction f2 = new Fraction(4, 5, 6);
+    try
+    {
+      Operator o = new Operator(f1, f2, "hello");
+    }
+    catch (IllegalArgumentException e)
+    {
+      // Expected
+    }
+  }
+  
+  @Test
   void calculateAddition()
   {
     // Simple Test
@@ -70,6 +85,10 @@ class OperatorTest
     assertEquals(3,res1.getNumerator());
     assertEquals(4,res1.getDenominator());
     assertEquals(0, res1.getWholeNumber());
+    
+    Fraction f = new Fraction(111, 2, true);
+    Fraction f2 = new Fraction(2, 3, false);
+    op = new Operator(f, f2, a);
     // One Fraction Zero
     
     
