@@ -2,6 +2,9 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -17,13 +20,19 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 
 import GUI.Displays.BarDisplay;
@@ -298,7 +307,12 @@ public class MenuSetup
     JMenuItem editPref = new JMenuItem("Edit");
     editPref.addActionListener(e -> 
     {
-      System.out.println("A");
+      JFileChooser fileChooser = new JFileChooser();
+      int response = fileChooser.showOpenDialog(null);
+      if(response == JFileChooser.APPROVE_OPTION){
+        File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
+        editPreferences(file);
+      }
     });
 
     JMenuItem openPref = new JMenuItem("Open");
@@ -340,7 +354,6 @@ public class MenuSetup
       if(response == JFileChooser.APPROVE_OPTION){
         File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
         try {
-          System.out.println(file);
           writePreferences(file.toString());
         } catch (IOException e1) {e1.printStackTrace();}
       }
@@ -399,6 +412,55 @@ public class MenuSetup
     catch (FileNotFoundException e) {
       e.printStackTrace();
     }
+  }
+
+  private void editPreferences(File file){
+    JDialog edit = new JDialog();
+    edit.setLayout(new GridLayout(4,2));
+    edit.setVisible(true);
+    edit.setSize(300, 300);
+    edit.setAlwaysOnTop(true);
+    edit.setLocation(300, 300);
+    JCheckBox properBox = new JCheckBox();
+    JCheckBox reducedBox = new JCheckBox();
+    edit.add(new JLabel("   Proper: "));
+    edit.add(properBox);
+    edit.add(new JLabel("   Reduced: "));
+    edit.add(reducedBox);
+    edit.add(new JLabel("   Display Style: "));
+
+    String[] displays = {"Bar", "Solidus", "Slash"};
+    JComboBox editGroup = new JComboBox<>(displays);
+    edit.add(editGroup);
+
+    JButton save = new JButton("Save to File");
+    save.setSize(save.getMinimumSize());
+    save.addActionListener(e -> {
+      try {
+        writer = new FileWriter(file);
+        out = new BufferedWriter(writer);
+        String proper = (properBox.isSelected()) ? "true" : "false";
+        String reduced = (reducedBox.isSelected()) ? "true" : "false";
+        out.write(proper + "\n");
+        out.write(reduced + "\n");
+
+        if(editGroup.getSelectedItem().equals("Bar")){
+          out.write("bar\n");
+        } else if (editGroup.getSelectedItem().equals("Solidus")){
+          out.write("solidus\n");
+        } else{
+          out.write("slash\n");
+        }
+
+        out.close();
+      } 
+      catch (FileNotFoundException e1) {
+        e1.printStackTrace();
+      } catch (IOException e1) {
+        e1.printStackTrace();
+      }
+    });
+    edit.add(save);
   }
 
   public String getDisplay(){
