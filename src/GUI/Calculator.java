@@ -1029,8 +1029,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
         // Save the recording
         recorder.stopRecording();
     }
+    CalculatorFactory.count--;
 
     // Perform any other shutdown procedures here
+    if (CalculatorFactory.count == 0){
+      System.exit(0);
+    }
   }
 
   @Override
@@ -1061,9 +1065,8 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     Locale locale = Locale.getDefault();
     
     if (args.length == 2) {
-      locale = new Locale(args[0], args[1]);
+      CalculatorFactory.createCalculator(args[0], args[1]);
     }
-    new Calculator(locale);
   }
   
   public void customize() {
@@ -1114,7 +1117,6 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   @Override
   public void windowClosing(WindowEvent e) 
   {
-    // TODO Auto-generated method stub
     
   }
 }
