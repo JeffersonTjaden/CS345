@@ -41,9 +41,9 @@ public class PlaybackController extends JDialog
   {
     JFileChooser chooser = new JFileChooser();
     int opt = chooser.showOpenDialog(this);
-    while (opt != JFileChooser.APPROVE_OPTION)
+    if (opt != JFileChooser.APPROVE_OPTION)
     {
-      opt = chooser.showOpenDialog(this);
+      dispose();
     }
     File file = chooser.getSelectedFile();
     setLayout(new FlowLayout());
