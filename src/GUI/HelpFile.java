@@ -14,7 +14,7 @@ public class HelpFile {
 
   public HelpFile(ResourceBundle messages) {
       this.messages = messages;
-      this.imagePaths = new String[20]; // Adjust the size as necessary
+      this.imagePaths = new String[30];
       for (int i = 0; i < this.imagePaths.length; i++) {
           this.imagePaths[i] = extractImage("Picture" + (i + 1) + ".png");
       }
@@ -22,7 +22,7 @@ public class HelpFile {
 
   public String generateTranslatedHtmlContent() {
       StringBuilder htmlBuilder = new StringBuilder();
-   // Add the HTML header with the title
+      // Add the HTML header with the title
       htmlBuilder.append("<html><head><title>")
                  .append(messages.getString("fractal.title"))
                  .append("</title></head><body>");
@@ -62,10 +62,13 @@ public class HelpFile {
 
       // Session History section
       htmlBuilder.append("<h2>").append(messages.getString("sesh.title")).append("</h2>")
-                 .append("<p>").append(messages.getString("session.history.instruction")).append("</p>");
+                 .append("<p>").append(messages.getString("session.history.instruction")).append("</p>")
+                 .append("<img src='file:/").append(imagePaths[18]).append("' alt='Launch Icon'>");
 
       // Calculator Functions section
-      htmlBuilder.append("<h2>").append(messages.getString("calculator.display.instruction")).append("</h2>")
+      htmlBuilder.append("<h2>").append(messages.getString("buttons.title")).append("</h2>")
+                 .append("<img src='file:/").append(imagePaths[27]).append("' alt='Launch Icon'>")
+                 .append("<p>").append(messages.getString("calculator.display.instruction")).append("</h2>")
                  .append("<p>").append(messages.getString("position.button.instruction")).append("</p>")
                  .append("<p>").append(messages.getString("number.button.instruction")).append("</p>")
                  .append("<p>").append(messages.getString("reset.button.instruction")).append("</p>")
@@ -96,24 +99,28 @@ public class HelpFile {
                  .append("<p>").append(messages.getString("recording.instruction")).append("</p>")
                  // Assuming imagePath18 is the path to the image showing the recording controls
                  .append("<img src='file:/").append(imagePaths[17]).append("' alt='Recording Controls'>")
-                 .append("<p>").append(messages.getString("playback.instruction")).append("</p>");
+                 .append("<p>").append(messages.getString("playback.instruction")).append("</p>")
+                 .append("<p>").append(messages.getString("recording.save.example")).append("</p>")
+                 .append("<img src='file:/").append(imagePaths[20]).append("' alt='Recording Controls'>");
 
       // Intermediate Steps section
       htmlBuilder.append("<h2>").append(messages.getString("intermediateSteps.title")).append("</h2>")
                  .append("<p>").append(messages.getString("intermediateSteps.instruction")).append("</p>")
-                 .append("<img src='file:/").append(imagePaths[18]).append("' alt='Recording Controls'>");
+                 .append("<img src='file:/").append(imagePaths[21]).append("' alt='Recording Controls'>")
+                 .append("<img src='file:/").append(imagePaths[22]).append("' alt='Recording Controls'>");
 
       // Customization section
       htmlBuilder.append("<h2>").append(messages.getString("customization.title")).append("</h2>")
-                 .append("<p>").append(messages.getString("customization.instruction")).append("</p>");
-
-      // Keyboard Shortcuts section
-      htmlBuilder.append("<h2>").append(messages.getString("keyboardShortcuts.title")).append("</h2>")
-                 .append("<p>").append(messages.getString("keyboardShortcuts.instruction")).append("</p>");
+                 .append("<p>").append(messages.getString("customization.instruction")).append("</p>")
+                 .append("<p>").append(messages.getString("customization.examples")).append("</p>")
+                 .append("<div><img src='file:/").append(imagePaths[23]).append("' alt='Customization Example 1'></div>")
+                 .append("<div><img src='file:/").append(imagePaths[24]).append("' alt='Customization Example 2'></div>");
 
       // Comparing Fractions section
       htmlBuilder.append("<h2>").append(messages.getString("comparingFractions.title")).append("</h2>")
-                 .append("<p>").append(messages.getString("comparingFractions.instruction")).append("</p>");
+                 .append("<p>").append(messages.getString("comparingFractions.instruction")).append("</p>")
+                 .append("<div><img src='file:/").append(imagePaths[25]).append("' alt='Customization Example 1'></div>")
+                 .append("<div><img src='file:/").append(imagePaths[26]).append("' alt='Customization Example 2'></div>");
 
       // Close the HTML content
       htmlBuilder.append("</body></html>");
