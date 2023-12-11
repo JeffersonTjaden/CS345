@@ -640,11 +640,13 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
         IrreducedMixedFraction rightTemp = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
         IrreducedMixedFraction leftSteps = new IrreducedMixedFraction(left.getWhole(), left.getNumerator(), left.getDenominator(), left.getSign());
         IrreducedMixedFraction rightSteps = new IrreducedMixedFraction(right.getWhole(), right.getNumerator(), right.getDenominator(), right.getSign());
+        String historyOperation = "";
         switch (currentOperation)
         {        
           case "+":
             result = Operations.add(leftTemp, rightTemp);
             intSteps.addSteps(leftSteps, rightSteps);
+            historyOperation = "+";
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -655,6 +657,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "-":
             result = Operations.subtract(leftTemp, rightTemp);
             intSteps.subtractSteps(leftSteps, rightSteps);
+            historyOperation = "-";
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -665,6 +668,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "*":
             result = Operations.multiply(leftTemp, rightTemp);
             intSteps.multiplySteps(leftSteps, rightSteps);
+            historyOperation = "*";
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -677,6 +681,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             {
               result = Operations.divide(leftTemp, rightTemp);
               intSteps.divideSteps(leftSteps, rightSteps);
+              historyOperation = "÷";
               pieChartOps.clear();
               pieChartOps.add(left);
               pieChartOps.add(right);
@@ -699,6 +704,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
               result = Operations.intPower(leftTemp, -right.getWhole());
               intSteps.intPowerSteps(leftSteps, -rightSteps.getWhole());
             }
+            historyOperation = "^";
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -708,6 +714,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "mediant":
             result = Operations.mediant(leftTemp, rightTemp);
             intSteps.mediantSteps(leftSteps, rightSteps);
+            historyOperation = "↔";
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
@@ -717,19 +724,25 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "<":
             resultBool = Operations.lessThan(leftTemp, rightTemp);
             intSteps.lessThanSteps(leftSteps, rightSteps);
+            historyOperation = "<";
             display.resetButton();
+            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultBool));
             JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
           case "==":
             resultBool = Operations.equalTo(leftTemp, rightTemp);
             intSteps.equalToSteps(leftSteps, rightSteps);
+            historyOperation = "==";
             display.resetButton();
+            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultBool));;
             JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
           case ">":
             resultBool = Operations.greaterThan(leftTemp, rightTemp);
             intSteps.greaterThanSteps(leftSteps, rightSteps);
+            historyOperation = ">";
             display.resetButton();
+            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultBool));
             JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
             break;
         }
@@ -749,7 +762,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           if (recorder.isRecording()) {
             recorder.recordCalculation(evaluatedCurrentExpression);
           }
-          historyPanel.addCalculation(display.getEvaluatedExpression(left, currentOperation, right, result));
+          historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, result));
         }
         left = null;
         right = null;
