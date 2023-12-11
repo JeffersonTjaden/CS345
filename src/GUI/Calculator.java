@@ -23,7 +23,6 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -1037,6 +1036,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
   
   public void changeDisplay(Display newDisplay) {
     display(newDisplay);
+  }
+
+  public void changeSteps(IntermediateSteps newSteps) {
+    intSteps = newSteps;
   }
 
   public static void main(String[] args)

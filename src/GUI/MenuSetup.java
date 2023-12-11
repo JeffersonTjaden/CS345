@@ -29,6 +29,9 @@ import javax.swing.JRadioButtonMenuItem;
 import GUI.Displays.BarDisplay;
 import GUI.Displays.SlashDisplay;
 import GUI.Displays.SolidusDisplay;
+import GUI.IntermediateSteps.BarSteps;
+import GUI.IntermediateSteps.SlashSteps;
+import GUI.IntermediateSteps.SolidusSteps;
 import GUI.pieChart.PieChart;
 import Recording.CalculationRecorder;
 import Recording.PlaybackController;
@@ -321,12 +324,15 @@ public class MenuSetup
         if(display.equals("bar")){
           barItem.setSelected(true);
           calculator.changeDisplay(new BarDisplay());
+          calculator.changeSteps(new BarSteps());
         } else if (display.equals("solidus")){
           solidusItem.setSelected(true);
           calculator.changeDisplay(new SolidusDisplay());
+          calculator.changeSteps(new SolidusSteps());
         } else if (display.equals("slash")){
           slashItem.setSelected(true);
           calculator.changeDisplay(new SlashDisplay());
+          calculator.changeSteps(new SlashSteps());
         }
       }
     });
