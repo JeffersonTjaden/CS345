@@ -68,7 +68,7 @@ public class MenuSetup
     this.recorder = recorder;
   }
   
-  public JMenuBar createMenuBar() {
+  public JMenuBar createMenuBar(Locale locale) {
     // Create a menu bar
     JMenuBar menuBar = new JMenuBar();
     try {
@@ -107,7 +107,7 @@ public class MenuSetup
         @Override
         public void actionPerformed(ActionEvent e) {
             // Logic to open recording
-          new PlaybackController(calculator, calculator.getDisplay());
+          new PlaybackController(calculator, calculator.getDisplay(), messages);
         }
     });
     fileMenu.add(openRecordingItem);
@@ -222,8 +222,8 @@ public class MenuSetup
     ButtonGroup styleGroup = new ButtonGroup();
     JRadioButtonMenuItem barItem = new JRadioButtonMenuItem(messages.getString("bar.item"));
     barItem.addActionListener(e -> {
-      calculator.changeDisplay(new BarDisplay());
-      calculator.changeSteps(new BarSteps());
+      calculator.changeDisplay(new BarDisplay(locale));
+      calculator.changeSteps(new BarSteps(locale));
       display = "bar";
       try {
         writePreferences("src/resources/Preferences");
@@ -233,8 +233,8 @@ public class MenuSetup
     });
     JRadioButtonMenuItem slashItem = new JRadioButtonMenuItem(messages.getString("slash.item"));
     slashItem.addActionListener(e -> {
-      calculator.changeDisplay(new SlashDisplay());
-      calculator.changeSteps(new SlashSteps());
+      calculator.changeDisplay(new SlashDisplay(locale));
+      calculator.changeSteps(new SlashSteps(locale));
       display = "slash";
       try {
         writePreferences("src/resources/Preferences");
@@ -244,8 +244,8 @@ public class MenuSetup
     });
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
     solidusItem.addActionListener(e -> {
-      calculator.changeDisplay(new SolidusDisplay());
-      calculator.changeSteps(new SolidusSteps());
+      calculator.changeDisplay(new SolidusDisplay(locale));
+      calculator.changeSteps(new SolidusSteps(locale));
       display = "solidus";
       try {
         writePreferences("src/resources/Preferences");
@@ -305,6 +305,7 @@ public class MenuSetup
     editPref.addActionListener(e -> 
     {
       JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle(messages.getString("editDialog.title"));
       int response = fileChooser.showOpenDialog(null);
       if(response == JFileChooser.APPROVE_OPTION){
         File file = new File(fileChooser.getSelectedFile().getAbsolutePath());
@@ -316,6 +317,7 @@ public class MenuSetup
     openPref.addActionListener(e -> 
     {
       JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle(messages.getString("openDialog.title"));
       int response = fileChooser.showOpenDialog(null);
 
       if(response == JFileChooser.APPROVE_OPTION){
@@ -331,16 +333,16 @@ public class MenuSetup
         properItem.setSelected(proper);
         if(display.equals("bar")){
           barItem.setSelected(true);
-          calculator.changeDisplay(new BarDisplay());
-          calculator.changeSteps(new BarSteps());
+          calculator.changeDisplay(new BarDisplay(locale));
+          calculator.changeSteps(new BarSteps(locale));
         } else if (display.equals("solidus")){
           solidusItem.setSelected(true);
-          calculator.changeDisplay(new SolidusDisplay());
-          calculator.changeSteps(new SolidusSteps());
+          calculator.changeDisplay(new SolidusDisplay(locale));
+          calculator.changeSteps(new SolidusSteps(locale));
         } else if (display.equals("slash")){
           slashItem.setSelected(true);
-          calculator.changeDisplay(new SlashDisplay());
-          calculator.changeSteps(new SlashSteps());
+          calculator.changeDisplay(new SlashDisplay(locale));
+          calculator.changeSteps(new SlashSteps(locale));
         }
       }
     });
@@ -349,6 +351,7 @@ public class MenuSetup
     savePref.addActionListener(e -> 
     {
       JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle(messages.getString("saveDialog.title"));
       int response = fileChooser.showSaveDialog(null);
 
       if(response == JFileChooser.APPROVE_OPTION){
@@ -394,14 +397,11 @@ public class MenuSetup
       display = in.readLine();
       in.close();
     }else {
-        throw new FileNotFoundException("Preferences file not found in resources");
+        throw new FileNotFoundException(messages.getString("prefError.item"));
     }
   }
 
   private void writePreferences(String file) throws IOException{
-    if (!file.endsWith(".txt")) {
-      file += ".txt";
-    }
     try {
       writer = new FileWriter(file);
       out = new BufferedWriter(writer);

@@ -1,5 +1,7 @@
 package GUI.IntermediateSteps;
 
+import java.util.Locale;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -7,8 +9,8 @@ import utilities.IrreducedMixedFraction;
 
 public class SolidusSteps extends IntermediateSteps {
 
-    public SolidusSteps(){
-        super();
+    public SolidusSteps(Locale locale){
+        super(locale);
     }
 
     @Override

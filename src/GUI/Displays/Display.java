@@ -1,5 +1,8 @@
 package GUI.Displays;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import javax.swing.*;
 
 import utilities.IrreducedMixedFraction;
@@ -22,9 +25,14 @@ public abstract class Display extends JPanel {
     protected String denominator;
     protected String signText;
     protected boolean signBool;
+    protected ResourceBundle messages;
     
     protected int currentPosition;
 
+    public Display(Locale locale) {
+      this.messages = ResourceBundle.getBundle("resources.MessagesBundle", locale);
+    }
+    
     //Getter and Setter Methods
 
     /**
@@ -56,7 +64,7 @@ public abstract class Display extends JPanel {
 
     public abstract JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, IrreducedMixedFraction result);
 
-    public abstract JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, boolean result);
+    public abstract JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, String result);
 
     /**
      * A getter method for the IrreducedMixedFraction inputted as the current operand.

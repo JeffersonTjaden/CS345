@@ -66,7 +66,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 {
   private JPanel content = (JPanel) getContentPane();
   private GridBagConstraints c = new GridBagConstraints();
-  private Display display = new BarDisplay();
+  private Display display;
   
   private ResourceBundle messages;
   
@@ -192,18 +192,18 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     // Menu bar
     recorder = new CalculationRecorder(this, messages);
     MenuSetup menuSetup = new MenuSetup(this, this, locale, recorder);
-    JMenuBar menuBar = menuSetup.createMenuBar();
+    JMenuBar menuBar = menuSetup.createMenuBar(locale);
     setJMenuBar(menuBar);
 
     if(menuSetup.getDisplay().equals("bar")){
-      display = new BarDisplay();
-      intSteps = new BarSteps();
+      display = new BarDisplay(locale);
+      intSteps = new BarSteps(locale);
     } else if(menuSetup.getDisplay().equals("slash")){
-      display = new SlashDisplay();
-      intSteps = new SlashSteps();
+      display = new SlashDisplay(locale);
+      intSteps = new SlashSteps(locale);
     } else if(menuSetup.getDisplay().equals("solidus")){
-      display = new SolidusDisplay();
-      intSteps = new SolidusSteps();
+      display = new SolidusDisplay(locale);
+      intSteps = new SolidusSteps(locale);
     } else{
       System.out.println("Improper Display!!!");
     }
@@ -726,24 +726,27 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             intSteps.lessThanSteps(leftSteps, rightSteps);
             historyOperation = "<";
             display.resetButton();
-            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultBool));
-            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
+            String resultStr = resultBool ? messages.getString("result.true") : messages.getString("result.false");
+            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultStr));
+            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultStr), messages.getString("dialog.title.lessThan"), JOptionPane.INFORMATION_MESSAGE);
             break;
           case "==":
             resultBool = Operations.equalTo(leftTemp, rightTemp);
             intSteps.equalToSteps(leftSteps, rightSteps);
             historyOperation = "==";
             display.resetButton();
-            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultBool));;
-            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
+            resultStr = resultBool ? messages.getString("result.true") : messages.getString("result.false");
+            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultStr));;
+            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultStr), messages.getString("dialog.title.equalTo"), JOptionPane.INFORMATION_MESSAGE);
             break;
           case ">":
             resultBool = Operations.greaterThan(leftTemp, rightTemp);
             intSteps.greaterThanSteps(leftSteps, rightSteps);
             historyOperation = ">";
             display.resetButton();
-            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultBool));
-            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultBool));
+            resultStr = resultBool ? messages.getString("result.true") : messages.getString("result.false");
+            historyPanel.addCalculation(display.getEvaluatedExpression(left, historyOperation, right, resultStr));
+            JOptionPane.showMessageDialog(this, display.getEvaluatedExpression(left, currentOperation, right, resultStr), messages.getString("dialog.title.greaterThan"), JOptionPane.INFORMATION_MESSAGE);
             break;
         }
         if (result != null) {
@@ -1094,10 +1097,10 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
             in.close();
         } else {
-            System.out.println("Customization file not found in resources.");
+            System.out.println(messages.getString("customizationError1.item"));
         }
     } catch (IOException e) {
-        System.out.println("Error reading the Customization file.");
+        System.out.println(messages.getString("customizationError2.item"));
         e.printStackTrace();
     }
  }

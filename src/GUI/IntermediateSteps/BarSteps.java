@@ -3,13 +3,14 @@ package GUI.IntermediateSteps;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
+import java.util.Locale;
 
 import utilities.IrreducedMixedFraction;
 
 public class BarSteps extends IntermediateSteps {
 
-    public BarSteps() {
-        super();
+    public BarSteps(Locale locale) {
+        super(locale);
     }
 
     @Override

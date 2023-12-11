@@ -4,6 +4,8 @@ import javax.swing.*;
 
 
 import java.awt.*;
+import java.util.Locale;
+
 import utilities.*;
 
 /**
@@ -34,7 +36,8 @@ public class BarDisplay extends Display {
     /**
      * Constructs a new BarDisplay with an empty current operand and an empty current expression.
      */
-    public BarDisplay() {
+    public BarDisplay(Locale locale) {
+        super(locale);
         displayExpression = new JPanel();
         displayOperand = new JPanel();
 
@@ -123,7 +126,7 @@ public class BarDisplay extends Display {
     }
 
     @Override
-    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, boolean result) {
+    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, String result) {
         JPanel panel = new JPanel();
         JLabel[] labels = new JLabel[5];
 
@@ -136,7 +139,7 @@ public class BarDisplay extends Display {
         labels[1].setText(left.toFractionBarString());
         labels[2].setText(" " + operation + " " + right.toWholeBarString() + " ");
         labels[3].setText(right.toFractionBarString());
-        labels[4].setText(" = " + Boolean.toString(result));
+        labels[4].setText(" = " + result);
 
         return panel;
     }

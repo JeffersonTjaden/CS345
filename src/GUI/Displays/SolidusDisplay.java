@@ -5,6 +5,7 @@ import javax.swing.*;
 import utilities.*;
 
 import java.awt.*;
+import java.util.Locale;
 
 /**
  * The SolidusDisplay class is for displaying the operand being inputted, the partial current expression, and the evaluated current expression in solidus style.
@@ -22,7 +23,8 @@ public class SolidusDisplay extends Display {
     /**
      * Constructs a new SolidusDisplay with an empty current operand and an empty current expression.
      */
-    public SolidusDisplay() {
+    public SolidusDisplay(Locale locale) {
+        super(locale);
         setLayout(new BorderLayout());
 
         displayExpression = new JLabel();
@@ -71,7 +73,7 @@ public class SolidusDisplay extends Display {
     }
 
     @Override
-    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, boolean result) {
+    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, String result) {
         JPanel panel = new JPanel();
         JLabel label = new JLabel();
         panel.add(label);

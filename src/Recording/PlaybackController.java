@@ -30,11 +30,14 @@ public class PlaybackController extends JDialog
   private JButton stopButton;
   private JSlider slider;
   private Timer timer;
-  public PlaybackController(final JFrame frame, final Display display)
+  private ResourceBundle messages;
+  
+  public PlaybackController(final JFrame frame, final Display display, final ResourceBundle messages)
   {
     super(frame, "Playback Controls");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     this.display = display;
+    this.messages = messages;
     setup();
   }
   private void setup()
@@ -61,7 +64,7 @@ public class PlaybackController extends JDialog
     pauseButton.setPreferredSize(buttonSize);
     stopButton.setPreferredSize(buttonSize);
     
-    setTitle("Playback from: " + file.getName());
+    setTitle("playbackFrom.item" + file.getName());
     pack();
     setSize(500, 150);
     setLocationRelativeTo(frame);

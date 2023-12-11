@@ -1,5 +1,7 @@
 package GUI.IntermediateSteps;
 
+import java.util.Locale;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -7,8 +9,8 @@ import utilities.IrreducedMixedFraction;
 
 public class SlashSteps extends IntermediateSteps {
     
-    public SlashSteps() {
-        super();
+    public SlashSteps(Locale locale) {
+        super(locale);
     }
 
     @Override

@@ -3,6 +3,8 @@ package GUI.Displays;
 import javax.swing.*;
 
 import java.awt.*;
+import java.util.Locale;
+
 import utilities.*;
 
 /**
@@ -21,7 +23,8 @@ public class SlashDisplay extends Display {
     /**
      * Constructs a new SlashDisplay with an empty current operand and an empty current expression.
      */
-    public SlashDisplay() {
+    public SlashDisplay(Locale locale) {
+        super(locale);
         setLayout(new BorderLayout());
 
         displayExpression = new JLabel();
@@ -74,7 +77,7 @@ public class SlashDisplay extends Display {
     }
 
     @Override
-    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, boolean result) {
+    public JPanel getEvaluatedExpression(IrreducedMixedFraction left, String operation, IrreducedMixedFraction right, String result) {
         JPanel panel = new JPanel();
         JLabel label = new JLabel();
         panel.add(label);
