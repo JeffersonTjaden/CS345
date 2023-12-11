@@ -607,7 +607,7 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
     }
     else if (mediant.getActionCommand().equals(command)) {
       currentOperation = "mediant";
-      operatorButtonClicked("â†”");
+      operatorButtonClicked("↔");
     }
     else if (intPower.getActionCommand().equals(command)) {
       currentOperation = "power";
@@ -681,12 +681,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
             {
               result = Operations.divide(leftTemp, rightTemp);
               intSteps.divideSteps(leftSteps, rightSteps);
-              historyOperation = "Ã·";
+              historyOperation = Character.toString((char) 247);
               pieChartOps.clear();
               pieChartOps.add(left);
               pieChartOps.add(right);
               pieChartOps.add(result);
-              pieChartOps.add("Ã·");
+              pieChartOps.add(Character.toString((char) 247));
               canCreatePieChart = true;
             } else 
             {
@@ -714,12 +714,12 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
           case "mediant":
             result = Operations.mediant(leftTemp, rightTemp);
             intSteps.mediantSteps(leftSteps, rightSteps);
-            historyOperation = "â†”";
+            historyOperation = "↔";
             pieChartOps.clear();
             pieChartOps.add(left);
             pieChartOps.add(right);
             pieChartOps.add(result);
-            pieChartOps.add("â†”");
+            pieChartOps.add("↔");
             break;
           case "<":
             resultBool = Operations.lessThan(leftTemp, rightTemp);
