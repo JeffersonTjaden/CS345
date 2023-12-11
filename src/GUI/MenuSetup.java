@@ -226,6 +226,7 @@ public class MenuSetup
     JRadioButtonMenuItem barItem = new JRadioButtonMenuItem(messages.getString("bar.item"));
     barItem.addActionListener(e -> {
       calculator.changeDisplay(new BarDisplay());
+      calculator.changeSteps(new BarSteps());
       display = "bar";
       try {
         writePreferences("src/resources/Preferences");
@@ -237,6 +238,7 @@ public class MenuSetup
     JRadioButtonMenuItem slashItem = new JRadioButtonMenuItem(messages.getString("slash.item"));
     slashItem.addActionListener(e -> {
       calculator.changeDisplay(new SlashDisplay());
+      calculator.changeSteps(new SlashSteps());
       display = "slash";
       try {
         writePreferences("src/resources/Preferences");
@@ -248,6 +250,7 @@ public class MenuSetup
     JRadioButtonMenuItem solidusItem = new JRadioButtonMenuItem(messages.getString("solidus.item"));
     solidusItem.addActionListener(e -> {
       calculator.changeDisplay(new SolidusDisplay());
+      calculator.changeSteps(new SolidusSteps());
       display = "solidus";
       try {
         writePreferences("src/resources/Preferences");

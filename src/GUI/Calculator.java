@@ -1058,6 +1058,11 @@ public class Calculator extends JFrame implements ActionListener, ComponentListe
 
   public void changeSteps(IntermediateSteps newSteps) {
     intSteps = newSteps;
+    // Update the JScrollPane with new IntermediateSteps
+    JScrollPane scrollPane = (JScrollPane) steps.getContentPane().getComponent(0);
+    scrollPane.setViewportView(intSteps);
+    steps.revalidate();
+    steps.repaint();
   }
   
   public void customize() {
