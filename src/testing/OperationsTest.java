@@ -1,6 +1,6 @@
 /**
  * @author Jefferson Tjaden.
- * @version October 30, 2023
+ * @version December 10, 2023
  */
 package testing;
 import static org.junit.Assert.assertEquals;
@@ -11,7 +11,7 @@ import utilities.IrreducedMixedFraction;
 import utilities.Operations;
 
 /**
- * 
+ * The testing class for the Operations class.
  */
 public class OperationsTest
 {
@@ -51,7 +51,7 @@ public class OperationsTest
     result = Operations.add(left3, right3);
     assertEquals(0, result.getWhole());
     assertEquals(0, result.getNumerator());
-    assertEquals(1, result.getDenominator());
+    assertEquals(6, result.getDenominator());
     
     // One Fraction Negative
     IrreducedMixedFraction left4 = new IrreducedMixedFraction(1, 3, true);
@@ -109,8 +109,8 @@ public class OperationsTest
     IrreducedMixedFraction right = new IrreducedMixedFraction(23, 72, 442, false);
     IrreducedMixedFraction result = Operations.subtract(left, right);
     assertEquals(0, result.getWhole());
-    assertEquals(63528999, result.getNumerator());
-    assertEquals(197353, result.getDenominator());
+    assertEquals(2106490, result.getNumerator());
+    assertEquals(394706, result.getDenominator());
     
     // First Fraction Zero
     left = new IrreducedMixedFraction(0, 5, true);
@@ -138,7 +138,7 @@ public class OperationsTest
     result = Operations.subtract(left, right);
     assertEquals(0, result.getWhole());
     assertEquals(0, result.getNumerator());
-    assertEquals(1, result.getDenominator());
+    assertEquals(15, result.getDenominator());
     
     // First Fraction Negative
     left = new IrreducedMixedFraction(1, 5, true);
@@ -181,7 +181,7 @@ public class OperationsTest
     result = Operations.subtract(left, right);
     assertEquals(0, result.getWhole());
     assertEquals(0, result.getNumerator());
-    assertEquals(5, result.getDenominator());
+    assertEquals(25, result.getDenominator());
     
     // Whole Number Test
     left = new IrreducedMixedFraction(1, 3, 5, false);
@@ -189,7 +189,7 @@ public class OperationsTest
     result = Operations.subtract(left, right);
     assertEquals(0, result.getWhole());
     assertEquals(0, result.getNumerator());
-    assertEquals(5, result.getDenominator());
+    assertEquals(25, result.getDenominator());
     
     // Additional Sign Testing
     IrreducedMixedFraction l = new IrreducedMixedFraction(1, 2, true);

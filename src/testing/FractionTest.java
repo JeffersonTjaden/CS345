@@ -1,6 +1,6 @@
 /**
  * @author Jefferson Tjaden.
- * @version October 30, 2023
+ * @version December 10, 2023
  */
 package testing;
 
@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 import Operations.Fraction;
 import utilities.IrreducedMixedFraction;
 
+/**
+ * The Testing class for the unused Fraction class in the Operations packagge.
+ */
 class FractionTest
 {
 
