@@ -35,5 +35,6 @@ public class HistoryWindow extends JPanel {
 
     public void addCalculation(JPanel calculation) {        
         history.add(calculation);
+        updateUI();
     }
 }
